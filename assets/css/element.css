@@ -1,0 +1,83 @@
+/* button */
+.el-button--primary:focus,
+.el-button--primary:hover {
+  background: #08444d;
+  color: #fff;
+  border: 1px solid #063941;
+}
+.el-button--primary {
+  color: #fff;
+  background: #063941;
+  border: 1px solid #063941;
+}
+
+.el-button--info:focus,
+.el-button--info:hover {
+  background: #eaeaef;
+  color: #25252d;
+}
+.el-button--info {
+  color: #25252d;
+  background: #e6e6ea;
+  border: none;
+}
+
+/* form */
+.el-form-item__label {
+  font-size: 15px;
+  font-family: var(--font-primary-light);
+  color: black;
+  font-weight: bold;
+  line-height: 36px;
+}
+.el-form--label-top .el-form-item__label {
+  padding: 0 0 0px;
+}
+.el-input__inner {
+  border: 1.3px solid #dcdfe6;
+  height: 43px;
+  border-radius: 10px;
+}
+.el-input-number__decrease,
+.el-input-number__increase {
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.el-input {
+  font-size: 16px;
+}
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus {
+  border-color: var(--color-primary);
+  outline: 0;
+}
+.el-select-dropdown__item.selected {
+  color: var(--color-primary);
+}
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+  width: 100%;
+}
+.el-form-item {
+  margin-bottom: 10px;
+}
+
+/* checkbox */
+.el-checkbox {
+  display: flex;
+}
+.el-checkbox,
+.el-checkbox__input {
+  white-space: inherit;
+}
+
+/* message */
+.el-message-box__title span {
+  font-size: 19px;
+}
+.el-message-box__headerbtn .el-message-box__close {
+  color: #191a1b;
+  font-weight: bold;
+}

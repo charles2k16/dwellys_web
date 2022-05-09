@@ -1,0 +1,283 @@
+:root {
+  --text-base: #1c1c1e;
+  --color-primary: #08444d;
+  --text-white: #ffffff;
+  --font-primary: Circular_std;
+  --font-primary-md: Circular_med;
+  --font-primary-light: Circular_light;
+}
+
+@font-face {
+  font-family: 'Circular_std';
+  src: url('../fonts/CircularStd-Book.otf');
+}
+@font-face {
+  font-family: 'Circular_med';
+  src: url('../fonts/CircularStd-Medium.otf');
+}
+@font-face {
+  font-family: 'Circular_light';
+  src: url('../fonts/CircularStd-Light.otf');
+}
+
+html,
+body {
+  min-height: 100%;
+  font-family: var(--font-primary), sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 19px;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+i {
+  font-weight: bold;
+}
+p {
+  font-family: var(--font-primary-light), sans-serif;
+  font-weight: bold;
+}
+b {
+  font-family: var(--font-primary-md), sans-serif;
+}
+small {
+  font-size: 13px;
+}
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.5rem;
+  color: #25252d;
+}
+h3 {
+  font-size: 1.1rem;
+}
+h4 {
+  font-size: 1rem;
+}
+hr.hr_rule {
+  border: 0.5px solid #dcd8e8;
+}
+p {
+  font-size: 1rem;
+  font-family: Circular_light, sans-serif;
+  line-height: 24px;
+}
+span {
+  font-family: Circular_light, sans-serif;
+  font-weight: 100;
+}
+.text-black {
+  color: var(--text-base);
+}
+.text-primary {
+  color: var(--color-primary);
+}
+.text-grey {
+  color: rgb(117, 113, 113);
+}
+.text-bold {
+  font-weight: bold;
+}
+
+/* margin-top */
+.mt-5 {
+  margin-top: 5px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.mt-40 {
+  margin-top: 40px;
+}
+
+/* margin-bottom */
+.mb-5 {
+  margin-bottom: 5px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.mb-40 {
+  margin-bottom: 40px;
+}
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+/* margin-left */
+.ml-10 {
+  margin-left: 10px;
+}
+.ml-15 {
+  margin-left: 15px;
+}
+.ml-20 {
+  margin-left: 20px;
+}
+
+/* margin-right */
+.mr-5 {
+  margin-right: 5px;
+}
+.mr-10 {
+  margin-right: 10px;
+}
+.mr-20 {
+  margin-right: 20px;
+}
+.mr-30 {
+  margin-right: 30px;
+}
+
+/* margin y */
+.my-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* padding bottom */
+.pb-10 {
+  padding-bottom: 10px;
+}
+.px-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.px-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.py-20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.pt-20 {
+  padding-top: 20px;
+}
+.pt-10 {
+  padding-top: 10px;
+}
+.p-20 {
+  padding: 20px;
+}
+.p-10 {
+  padding: 10px;
+}
+.center {
+  text-align: center;
+}
+
+/* flex */
+.d-block {
+  display: block;
+}
+.d-flex {
+  display: flex;
+}
+.justify_between {
+  justify-content: space-between;
+  align-items: center;
+}
+.justify_center {
+  justify-content: center;
+  align-items: center;
+}
+.justify_end {
+  justify-content: flex-end;
+}
+.justify_around {
+  justify-content: space-around;
+  align-items: center;
+}
+.align_center {
+  display: flex;
+  align-items: center;
+}
+.d-flex_column_center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mob_flex_end {
+  justify-content: flex-end;
+  align-items: center;
+}
+.full_width {
+  width: 100%;
+}
+.w-50 {
+  width: 50%;
+}
+.search_input_width.el-input {
+  width: 80% !important;
+}
+.clickable {
+  cursor: pointer;
+}
+.radius-5 {
+  border-radius: 5px;
+}
+.bold {
+  font-weight: bold;
+}
+.textarea {
+  font-family: var(--font-primary-md), sans-serif !important;
+}
+.section {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1270px;
+  width: 100%;
+  height: auto;
+}
+.product_price {
+  color: #5c5c61;
+  font-size: 17px;
+}
+.btn_width {
+  width: 60%;
+}
+.country-selector__label {
+  display: none;
+}
+.brij_select .el-input__inner {
+  color: var(--color-primary);
+}
+.country-selector__country-flag[data-v-46e105de] {
+  top: 14px !important;
+}
+.country-selector.has-value .country-selector__input[data-v-46e105de] {
+  padding-top: 1px !important;
+  font-size: 14px !important;
+  border-radius: 8px !important;
+}
+.country-selector.has-value .country-selector__input:hover {
+  border: 1px solid var(--color-primary) !important;
+}
+.vue-phone-number-input .select-country-container {
+  width: 99px !important;
+  max-width: 98px !important;
+  margin-right: 10px !important;
+}
+.country-selector[data-v-46e105de] {
+  width: 109px !important;
+}
