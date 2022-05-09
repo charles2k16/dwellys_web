@@ -1,14 +1,2 @@
 @media only screen and (max-width: 600px) {
-  .mobile_drawer {
-    width: 100% !important;
-  }
-  .header_search {
-    width: 100%;
-  }
-  .mob_mt {
-    margin-top: 25px;
-  }
-  .mob_flex_end {
-    justify-content: space-between !important;
-  }
 }
