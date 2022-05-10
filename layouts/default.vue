@@ -14,5 +14,7 @@ import Vue from 'vue';
 import global from '~/mixins/global.ts';
 
 Vue.mixin(global);
-export default {};
+export default {
+  name: 'App',
+};
 </script>
