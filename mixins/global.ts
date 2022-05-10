@@ -1,11 +1,7 @@
 import Vue from 'vue'
 import { IMixinState } from '@/types/mixinsTypes'
-const ApplicationHandler = () => import( '../handlers/ApplicationHandler.vue' )
 
 export default Vue.extend( {
-  components: {
-    ApplicationHandler,
-  },
   methods: <IMixinState> {
     getPercentageData ( data: number, total: number ): number {
       let percentage: number = ( data / total ) * 100;

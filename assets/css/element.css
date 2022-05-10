@@ -1,24 +1,24 @@
 /* button */
 .el-button--primary:focus,
 .el-button--primary:hover {
-  background: #08444d;
+  background: #de0b0b;
   color: #fff;
-  border: 1px solid #063941;
+  border: 1px solid #de0b0b;
 }
 .el-button--primary {
   color: #fff;
-  background: #063941;
-  border: 1px solid #063941;
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
 }
 
 .el-button--info:focus,
 .el-button--info:hover {
-  background: #eaeaef;
-  color: #25252d;
+  background: #f1f5f9;
+  color: #44556f;
 }
 .el-button--info {
-  color: #25252d;
-  background: #e6e6ea;
+  color: #475569;
+  background: #f1f5f9;
   border: none;
 }
 
@@ -34,9 +34,10 @@
   padding: 0 0 0px;
 }
 .el-input__inner {
-  border: 1.3px solid #dcdfe6;
+  border: 1px solid #e2e8f0;
   height: 43px;
-  border-radius: 10px;
+  border-radius: 8px;
+  background: #f8fafc;
 }
 .el-input-number__decrease,
 .el-input-number__increase {

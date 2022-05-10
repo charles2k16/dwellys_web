@@ -1,31 +1,30 @@
 :root {
-  --text-base: #1c1c1e;
-  --color-primary: #08444d;
+  --text-base: #334155;
+  --color-primary: #cf0100;
   --text-white: #ffffff;
   --font-primary: Circular_std;
   --font-primary-md: Circular_med;
   --font-primary-light: Circular_light;
-  --button-bg: rgba(207, 1, 0, 1);
 }
 
 @font-face {
-  font-family: "Circular_std";
-  src: url("../fonts/CircularStd-Book.otf");
+  font-family: 'Circular_std';
+  src: url('../fonts/CircularStd-Book.otf');
 }
 @font-face {
-  font-family: "Circular_med";
-  src: url("../fonts/CircularStd-Medium.otf");
+  font-family: 'Circular_med';
+  src: url('../fonts/CircularStd-Medium.otf');
 }
 @font-face {
-  font-family: "Circular_light";
-  src: url("../fonts/CircularStd-Light.otf");
+  font-family: 'Circular_light';
+  src: url('../fonts/CircularStd-Light.otf');
 }
 
 html,
 body {
   min-height: 100%;
   font-family: var(--font-primary), sans-serif;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
 }
@@ -66,7 +65,7 @@ h4 {
   font-size: 1rem;
 }
 hr.hr_rule {
-  border: 0.5px solid #dcd8e8;
+  border: 0.5px solid #e2e8f0;
 }
 p {
   font-size: 1rem;
@@ -158,6 +157,9 @@ span {
 /* padding bottom */
 .pb-10 {
   padding-bottom: 10px;
+}
+.pb-20 {
+  padding-bottom: 20px;
 }
 .px-10 {
   padding-left: 10px;

@@ -2,7 +2,6 @@
   <div>
     <el-container style="height: 100vh">
       <el-main>
-        <!-- <ApplicationHandler ref="handleAction"></ApplicationHandler> -->
         <NavHeader />
         <Nuxt />
       </el-main>

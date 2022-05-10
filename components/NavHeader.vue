@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <ApplicationHandler ref="loginAction" />
-    <div class="header_wrapper">
+    <div class="header_wrapper section">
       <div style="display: flex; align-items: center">
         <img src="~/assets/logo/logo.png" />
       </div>
@@ -27,10 +27,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "NavHeader",
+  name: 'NavHeader',
+
   data() {
     return {};
   },
@@ -50,7 +51,7 @@ a {
 }
 .header_wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .header_content {
   display: flex;
