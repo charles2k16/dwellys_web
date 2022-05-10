@@ -5,19 +5,20 @@
   --font-primary: Circular_std;
   --font-primary-md: Circular_med;
   --font-primary-light: Circular_light;
+  --button-bg: rgba(207, 1, 0, 1);
 }
 
 @font-face {
-  font-family: 'Circular_std';
-  src: url('../fonts/CircularStd-Book.otf');
+  font-family: "Circular_std";
+  src: url("../fonts/CircularStd-Book.otf");
 }
 @font-face {
-  font-family: 'Circular_med';
-  src: url('../fonts/CircularStd-Medium.otf');
+  font-family: "Circular_med";
+  src: url("../fonts/CircularStd-Medium.otf");
 }
 @font-face {
-  font-family: 'Circular_light';
-  src: url('../fonts/CircularStd-Light.otf');
+  font-family: "Circular_light";
+  src: url("../fonts/CircularStd-Light.otf");
 }
 
 html,
