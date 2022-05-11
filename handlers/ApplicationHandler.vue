@@ -1,46 +1,35 @@
 <template>
   <div>
-    <!-- Add Class dialog -->
+    <!-- Login dialog -->
     <el-dialog
-      :visible.sync="showAddClassModal"
-      width="40%"
+      :visible.sync="showLoginModal"
+      width="60%"
       :destroy-on-close="true"
       custom-class="mobile-modal"
     >
-      <template slot="title">
-        <h3>{{ modalTitle }}</h3>
-        <p class="mt-10">
-          All fields should be filled for accurate class filtering.
-        </p>
-      </template>
-      <AddClasses @closeClassModal="closeAddClassModal" />
+      <LoginForm />
     </el-dialog>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'ModalHandler',
+  name: "ApplicationHandler",
   data() {
     return {
-      modalTitle: '' as string,
-      showAddClassModal: false as boolean,
-      successFunc: null as any,
-    }
+      user: "ass" as string,
+      showLoginModal: false as boolean,
+    };
   },
-    methods: {
-    addClassModal(refereshTable: any): void {
-      this.modalTitle = 'Add Classes'
-      this.successFunc = refereshTable
-      this.showAddClassModal = true
+  methods: {
+    showLogin(user: string): void {
+      console.log(user);
+      this.showLoginModal = true;
     },
     closeAddClassModal() {
-      this.closeModal(this.successFunc)
-      this.showAddClassModal = false
+      this.showLoginModal = false;
     },
-    closeModal(done: any) {
-      done()
-    },
-    }
-})
+  },
+});
+</script>

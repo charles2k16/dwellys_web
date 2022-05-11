@@ -15,7 +15,7 @@
       </div>
       <div class="header_content">
         <section class="messages"><NuxtLink to="/">Messages</NuxtLink></section>
-        <section class="login">
+        <section class="login" @click="showLoginModal">
           <div class="login_text">
             <p>Login</p>
             <i class="el-icon-user-solid"></i>
@@ -28,15 +28,22 @@
 
 <script lang="ts">
 import Vue from "vue";
+import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
 
 export default Vue.extend({
   name: "NavHeader",
+  components: {
+    ApplicationHandler,
+  },
   data() {
-    return {};
+    return {
+      user: "login",
+    };
   },
   methods: {
-    AddClientModal(): void {
-      (this as any).$refs.handleAction.addClientModal(this.$fetch);
+    showLoginModal(): void {
+      console.log("show");
+      (this as any).$refs.loginAction.showLogin(this.user);
     },
   },
 });

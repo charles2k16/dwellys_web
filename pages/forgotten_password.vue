@@ -11,7 +11,7 @@
       <div style="width: 80%">
         <el-form
           ref="userAccount"
-          v-model="account"
+          v-model="email"
           class="client"
           label-position="top"
         >
