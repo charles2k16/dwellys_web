@@ -2,7 +2,6 @@
   <div>
     <el-container style="height: 100vh">
       <el-main>
-        <!-- <ApplicationHandler ref="handleAction"></ApplicationHandler> -->
         <NavHeader />
         <Nuxt />
       </el-main>
@@ -15,5 +14,7 @@ import Vue from 'vue';
 import global from '~/mixins/global.ts';
 
 Vue.mixin(global);
-export default {};
+export default {
+  name: 'App',
+};
 </script>
