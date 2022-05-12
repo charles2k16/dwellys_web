@@ -51,7 +51,7 @@
               <el-input
                 v-model="account.email"
                 type="email"
-                placeholder="email@gmail.com"
+                placeholder="Enter email"
               >
               </el-input>
             </el-form-item>
@@ -84,25 +84,25 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import VuePhoneNumberInput from 'vue-phone-number-input';
-import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+import Vue from "vue";
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
 
 export default Vue.extend({
-  name: 'AccountPage',
+  name: "AccountPage",
   components: {
     VuePhoneNumberInput,
   },
   data() {
     return {
       account: {
-        first_name: '' as string,
-        last_name: '' as string,
-        date: '' as string,
-        email: '' as string,
-        phone: '' as string,
+        first_name: "" as string,
+        last_name: "" as string,
+        date: "" as string,
+        email: "" as string,
+        phone: "" as string,
         terms: false as boolean,
-        number: '' as string,
+        number: "" as string,
       },
     };
   },
@@ -111,7 +111,7 @@ export default Vue.extend({
   },
   methods: {
     submitAccount() {
-      console.log('submit');
+      console.log("submit");
     },
   },
 });

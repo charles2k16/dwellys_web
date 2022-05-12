@@ -3,7 +3,7 @@
     <ApplicationHandler ref="loginAction" />
     <div class="header_wrapper section">
       <div style="display: flex; align-items: center">
-        <img src="~/assets/logo/logo.png" />
+        <img src="~/assets/img/logo.png" />
       </div>
       <div class="header_content">
         <section class="property">
@@ -76,6 +76,7 @@ a {
 .login {
   border: 1px solid #e2e8f0;
   border-radius: 40px;
+  cursor: pointer;
   padding: 5px 10px;
   background: #f8fafc;
 }

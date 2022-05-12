@@ -16,16 +16,12 @@
           label-position="top"
         >
           <el-form-item label="Email address">
-            <el-input
-              v-model="email"
-              type="email"
-              placeholder="Enter your email address"
-            >
+            <el-input v-model="email" type="email" placeholder="Enter email">
             </el-input>
           </el-form-item>
         </el-form>
-        <div style="margin-top: 20px">
-          <el-button class="email_btn" @click="submitEmail"
+        <div class="mt-20 d-flex justify_end">
+          <el-button type="primary" @click="submitEmail"
             >Send a link to reset password</el-button
           >
         </div>
