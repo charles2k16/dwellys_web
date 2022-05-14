@@ -30,7 +30,7 @@
         </el-tabs>
         <el-row class="d-flex pt-20">
           <div class="pr-20">
-            <p>2000+</p>
+            <p><b>2000+ </b></p>
             <small>Properties for rent</small>
           </div>
           <div
@@ -68,30 +68,30 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 // import { products } from '@/assets/data/index.js'
 
 export default Vue.extend({
-  name: "IndexPage",
+  name: 'IndexPage',
   data() {
     return {
-      activeName: "first" as string,
-      home: "" as string,
+      activeName: 'first' as string,
+      home: '' as string,
       sendForm: {
         amount: null,
         recipient_amt: null,
-        payment_method: "" as string,
+        payment_method: '' as string,
       },
       payOptions: [
-        { value: ":brijwallet", label: ":brij wallet" },
-        { value: ":brijEx", label: ":brijEx" },
-        { value: "M-PESA", label: "M-PESA" },
+        { value: ':brijwallet', label: ':brij wallet' },
+        { value: ':brijEx', label: ':brijEx' },
+        { value: 'M-PESA', label: 'M-PESA' },
       ],
     };
   },
   methods: {
     onCountryUpdate(country: object) {
-      console.log(country, "event");
+      console.log(country, 'event');
     },
     handleClick(tab: string, event: object) {
       console.log(tab, event);
@@ -104,7 +104,7 @@ export default Vue.extend({
 .home {
   color: var(--text-white);
   .home_landing_page {
-    background-image: url("~/assets/img/home.png");
+    background-image: url('~/assets/img/home.png');
     background-repeat: no-repeat;
     background-size: 100% 400px;
     height: 400px;
@@ -127,14 +127,6 @@ export default Vue.extend({
         .search_home {
           display: flex;
           padding: 10px;
-          // .search_input {
-          //   border: none;
-          //   outline: 0;
-          //   &:focus {
-          //     outline: none;
-          //     border: none;
-          //   }
-          // }
         }
       }
     }

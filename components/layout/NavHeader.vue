@@ -18,7 +18,7 @@
         <section class="login" @click="showLoginModal">
           <div class="login_text">
             <p>Login</p>
-            <i class="el-icon-user-solid"></i>
+            <img src="~/assets/img/user_icon.png" alt="" />
           </div>
         </section>
       </div>
@@ -27,22 +27,22 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
+import Vue from 'vue';
+import ApplicationHandler from '@/handlers/ApplicationHandler.vue';
 
 export default Vue.extend({
-  name: "NavHeader",
+  name: 'NavHeader',
   components: {
     ApplicationHandler,
   },
   data() {
     return {
-      user: "login",
+      user: 'login',
     };
   },
   methods: {
     showLoginModal(): void {
-      console.log("show");
+      console.log('show');
       (this as any).$refs.loginAction.showLogin(this.user);
     },
   },
@@ -87,7 +87,8 @@ a {
 .login_text p {
   padding-right: 8px;
 }
-.login_text i {
-  padding-top: 3px;
+.login_text img {
+  width: 24px;
+  height: 24px;
 }
 </style>

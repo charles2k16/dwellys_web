@@ -13,7 +13,7 @@
     <div class="section account_content">
       <div class="pb-20">
         <h3>Create a property owner account</h3>
-        <p>
+        <p class="mt-10">
           Help us authenticate you by providing us some background information
         </p>
       </div>
@@ -134,7 +134,6 @@
                 <el-col :xs="24" :sm="24" :md="24">
                   <el-form-item label="Upload ID">
                     <el-upload
-                      class="upload-demo"
                       drag
                       action=""
                       :on-preview="handlePreview"

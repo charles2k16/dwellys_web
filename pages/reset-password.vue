@@ -1,14 +1,16 @@
 <template>
-  <div class="forgotten">
-    <div style="width: 50%">
-      <div class="forgotten_text">
+  <div class="section">
+    <div>
+      <div class="forgotten_text mb-20 mt-20">
         <h3>Have you forgotten your password?</h3>
         <p>
           Enter the e-mail address to which you registered your account in the
           system, and we’ll send you reset instructions.
         </p>
       </div>
-      <div style="width: 80%">
+      <hr class="hr_rule" />
+
+      <div class="reset_div mt-20">
         <el-form
           ref="userAccount"
           v-model="email"
@@ -31,13 +33,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 export default Vue.extend({
-  name: "ForgottenPage",
+  name: 'ForgottenPage',
 
   data() {
     return {
-      email: "" as string,
+      email: '' as string,
     };
   },
   methods: {
@@ -47,27 +49,23 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.forgotten {
-  padding-top: 30px;
+.forgotten_text {
+  max-width: 500px;
+  width: 100%;
 
-  width: 85%;
-  margin: 0 auto;
-  .forgotten_text {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    h3 {
-      padding-bottom: 10px;
-      line-height: 28px;
-    }
-    p {
-      line-height: 20px;
-    }
+  h3 {
+    padding-bottom: 10px;
+    line-height: 28px;
   }
-  .email_btn {
-    float: right;
-    border-radius: 8px;
-    background: var(--button-bg);
-    color: white;
-  }
+}
+.email_btn {
+  float: right;
+  border-radius: 8px;
+  background: var(--button-bg);
+  color: white;
+}
+.reset_div {
+  max-width: 500px;
+  width: 100%;
 }
 </style>

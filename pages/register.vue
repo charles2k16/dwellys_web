@@ -2,7 +2,7 @@
   <div class="section account_content">
     <div class="pb-20">
       <h3>Create an account</h3>
-      <p>Provide information about yourself for identity</p>
+      <p class="mt-10">Provide information about yourself for identity</p>
     </div>
     <hr class="hr_rule" />
     <div class="account_form">

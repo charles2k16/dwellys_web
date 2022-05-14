@@ -66,6 +66,10 @@
 .el-form-item {
   margin-bottom: 10px;
 }
+.search_input .el-input__inner {
+  border: none;
+  outline: 0;
+}
 
 /* checkbox */
 .el-checkbox {
@@ -83,4 +87,58 @@
 .el-message-box__headerbtn .el-message-box__close {
   color: #191a1b;
   font-weight: bold;
+}
+
+/* upload */
+.el-upload-dragger {
+  background: #f8fafc;
+  width: 526px;
+}
+
+/* tabs */
+.el-tabs--card .el-tabs__item.is-active {
+  color: #101112;
+  background: white;
+}
+.el-tabs--card .el-tabs__item {
+  color: white;
+}
+.el-tabs--card {
+  border-radius: 8px;
+}
+.el-tabs--card > .el-tabs__header {
+  border-bottom: none;
+  margin: 0;
+}
+.el-tabs--card > .el-tabs__header .el-tabs__item {
+  border-left: 1px solid grey;
+}
+.el-tabs__item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  font-size: 14px;
+  height: 50px;
+  width: 120px;
+  box-sizing: border-box;
+  font-weight: 500;
+  color: #303133;
+  position: relative;
+}
+
+.el-tabs--top.el-tabs--card > .el-tabs__header .el-tabs__item {
+  padding-left: 0;
+}
+.el-tabs--top.el-tabs--card > .el-tabs__header .el-tabs__item:last-child {
+  padding-right: 0;
+}
+.el-tabs--card > .el-tabs__header .el-tabs__nav {
+  border: none;
+  background: rgba(68, 68, 68, 0.4);
+  backdrop-filter: blur(6px);
+}
+.el-tabs__nav-scroll {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
