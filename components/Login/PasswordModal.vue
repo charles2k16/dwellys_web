@@ -2,7 +2,7 @@
   <div class="password_container">
     <hr class="hr_rule" />
     <div class="profile_img_container">
-      <img src="~/assets/img/nike7.png" />
+      <img src="~/assets/img/user.png" />
       <p>Abenadanks@gmail.com</p>
     </div>
     <el-form
@@ -34,19 +34,19 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "PasswordModal",
+  name: 'PasswordModal',
   data() {
     return {
-      password: "" as string,
+      password: '' as string,
     };
   },
   methods: {
     closeModal() {
-      console.log("modal");
-      this.$emit("closePasswordModal");
+      console.log('modal');
+      this.$emit('closePasswordModal');
     },
     login() {},
   },
@@ -66,7 +66,6 @@ export default Vue.extend({
   padding: 30px 0;
   img {
     width: 200px;
-    height: 200px;
     border-radius: 50%;
   }
 }

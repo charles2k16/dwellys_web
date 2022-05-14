@@ -8,16 +8,16 @@
 }
 
 @font-face {
-  font-family: "Circular_std";
-  src: url("../fonts/CircularStd-Book.otf");
+  font-family: 'Circular_std';
+  src: url('../fonts/CircularStd-Book.otf');
 }
 @font-face {
-  font-family: "Circular_med";
-  src: url("../fonts/CircularStd-Medium.otf");
+  font-family: 'Circular_med';
+  src: url('../fonts/CircularStd-Medium.otf');
 }
 @font-face {
-  font-family: "Circular_light";
-  src: url("../fonts/CircularStd-Light.otf");
+  font-family: 'Circular_light';
+  src: url('../fonts/CircularStd-Light.otf');
 }
 
 html,
@@ -280,12 +280,8 @@ span {
   width: 100%;
   height: auto;
 }
-.product_price {
-  color: #5c5c61;
-  font-size: 17px;
-}
 .btn_sm {
-  width: 150px;
+  width: 180px;
 }
 .btn_width {
   width: 60%;
@@ -296,9 +292,6 @@ span {
 
 .country-selector__label {
   display: none;
-}
-.brij_select .el-input__inner {
-  color: var(--color-primary);
 }
 .country-selector__country-flag[data-v-46e105de] {
   top: 14px !important;

@@ -24,7 +24,7 @@
         :file-list="fileList"
         list-type="picture"
       >
-        <el-button size="small" type="info">Select an image of you</el-button>
+        <el-button type="info">Select an image of you</el-button>
       </el-upload>
       <el-button type="primary" class="ml-20">Save</el-button>
     </div>
@@ -32,13 +32,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "PropertyProfile",
+  name: 'PropertyProfile',
   data() {
     return {
-      email: "" as string,
+      email: '' as string,
     };
   },
   methods: {

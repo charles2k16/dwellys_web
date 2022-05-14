@@ -1,6 +1,6 @@
 <template>
   <div class="section account_content">
-    <div class="create_account">
+    <div class="pb-20">
       <h3>Create an account</h3>
       <p>Provide information about yourself for identity</p>
     </div>
@@ -55,7 +55,7 @@
               >
               </el-input>
             </el-form-item>
-            <el-form-item label="Phone number" style="margin-bottom: 0">
+            <el-form-item label="Phone number">
               <vue-phone-number-input
                 v-model="account.number"
                 :border-radius="7"
@@ -94,25 +94,25 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import VuePhoneNumberInput from "vue-phone-number-input";
-import "vue-phone-number-input/dist/vue-phone-number-input.css";
+import Vue from 'vue';
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 
 export default Vue.extend({
-  name: "AccountPage",
+  name: 'AccountPage',
   components: {
     VuePhoneNumberInput,
   },
   data() {
     return {
       account: {
-        first_name: "" as string,
-        last_name: "" as string,
-        date: "" as string,
-        email: "" as string,
-        phone: "" as string,
+        first_name: '' as string,
+        last_name: '' as string,
+        date: '' as string,
+        email: '' as string,
+        phone: '' as string,
         terms: false as boolean,
-        number: "" as string,
+        number: '' as string,
       },
     };
   },
@@ -121,7 +121,7 @@ export default Vue.extend({
   },
   methods: {
     submitAccount() {
-      console.log("submit");
+      console.log('submit');
     },
   },
 });
@@ -137,9 +137,6 @@ export default Vue.extend({
       width: 75.61px;
       height: 16.3px;
     }
-  }
-  .create_account {
-    padding-bottom: 20px;
   }
   .account_form {
     padding-top: 20px;
