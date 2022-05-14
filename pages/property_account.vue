@@ -98,12 +98,12 @@
                     @update="onCountryUpdate"
                   />
                 </el-form-item>
+                <div class="mt-20 d-flex justify_end">
+                  <el-button type="primary" class="btn_sm" @click="toNext"
+                    >Next</el-button
+                  >
+                </div>
               </div>
-            </div>
-            <div class="mt-20 d-flex justify_end">
-              <el-button type="primary" class="btn_sm" @click="toNext"
-                >Next</el-button
-              >
             </div>
           </div>
           <div v-if="step == 2">
@@ -259,6 +259,8 @@ export default Vue.extend({
 }
 .account_content {
   padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
 
   .create_account {
     padding-bottom: 20px;

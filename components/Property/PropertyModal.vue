@@ -9,9 +9,8 @@
       <i class="el-icon-warning-outline"></i>
       <el-col class="photo_main_text">
         <small
-          >Must be an actual photo of you.<br />
-          Logos, clip-art, group photos, and digitally-altered images are not
-          allowed</small
+          >Must be an actual photo of you.<br />Logos, clip-art, group photos,
+          and digitally-altered images are not allowed</small
         >
         <p><i class="el-icon-link"></i>Learn more</p></el-col
       >
@@ -83,9 +82,9 @@ export default Vue.extend({
     margin-right: 20px;
   }
   .photo_main_text {
-    width: 80%;
+    width: 100%;
     p {
-      padding-right: 10px;
+      // padding-right: 10px;
       color: var(--color-primary);
       float: right;
 

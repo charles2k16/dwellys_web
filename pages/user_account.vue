@@ -80,6 +80,16 @@
         </div>
       </el-form>
     </div>
+    <div class="user_account_footer">
+      <div class="pb-10">
+        <img src="~/assets/img/logo.png" class="user_img_logo" />
+      </div>
+      <small>
+        Dwellys International Limited (dwellys) is a company registered in Ghana
+        with company registration number CS234262018 at 8th Floor, Silver Star
+        Tower, Airport City, Accra - Ghana.
+      </small>
+    </div>
   </div>
 </template>
 
@@ -117,10 +127,17 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .account_content {
   padding-top: 40px;
-
+  .user_account_footer {
+    padding: 80px 0 30px;
+    width: 20%;
+    .user_img_logo {
+      width: 75.61px;
+      height: 16.3px;
+    }
+  }
   .create_account {
     padding-bottom: 20px;
   }

@@ -26,7 +26,7 @@
 
     <el-dialog
       :visible.sync="photoModal"
-      width="45%"
+      width="40%"
       :destroy-on-close="true"
       custom-class="mobile-modal"
     >
