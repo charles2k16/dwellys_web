@@ -3,8 +3,8 @@
     <div class="home_landing_page">
       <div class="landing_content section">
         <h2>
-          Discover the world’s hub for <bold>houses</bold> and
-          <bold>properties</bold> for sale and rent
+          Discover the world’s hub for <span>houses</span> and
+          <span>properties</span> for sale and rent
         </h2>
         <el-tabs type="card" @tab-click="handleClick">
           <el-tab-pane label="Buy">
@@ -25,8 +25,42 @@
               </el-form>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="Rent">Configs</el-tab-pane>
-          <el-tab-pane label="Lease">Lease</el-tab-pane>
+          <el-tab-pane label="Rent">
+            <div class="buy">
+              <el-form
+                ref="home"
+                class="search_home"
+                v-model="home"
+                label-position="top"
+              >
+                <el-input
+                  v-model="home"
+                  class="search_input"
+                  placeholder="Where do you want to live?"
+                >
+                </el-input>
+                <el-button type="primary">Find your home</el-button>
+              </el-form>
+            </div></el-tab-pane
+          >
+          <el-tab-pane label="Lease">
+            <div class="buy">
+              <el-form
+                ref="home"
+                class="search_home"
+                v-model="home"
+                label-position="top"
+              >
+                <el-input
+                  v-model="home"
+                  class="search_input"
+                  placeholder="Where do you want to live?"
+                >
+                </el-input>
+                <el-button type="primary">Find your home</el-button>
+              </el-form>
+            </div></el-tab-pane
+          >
         </el-tabs>
         <el-row class="d-flex pt-20">
           <div class="pr-20">
@@ -40,58 +74,97 @@
             "
             class="px-20"
           >
-            <p>1954+</p>
+            <p><b>1954+</b></p>
             <small>Properties for sale</small>
           </div>
           <div class="pl-20">
-            <p>1954+</p>
+            <p><b>1954+</b></p>
             <small>Properties for sale</small>
           </div>
         </el-row>
       </div>
     </div>
     <div>
-      <!-- <div>
-        <el-tabs
-          class="section"
-          :tab-position="top"
-          style="height: 200px; display: flex; justify-content: between"
-        >
-          <el-tab-pane label="User">User</el-tab-pane>
-          <el-tab-pane label="Config">Config</el-tab-pane>
-          <el-tab-pane label="Role">Role</el-tab-pane>
-          <el-tab-pane label="Task">Task</el-tab-pane>
-        </el-tabs>
-      </div> -->
+      <el-tabs type="border-card">
+        <el-tab-pane label="All">
+          <div class="section pt-20">
+            <p class="pb-20" style="font-size: 20px; line-height: 24px">
+              Rent a home
+            </p>
+            <HomeCard /></div
+        ></el-tab-pane>
+        <el-tab-pane label="House">
+          <div class="section pt-20">
+            <p class="pb-20" style="font-size: 20px; line-height: 24px">
+              Rent a house
+            </p>
+            <HomeCard /></div
+        ></el-tab-pane>
+        <el-tab-pane label="Apartment">
+          <div class="section pt-20">
+            <p class="pb-20" style="font-size: 20px; line-height: 24px">
+              Rent an apartment
+            </p>
+            <HomeCard /></div
+        ></el-tab-pane>
+        <el-tab-pane label="Town house">
+          <div class="section pt-20">
+            <p class="pb-20" style="font-size: 20px; line-height: 24px">
+              Rent a town house
+            </p>
+            <HomeCard /></div
+        ></el-tab-pane>
+        <el-tab-pane label="Office">
+          <div class="section pt-20">
+            <p class="pb-20" style="font-size: 20px; line-height: 24px">
+              Rent an office
+            </p>
+            <HomeCard /></div
+        ></el-tab-pane>
+        <el-tab-pane label="Land">
+          <div class="section pt-20">
+            <p class="pb-20" style="font-size: 20px; line-height: 24px">
+              Buy a land
+            </p>
+            <HomeCard /></div
+        ></el-tab-pane>
+        <el-tab-pane label="Community Space">
+          <div class="section pt-20">
+            <p class="pb-20" style="font-size: 20px; line-height: 24px">
+              Rent a community space
+            </p>
+            <HomeCard /></div
+        ></el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 // import { products } from '@/assets/data/index.js'
 
 export default Vue.extend({
-  name: 'IndexPage',
+  name: "IndexPage",
   data() {
     return {
-      activeName: 'first' as string,
-      home: '' as string,
+      activeName: "first" as string,
+      home: "" as string,
       sendForm: {
         amount: null,
         recipient_amt: null,
-        payment_method: '' as string,
+        payment_method: "" as string,
       },
       payOptions: [
-        { value: ':brijwallet', label: ':brij wallet' },
-        { value: ':brijEx', label: ':brijEx' },
-        { value: 'M-PESA', label: 'M-PESA' },
+        { value: ":brijwallet", label: ":brij wallet" },
+        { value: ":brijEx", label: ":brijEx" },
+        { value: "M-PESA", label: "M-PESA" },
       ],
     };
   },
   methods: {
     onCountryUpdate(country: object) {
-      console.log(country, 'event');
+      console.log(country, "event");
     },
     handleClick(tab: string, event: object) {
       console.log(tab, event);
@@ -104,7 +177,7 @@ export default Vue.extend({
 .home {
   color: var(--text-white);
   .home_landing_page {
-    background-image: url('~/assets/img/home.png');
+    background-image: url("~/assets/img/home.png");
     background-repeat: no-repeat;
     background-size: 100% 400px;
     height: 400px;
@@ -116,10 +189,19 @@ export default Vue.extend({
       justify-content: center;
       // padding: 20px;
       h2 {
-        color: var(--text-white);
-        width: 35%;
+        color: #f8fafc;
+        padding-top: 40px;
+        width: 40%;
+        text-align: justify;
+        max-width: 440px;
         padding-bottom: 30px;
-        font-weight: 400;
+
+        font-weight: 200;
+        line-height: 32px;
+        span {
+          font-weight: 500;
+          font-size: 30px;
+        }
       }
       .buy {
         background: #ffffff;

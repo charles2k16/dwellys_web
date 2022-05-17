@@ -35,6 +35,17 @@
       </template>
       <PropertyModal />
     </el-dialog>
+    <el-dialog
+      :visible.sync="ownerModal"
+      width="40%"
+      :destroy-on-close="true"
+      custom-class="mobile-modal"
+    >
+      <template slot="title">
+        <h3>Send a message</h3>
+      </template>
+      <PropertyMessage />
+    </el-dialog>
   </div>
 </template>
 <script lang="ts">
@@ -47,7 +58,8 @@ export default Vue.extend({
       user: "ass" as string,
       showLoginModal: false as boolean,
       showPasswordModal: false as boolean,
-      photoModal: false,
+      photoModal: false as boolean,
+      ownerModal: false as boolean,
     };
   },
   methods: {
@@ -60,11 +72,17 @@ export default Vue.extend({
       this.showPasswordModal = true;
     },
     showPhotoModal() {
-      console.log("in");
       this.photoModal = true;
     },
     closePhotoModal() {
       this.photoModal = false;
+    },
+    showOwnerModal(user: string) {
+      console.log(user);
+      this.ownerModal = true;
+    },
+    closeOwnerModal() {
+      this.ownerModal = false;
     },
     closePasswordModal() {
       console.log("handler");

@@ -2,22 +2,24 @@
   --text-base: #334155;
   --color-primary: #cf0100;
   --text-white: #ffffff;
-  --font-primary: Circular_std;
-  --font-primary-md: Circular_med;
-  --font-primary-light: Circular_light;
+  --font-primary: SFtext_reg;
+  --font-primary-md: SFtext_md;
+  --font-primary-light: SFtext_light;
 }
 
 @font-face {
-  font-family: 'Circular_std';
-  src: url('../fonts/CircularStd-Book.otf');
+  font-family: "SFtext_reg";
+  src: url("../fonts/SFUIText-Regular.woff");
 }
+
 @font-face {
-  font-family: 'Circular_med';
-  src: url('../fonts/CircularStd-Medium.otf');
+  font-family: "SFtext_light";
+  src: url("../fonts/SFUIText-Light.woff");
 }
+
 @font-face {
-  font-family: 'Circular_light';
-  src: url('../fonts/CircularStd-Light.otf');
+  font-family: "SFtext_md";
+  src: url("../fonts/SFUIText-Medium.woff");
 }
 
 html,
@@ -43,13 +45,15 @@ i {
 }
 p {
   font-family: var(--font-primary-light), sans-serif;
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-size: 14px;
+  line-height: 16px;
 }
 b {
   font-family: var(--font-primary-md), sans-serif;
 }
 small {
-  font-size: 13px;
+  font-size: 11px;
 }
 h1 {
   font-size: 2rem;
