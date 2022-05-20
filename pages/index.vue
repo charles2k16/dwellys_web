@@ -2,10 +2,11 @@
   <div class="home">
     <div class="home_landing_page">
       <div class="landing_content section">
-        <h2>
-          Discover the world’s hub for <span>houses</span> and
-          <span>properties</span> for sale and rent
-        </h2>
+        <h1>
+          Discover the world’s hub for<br />
+          <span>houses</span> and <span>properties</span> for sale and rent
+        </h1>
+        <div class="discover_line"></div>
         <el-tabs type="card" @tab-click="handleClick">
           <el-tab-pane label="Buy">
             <div class="buy">
@@ -187,21 +188,26 @@ export default Vue.extend({
       width: 90%;
       flex-direction: column;
       justify-content: center;
-      // padding: 20px;
-      h2 {
-        color: #f8fafc;
+      h1 {
         padding-top: 40px;
-        width: 40%;
-        text-align: justify;
-        max-width: 440px;
-        padding-bottom: 30px;
-
+        width: 100%;
+        max-width: 490px;
         font-weight: 200;
         line-height: 32px;
+        z-index: 10;
         span {
-          font-weight: 500;
+          font-weight: 700;
           font-size: 30px;
         }
+      }
+      .discover_line {
+        position: relative;
+        top: -25px;
+        left: 20px;
+        width: 220px;
+        height: 30px;
+        border-radius: 100%;
+        box-shadow: 5px -10px #cf0100;
       }
       .buy {
         background: #ffffff;

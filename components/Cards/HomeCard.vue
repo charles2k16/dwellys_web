@@ -9,15 +9,12 @@
         :key="index"
         class="pb-20"
       >
-        <el-card
-          shadow="hover"
-          style="background-image='~/assets/img/Frame1.png'"
-          class="house_card"
-        >
-          <div class="card_img">
-            <!-- images -->
-            <div class="p-10">
-              <div class="d-flex justify_between">
+        <!-- {{ "backgroundImage:" + "url(" + roote + house.img + ")" }} -->
+        <NuxtLink to="/property_details">
+          <el-card shadow="hover" class="house_card">
+            <div class="card_img">
+              <img :src="getImage(house.img)" class="house_img" />
+              <div class="d-flex justify_between house_text p-10">
                 <p
                   style="
                     background: white;
@@ -27,30 +24,41 @@
                 >
                   Rent
                 </p>
-                <span class="material-icons"> favorite_border </span>
+                <span class="material-icons" style="color: white">
+                  favorite_border
+                </span>
               </div>
             </div>
-          </div>
-          <div class="card_body">
-            <!-- amount -->
-            <p class="house_amount">$700/mth</p>
-            <p class="house_plot">Plot No, 34, Dade St, Tema</p>
-          </div>
-          <div class="card_footer">
-            <div>
-              <div><b>3</b></div>
-              <p>Bedrooms</p>
+            <div class="card_body">
+              <!-- amount -->
+              <p class="house_amount">$700/mth</p>
+              <p class="house_plot">Plot No, 34, Dade St, Tema</p>
             </div>
-            <div class="house_bathroom px-20">
-              <div>4</div>
-              <p>Bathrooms</p>
+            <div class="card_footer">
+              <div>
+                <div class="d-flex align_center">
+                  <span class="material-icons mr-10"> king_bed </span><b>3</b>
+                </div>
+                <p>Bedrooms</p>
+              </div>
+              <div class="house_bathroom px-20">
+                <div class="d-flex align_center">
+                  <span class="material-icons mr-10" style="color: #475569">
+                    bathtub </span
+                  ><b>4</b>
+                </div>
+                <p>Bathrooms</p>
+              </div>
+              <div>
+                <div class="d-flex align_center">
+                  <span class="material-icons mr-10"> desktop_windows </span
+                  ><b>1</b>
+                </div>
+                <p>Living area</p>
+              </div>
             </div>
-            <div>
-              <div>1</div>
-              <p>Living area</p>
-            </div>
-          </div>
-        </el-card>
+          </el-card>
+        </NuxtLink>
       </el-col>
     </el-row>
   </div>
@@ -64,20 +72,26 @@ export default Vue.extend({
   data() {
     return {
       email: "" as string,
-      houses: {
-        one: {},
-        two: {},
-        three: {},
-        four: {},
-        five: {},
-        six: {},
-        seven: {},
-        eight: {},
-      },
+      roote: "~/assets/img/",
+      houses: [
+        {
+          img: "Frame1.png",
+        },
+        { img: "Frame2.png" },
+        { img: "Frame3.png" },
+        { img: "Frame4.png" },
+        { img: "Frame5.png" },
+        { img: "Frame6.png" },
+        { img: "Frame7.png" },
+        { img: "Frame8.png" },
+      ],
     };
   },
   methods: {
     login() {},
+    getImage(pic: string): string {
+      return require("../../assets/img/" + pic);
+    },
   },
 });
 </script>
@@ -88,13 +102,20 @@ export default Vue.extend({
   border-radius: 8px;
   line-height: 16px;
   .card_img {
-    background-image: url("~/assets/img/Frame1.png");
-    background-repeat: no-repeat;
-    background-size: 100% 220px;
+    width: 100%;
     height: 220px;
+    .house_img {
+      width: 100%;
+      height: 220px;
+    }
+    .house_text {
+      width: 100%;
+      position: relative;
+      top: -220px;
+      z-index: 20;
+    }
   }
   .card_body {
-    // padding: 10px;
     padding: 10px 20px;
     .house_amount {
       color: #475569;

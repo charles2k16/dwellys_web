@@ -8,12 +8,9 @@
         :key="index"
         class="pb-20"
       >
-        <el-card
-          shadow="hover"
-          style="background-image='~/assets/img/Frame1.png'"
-          class="house_card"
-        >
+        <el-card shadow="hover" class="house_card">
           <div class="card_img">
+            <img :src="getImage(house.img)" class="house_img" />
             <!-- images -->
           </div>
           <div class="card_body">
@@ -27,11 +24,11 @@
               <p>Bedrooms</p>
             </div>
             <div class="house_bathroom px-20">
-              <div>4</div>
+              <div><b>4</b></div>
               <p>Bathrooms</p>
             </div>
             <div>
-              <div>1</div>
+              <div><b>1</b></div>
               <p>Living area</p>
             </div>
           </div>
@@ -49,61 +46,21 @@ export default Vue.extend({
   data() {
     return {
       email: "" as string,
-      houses: {
-        one: {},
-        two: {},
-        three: {},
-        four: {},
-      },
+      houses: [
+        { img: "Frame2.png" },
+        { img: "Frame3.png" },
+        { img: "Frame4.png" },
+        { img: "Frame5.png" },
+      ],
     };
   },
   methods: {
     login() {},
+    getImage(pic: string): string {
+      return require("../../assets/img/" + pic);
+    },
   },
 });
 </script>
 
-<style lang="scss">
-.house_section {
-  //   display: flex;
-  //   width: 100%;
-}
-.house_card {
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  line-height: 16px;
-  .card_img {
-    background-image: url("~/assets/img/Frame1.png");
-    background-repeat: no-repeat;
-    background-size: 100% 220px;
-    height: 220px;
-  }
-  .card_body {
-    // padding: 10px;
-    padding: 10px 20px;
-    .house_amount {
-      color: #475569;
-    }
-    .house_plot {
-      color: #64748b;
-      font-size: 11px;
-    }
-  }
-  .card_footer {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    border-top: 1px solid #e2e8f0;
-
-    p {
-      color: #94a3b8;
-      font-size: 11px;
-    }
-    .house_bathroom {
-      border-left: 1px solid #e2e8f0;
-      border-right: 1px solid #e2e8f0;
-      //   padding: 0 10px;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>

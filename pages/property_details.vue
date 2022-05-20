@@ -2,7 +2,12 @@
   <div class="home_details">
     <ApplicationHandler ref="propertyAction" />
     <div class="detail_tabs">
-      <el-tabs tab-position="top" v-model="activeName" @tab-click="handleClick">
+      <el-tabs
+        tab-position="top"
+        type="border-card"
+        v-model="activeName"
+        @tab-click="handleClick"
+      >
         <el-tab-pane label="Images" name="first">
           <div class="pt-20">
             <!-- back arrow -->
@@ -93,7 +98,7 @@
                     </el-col>
                   </div>
                   <div class="house_details_description">
-                    <p class="description_header">Description</p>
+                    <h3 class="description_header">Description</h3>
                     <p class="description_content">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                       Ut metus risus aenean mattis. Odio accumsan viverra ipsum

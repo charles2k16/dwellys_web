@@ -4,7 +4,7 @@
       <el-main style="display: flex; flex-direction: column; padding: 0">
         <NavHeader />
         <Nuxt />
-        <Footer />
+        <Foot />
       </el-main>
     </el-container>
   </div>
