@@ -37,7 +37,8 @@
             <div class="card_footer">
               <div>
                 <div class="d-flex align_center">
-                  <span class="material-icons mr-10"> king_bed </span><b>3</b>
+                  <span class="material-icons-outlined mr-10"> king_bed </span
+                  ><b>3</b>
                 </div>
                 <p>Bedrooms</p>
               </div>

@@ -48,7 +48,9 @@ export default Vue.extend({
 .foot {
   margin-top: auto;
   width: 100%;
+  background: #fff;
   bottom: 0;
+  z-index: 50;
   .trademark {
     justify-self: flex-start;
   }

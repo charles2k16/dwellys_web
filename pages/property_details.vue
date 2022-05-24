@@ -4,11 +4,11 @@
     <div class="detail_tabs">
       <el-tabs
         tab-position="top"
-        type="border-card"
+        class="property_details_tabs"
         v-model="activeName"
         @tab-click="handleClick"
       >
-        <el-tab-pane label="Images" name="first">
+        <el-tab-pane label="Images" class="property_details_tab" name="first">
           <div class="pt-20">
             <!-- back arrow -->
             <p class="arrow_back">
@@ -235,8 +235,19 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .detail_tabs {
-  // background: #f8fafc;
-  // background: red;
+  .detail_tabs .property_details_tabs[data-v-28842251] {
+    background: red;
+    // .el-tabs__header {
+    //   background: yellow;
+
+    //   .el-tabs__nav-wrap {
+    //     background: pink;
+    //     .el-tabs__nav-scroll {
+    //       background: red;
+    //     }
+    //   }
+    // }
+  }
   .details_plot {
     display: flex;
     justify-content: space-between;

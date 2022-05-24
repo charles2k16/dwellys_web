@@ -9,6 +9,7 @@
           <el-input
             v-model="search"
             placeholder="Search chat"
+            class="message_search_input"
             type="search"
           ></el-input>
         </section>
@@ -130,17 +131,17 @@
           >
         </div>
       </div>
-      <div class="chat_section p-20">
+      <div class="chat_section px-20 pt-20">
         <div class="chat_content">chat contents</div>
-        <div class="d-flex align_center chart_search p-10">
+        <div class="d-flex align_center chat_input p-10">
           <span class="material-icons" style="color: #94a3b8; font-size: 30px">
             search
           </span>
           <el-input
-            v-model="search"
-            placeholder="Search chat"
+            v-model="text"
+            placeholder="Enter chat"
             type="search"
-            class="mr-10"
+            class="mr-10 send_message_input"
           ></el-input>
           <el-button class="send_chat">Send</el-button>
         </div>
@@ -158,6 +159,7 @@ export default Vue.extend({
   data() {
     return {
       search: "" as string,
+      text: "" as string,
     };
   },
   computed: {
@@ -174,21 +176,32 @@ export default Vue.extend({
 <style lang="scss">
 .messages {
   display: flex;
-  // min-height: 100vh;
+  height: 100%;
+  max-height: 100vh;
   .message_search {
     padding: 5px;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     align-items: center;
+    .message_search_input {
+      border: none;
+
+      .el-input__inner {
+        border: none;
+        background: #fff;
+      }
+    }
   }
   .customers_chat {
     width: 30%;
     .customers {
       border-radius: 8px;
       border: 1px solid #e2e8f0;
+      height: 70vh;
+      max-height: 700px;
+      overflow-y: auto;
+      margin-bottom: 20px;
 
-      height: 500px;
-      overflow-y: scroll;
       .customer {
         border-bottom: 1px solid #e2e8f0;
         &:active {
@@ -211,8 +224,8 @@ export default Vue.extend({
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     flex: 1;
-    height: 600px;
-    overflow: hidden;
+    margin-bottom: 20px;
+    padding-bottom: 30px;
     .chat_header {
       background: #f8fafc;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
@@ -228,16 +241,23 @@ export default Vue.extend({
       }
     }
     .chat_section {
+      height: 70vh;
+      max-height: 750px;
+
       .chat_content {
-        height: 440px;
-        overflow-x: scroll;
+        height: 90%;
+        overflow-y: auto;
       }
-      .chart_search {
+      .chat_input {
+        width: 100%;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
-        margin-top: auto;
-        width: 100%;
-        bottom: 0;
+        .send_message_input {
+          .el-input__inner {
+            border: none;
+            background: #fff;
+          }
+        }
         .send_chat {
           background: #334155;
           color: #fff;

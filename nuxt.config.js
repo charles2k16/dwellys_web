@@ -54,6 +54,7 @@ export default {
     "@nuxtjs/pwa",
     "@nuxtjs/auth-next",
     "nuxt-material-design-icons-iconfont",
+    // "nuxt-material-design-icons",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

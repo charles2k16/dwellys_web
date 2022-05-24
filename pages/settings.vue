@@ -4,7 +4,11 @@
       <div class="settings_header">
         <h3 class="pb-20 pt-20 section">Settings</h3>
       </div>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs
+        v-model="activeName"
+        closable="settings_tabs"
+        @tab-click="handleClick"
+      >
         <el-tab-pane label="My details" name="first"
           ><div class="section">
             <el-form>
