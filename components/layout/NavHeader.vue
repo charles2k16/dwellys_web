@@ -1,20 +1,20 @@
 <template>
   <div class="header">
-    <ApplicationHandler ref="loginAction" />
+    <ApplicationHandler ref="modalHandler" />
     <div class="header_wrapper section">
       <div style="display: flex; align-items: center">
         <img src="~/assets/img/logo.png" />
       </div>
       <div class="header_content">
-        <section class="property">
+        <section class="pr-20">
           <NuxtLink to="/">Property valuation</NuxtLink>
         </section>
-        <section class="agent">
-          <NuxtLink to="/">Become an agent</NuxtLink>
+        <section class="pl-10">
+          <NuxtLink to="/property_account">Become an agent</NuxtLink>
         </section>
       </div>
       <div class="header_content">
-        <section class="messages_link">
+        <section class="pr-20">
           <NuxtLink to="/">Messages</NuxtLink>
         </section>
         <section class="login" @click="showLoginModal">
@@ -29,23 +29,23 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
+import Vue from 'vue';
+import ApplicationHandler from '@/handlers/ApplicationHandler.vue';
 
 export default Vue.extend({
-  name: "NavHeader",
+  name: 'NavHeader',
   components: {
     ApplicationHandler,
   },
   data() {
     return {
-      user: "login",
+      user: 'login',
     };
   },
   methods: {
     showLoginModal(): void {
-      console.log("show");
-      (this as any).$refs.loginAction.showLogin(this.user);
+      console.log('show');
+      (this as any).$refs.modalHandler.showLogin(this.user);
     },
   },
 });
@@ -65,15 +65,6 @@ a {
 .header_content {
   display: flex;
   align-items: center;
-}
-.property,
-.messages_link {
-  padding-right: 15px;
-}
-
-.agent,
-.login {
-  padding-left: 15px;
 }
 
 .login {

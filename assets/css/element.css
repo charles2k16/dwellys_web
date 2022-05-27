@@ -136,7 +136,7 @@
 .el-tabs--card > .el-tabs__header .el-tabs__nav {
   border: none;
   background: rgba(68, 68, 68, 0.4);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(3px);
 }
 .el-tabs__nav-scroll {
   border-top-left-radius: 8px;
@@ -197,4 +197,10 @@
 
 .el-textarea__inner {
   height: 150px;
+}
+
+/* dialog */
+
+.el-dialog {
+  border-radius: 22px;
 }

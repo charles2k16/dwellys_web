@@ -21,7 +21,7 @@
       </el-form-item>
       <div class="d-flex justify_end py-10">
         <div @click="closeModal">
-          <NuxtLink to="/forgotten_password">Forgot password?</NuxtLink>
+          <NuxtLink to="/reset_password">Forgot password?</NuxtLink>
         </div>
       </div>
       <div class="mt-20">

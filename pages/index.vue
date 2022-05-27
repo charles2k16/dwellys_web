@@ -87,85 +87,51 @@
     </div>
     <div>
       <el-tabs type="border-card">
-        <el-tab-pane label="All">
+        <el-tab-pane
+          :label="tab.label"
+          v-for="(tab, index) in tabOptions"
+          :key="index"
+        >
           <div class="section pt-20">
-            <p class="pb-20" style="font-size: 20px; line-height: 24px">
-              Rent a home
+            <p class="pb-20">
+              {{ tab.title }}
             </p>
-            <HomeCard /></div
-        ></el-tab-pane>
-        <el-tab-pane label="House">
-          <div class="section pt-20">
-            <p class="pb-20" style="font-size: 20px; line-height: 24px">
-              Rent a house
-            </p>
-            <HomeCard /></div
-        ></el-tab-pane>
-        <el-tab-pane label="Apartment">
-          <div class="section pt-20">
-            <p class="pb-20" style="font-size: 20px; line-height: 24px">
-              Rent an apartment
-            </p>
-            <HomeCard /></div
-        ></el-tab-pane>
-        <el-tab-pane label="Town house">
-          <div class="section pt-20">
-            <p class="pb-20" style="font-size: 20px; line-height: 24px">
-              Rent a town house
-            </p>
-            <HomeCard /></div
-        ></el-tab-pane>
-        <el-tab-pane label="Office">
-          <div class="section pt-20">
-            <p class="pb-20" style="font-size: 20px; line-height: 24px">
-              Rent an office
-            </p>
-            <HomeCard /></div
-        ></el-tab-pane>
-        <el-tab-pane label="Land">
-          <div class="section pt-20">
-            <p class="pb-20" style="font-size: 20px; line-height: 24px">
-              Buy a land
-            </p>
-            <HomeCard /></div
-        ></el-tab-pane>
-        <el-tab-pane label="Community Space">
-          <div class="section pt-20">
-            <p class="pb-20" style="font-size: 20px; line-height: 24px">
-              Rent a community space
-            </p>
-            <HomeCard /></div
-        ></el-tab-pane>
+            <PropertyList :type="tab.label" />
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-// import { products } from '@/assets/data/index.js'
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "IndexPage",
+  name: 'IndexPage',
   data() {
     return {
-      activeName: "first" as string,
-      home: "" as string,
+      activeName: 'first' as string,
+      home: '' as string,
       sendForm: {
         amount: null,
         recipient_amt: null,
-        payment_method: "" as string,
+        payment_method: '' as string,
       },
-      payOptions: [
-        { value: ":brijwallet", label: ":brij wallet" },
-        { value: ":brijEx", label: ":brijEx" },
-        { value: "M-PESA", label: "M-PESA" },
+      tabOptions: [
+        { label: 'All', title: 'Rent a home' },
+        { label: 'House', title: '     Rent a house' },
+        { label: 'Apartment', title: 'Rent an Apartment' },
+        { label: 'Town house', title: 'Rent a Town house' },
+
+        { label: ' Office', title: ' Rent an office' },
+        { label: 'Land', title: '            Buy a land' },
       ],
     };
   },
   methods: {
     onCountryUpdate(country: object) {
-      console.log(country, "event");
+      console.log(country, 'event');
     },
     handleClick(tab: string, event: object) {
       console.log(tab, event);
@@ -178,7 +144,7 @@ export default Vue.extend({
 .home {
   color: var(--text-white);
   .home_landing_page {
-    background-image: url("~/assets/img/home.png");
+    background-image: url('~/assets/img/home.png');
     background-repeat: no-repeat;
     background-size: 100% 400px;
     height: 400px;

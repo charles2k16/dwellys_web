@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <el-row class="house_section" :gutter="20">
       <el-col
         :xs="24"
@@ -66,32 +66,32 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "HomeCard",
+  name: 'PropertyList',
   data() {
     return {
-      email: "" as string,
-      roote: "~/assets/img/",
+      email: '' as string,
+      roote: '~/assets/img/',
       houses: [
         {
-          img: "Frame1.png",
+          img: 'Frame1.png',
         },
-        { img: "Frame2.png" },
-        { img: "Frame3.png" },
-        { img: "Frame4.png" },
-        { img: "Frame5.png" },
-        { img: "Frame6.png" },
-        { img: "Frame7.png" },
-        { img: "Frame8.png" },
+        { img: 'Frame2.png' },
+        { img: 'Frame3.png' },
+        { img: 'Frame4.png' },
+        { img: 'Frame5.png' },
+        { img: 'Frame6.png' },
+        { img: 'Frame7.png' },
+        { img: 'Frame8.png' },
       ],
     };
   },
   methods: {
     login() {},
     getImage(pic: string): string {
-      return require("../../assets/img/" + pic);
+      return require('../../assets/img/' + pic);
     },
   },
 });
