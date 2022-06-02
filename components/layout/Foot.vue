@@ -1,16 +1,18 @@
 <template>
-  <footer class="foot section">
+  <footer class="foot section mini_section">
     <hr class="hr_rule" />
     <el-row class="foot_contents mt-10">
       <el-col class="foot_content trademark" :md="8" :sm="24">
-        <p>&copy; Dwellys 2022, All rights reserved</p>
-        <small>
+        <p class="pb-10 trademark_reserved">
+          &copy; Dwellys 2022, All rights reserved
+        </p>
+        <p class="trademark_text text-grey">
           Dwellys is a registered trademark and the trading name of Dwellys
           Limited.
-        </small>
+        </p>
       </el-col>
       <el-col class="foot_content" :md="8" :sm="24">
-        <ul class="conditions">
+        <ul class="conditions text-grey">
           <li>Privacy</li>
           <li class="term">Terms</li>
           <li class="sitemap">Sitemaps</li>
@@ -45,6 +47,42 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss" scoped>
+@media (max-width: 425px) {
+  .foot {
+    padding: 0 20px;
+    width: 100%;
+    height: auto;
+    padding-bottom: 150px;
+
+    .foot_contents {
+      flex-direction: column;
+      .trademark_reserved {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .trademark_text {
+        width: 80%;
+        font-size: 12px;
+      }
+      .conditions {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        font-size: 14px;
+        justify-content: space-between;
+      }
+      .media_holder {
+        justify-content: flex-start;
+
+        span {
+          margin-right: 20px;
+        }
+        .img {
+          width: 35px;
+        }
+      }
+    }
+  }
+}
 .foot {
   margin-top: auto;
   width: 100%;

@@ -1,193 +1,173 @@
 <template>
-  <div class="home_details">
+  <div class="home_details d-flex pt-20">
     <ApplicationHandler ref="propertyAction" />
-    <div class="detail_tabs">
-      <el-tabs
-        tab-position="top"
-        class="property_details_tabs"
-        v-model="activeName"
-        @tab-click="handleClick"
-      >
-        <el-tab-pane label="Images" class="property_details_tab" name="first">
-          <div class="pt-20">
-            <!-- back arrow -->
-            <p class="arrow_back">
-              <span class="material-icons"> arrow_back </span>
+    <!-- <div class="pt-20 d-flex"> -->
+    <!-- back arrow -->
+    <div class="arrow_back_container">
+      <NuxtLink to="/">
+        <div class="arrow_back">
+          <span class="material-icons"> arrow_back </span>
+        </div>
+      </NuxtLink>
+    </div>
+    <div class="section" style="padding-bottom: 100px">
+      <div>
+        <p style="color: #1e293b; line-height: 24px" class="pb-10">
+          <b>3 bed room house in Community 25, Tema</b>
+        </p>
+        <div class="d-flex justify_between pb-10" style="color: #475569">
+          <div class="details_plot">
+            <section>
+              <p class="d-flex">
+                <span class="material-icons mr-5"> room </span>Plot No, 34, Dade
+                St, Tema
+              </p>
+            </section>
+            <section>
+              <p class="d-flex">
+                <span class="material-icons mr-5"> schedule </span>Last updated
+                2 mins ago
+              </p>
+            </section>
+          </div>
+          <div class="d-flex share">
+            <p class="d-flex mr-20">
+              <span class="material-icons mr-5"> share </span>Share
             </p>
-            <div class="section" style="padding-bottom: 100px">
-              <div>
-                <p style="color: #1e293b; line-height: 24px" class="pb-10">
-                  <b>3 bed room house in Community 25, Tema</b>
+            <p class="d-flex">
+              <span class="material-icons mr-5"> favorite_border </span>Share
+            </p>
+          </div>
+        </div>
+        <el-row class="house_details_images">
+          <div class="house_1"></div>
+          <div class="second_imgs">
+            <div class="house_2"></div>
+            <div class="house_3"></div>
+          </div>
+        </el-row>
+      </div>
+      <div class="d-flex justify_between">
+        <div class="pt-20 basic_info">
+          <p
+            style="font-size: 20px; line-height: 24px; color: #1e293b"
+            class="pb-10"
+          >
+            Basic information
+          </p>
+          <div class="pb-20 info_cards">
+            <el-col :md="4" :sm="6">
+              <el-card shadow="never" class="info_card">
+                <p class="d-flex">
+                  <span class="material-icons mr-5"> king_bed </span>2 Bedrooms
                 </p>
-                <div
-                  class="d-flex justify_between pb-10"
-                  style="color: #475569"
-                >
-                  <div class="details_plot">
-                    <section>
-                      <p class="d-flex">
-                        <span class="material-icons mr-5"> room </span>Plot No,
-                        34, Dade St, Tema
-                      </p>
-                    </section>
-                    <section>
-                      <p class="d-flex">
-                        <span class="material-icons mr-5"> schedule </span>Last
-                        updated 2 mins ago
-                      </p>
-                    </section>
-                  </div>
-                  <div class="d-flex share">
-                    <p class="d-flex mr-20">
-                      <span class="material-icons mr-5"> share </span>Share
-                    </p>
-                    <p class="d-flex">
-                      <span class="material-icons mr-5"> favorite_border </span
-                      >Share
-                    </p>
-                  </div>
-                </div>
-                <el-row class="house_details_images">
-                  <div class="house_1"></div>
-                  <div class="second_imgs">
-                    <div class="house_2"></div>
-                    <div class="house_3"></div>
-                  </div>
-                </el-row>
-              </div>
-              <div class="d-flex justify_between">
-                <div class="pt-20 basic_info">
-                  <p
-                    style="font-size: 20px; line-height: 24px; color: #1e293b"
-                    class="pb-10"
-                  >
-                    Basic information
+              </el-card>
+            </el-col>
+            <el-col :md="4" :sm="6">
+              <el-card shadow="never" class="info_card">
+                <p class="d-flex">
+                  <span class="material-icons mr-5"> bathtub </span>2 bathrooms
+                </p>
+              </el-card>
+            </el-col>
+            <el-col :md="4" :sm="6">
+              <el-card shadow="never" class="info_card">
+                <p class="d-flex">
+                  <span class="material-icons mr-5"> weekend </span>1 living
+                  area
+                </p>
+              </el-card>
+            </el-col>
+            <el-col :md="4" :sm="6">
+              <el-card shadow="never" class="info_card">
+                <p class="d-flex">
+                  <span class="material-icons mr-5"> drive_eta </span>2 car
+                  garage
+                </p>
+              </el-card>
+            </el-col>
+          </div>
+          <div class="house_details_description">
+            <h3 class="description_header">Description</h3>
+            <p class="description_content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut metus
+              risus aenean mattis. Odio accumsan viverra ipsum tristique lectus
+              pellentesque erat. Fermentum faucibus et nisl donec sollicitudin
+              aenean vel ornare vulputate. Lorem dolor elementum quis tempor
+              morbi. Dolor varius praesent iaculis et accumsan at fusce aliquam
+              ultricies. Amet aenean justo proin nulla ac arcu. Vitae dui, elit
+              velit nulla quis euismod nunc. .
+            </p>
+          </div>
+        </div>
+        <div class="info_side_card pt-20">
+          <el-col>
+            <el-card shadow="never" class="p-20">
+              <div>
+                <div style="height: 200px">
+                  <p style="padding-bottom: 5px">Rent</p>
+                  <p class="pb-20">
+                    <b style="font-size: 24px; line-height: 28px">$400.00</b>/
+                    month
                   </p>
-                  <div class="pb-20 info_cards">
-                    <el-col :md="4" :sm="6">
-                      <el-card shadow="never" class="info_card">
-                        <p class="d-flex">
-                          <span class="material-icons mr-5"> king_bed </span>2
-                          Bedrooms
-                        </p>
-                      </el-card>
-                    </el-col>
-                    <el-col :md="4" :sm="6">
-                      <el-card shadow="never" class="info_card">
-                        <p class="d-flex">
-                          <span class="material-icons mr-5"> bathtub </span>2
-                          bathrooms
-                        </p>
-                      </el-card>
-                    </el-col>
-                    <el-col :md="4" :sm="6">
-                      <el-card shadow="never" class="info_card">
-                        <p class="d-flex">
-                          <span class="material-icons mr-5"> weekend </span>1
-                          living area
-                        </p>
-                      </el-card>
-                    </el-col>
-                    <el-col :md="4" :sm="6">
-                      <el-card shadow="never" class="info_card">
-                        <p class="d-flex">
-                          <span class="material-icons mr-5"> drive_eta </span>2
-                          car garage
-                        </p>
-                      </el-card>
-                    </el-col>
+                  <div class="d-flex">
+                    <img src="~/assets/img/user_detail_img.png" />
+                    <div class="ml-20">
+                      <p>Abena Dankwa Have</p>
+                      <p style="font-size: 12px; color: #64748b">
+                        Independent agent
+                      </p>
+                    </div>
                   </div>
-                  <div class="house_details_description">
-                    <h3 class="description_header">Description</h3>
-                    <p class="description_content">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Ut metus risus aenean mattis. Odio accumsan viverra ipsum
-                      tristique lectus pellentesque erat. Fermentum faucibus et
-                      nisl donec sollicitudin aenean vel ornare vulputate. Lorem
-                      dolor elementum quis tempor morbi. Dolor varius praesent
-                      iaculis et accumsan at fusce aliquam ultricies. Amet
-                      aenean justo proin nulla ac arcu. Vitae dui, elit velit
-                      nulla quis euismod nunc. .
-                    </p>
-                  </div>
-                </div>
-                <div class="info_side_card pt-20">
-                  <el-col>
-                    <el-card shadow="never" class="p-20">
-                      <div>
-                        <div style="height: 200px">
-                          <p style="padding-bottom: 5px">Rent</p>
-                          <p class="pb-20">
-                            <b style="font-size: 24px; line-height: 28px"
-                              >$400.00</b
-                            >/ month
-                          </p>
-                          <div class="d-flex">
-                            <img src="~/assets/img/user_detail_img.png" />
-                            <div class="ml-20">
-                              <p>Abena Dankwa Have</p>
-                              <p style="font-size: 12px; color: #64748b">
-                                Independent agent
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <el-button
-                            type="primary"
-                            style="width: 100%"
-                            @click="showOwner"
-                            ><p class="d-flex justify_between">
-                              Send a message<span class="material-icons">
-                                arrow_forward
-                              </span>
-                            </p></el-button
-                          >
-                        </div>
-                      </div>
-                    </el-card>
-                  </el-col>
-                </div>
-              </div>
-
-              <div class="amenities pb-20">
-                <!-- amenities -->
-                <hr class="hr_rule" />
-                <div class="amenities_content">
-                  <p>Amenities</p>
-                  <ul class="amenites_list">
-                    <li>Air conditioning</li>
-                    <li>Fans</li>
-                    <li>Refrigerator</li>
-                    <li>Swimming pool</li>
-                    <li>Water reservoir</li>
-                    <li>Washing Machine</li>
-                    <li>Garden</li>
-                    <li>Internet</li>
-                    <li>Generator</li>
-                  </ul>
                 </div>
                 <div>
-                  <!-- similar properties -->
+                  <el-button
+                    type="primary"
+                    style="width: 100%"
+                    @click="showOwner"
+                    ><p class="d-flex justify_between">
+                      Send a message<span class="material-icons">
+                        arrow_forward
+                      </span>
+                    </p></el-button
+                  >
                 </div>
               </div>
-              <div>
-                <hr class="hr_rule" />
-                <p class="pt-20">Similar properties</p>
-                <div class="pt-20">
-                  <DetailCard />
-                </div>
-              </div>
-            </div>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="Basic information" name="second"
-          >Config</el-tab-pane
-        >
-        <el-tab-pane label="Amenities" name="third">Role</el-tab-pane>
-        <el-tab-pane label="Similar offers" name="fourth">Task</el-tab-pane>
-      </el-tabs>
+            </el-card>
+          </el-col>
+        </div>
+      </div>
+
+      <div class="amenities pb-20">
+        <!-- amenities -->
+        <hr class="hr_rule" />
+        <div class="amenities_content">
+          <p>Amenities</p>
+          <ul class="amenites_list">
+            <li>Air conditioning</li>
+            <li>Fans</li>
+            <li>Refrigerator</li>
+            <li>Swimming pool</li>
+            <li>Water reservoir</li>
+            <li>Washing Machine</li>
+            <li>Garden</li>
+            <li>Internet</li>
+            <li>Generator</li>
+          </ul>
+        </div>
+        <div>
+          <!-- similar properties -->
+        </div>
+      </div>
+      <div>
+        <hr class="hr_rule" />
+        <p class="pt-20">Similar properties</p>
+        <div class="pt-20">
+          <DetailCard />
+        </div>
+      </div>
     </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -234,19 +214,17 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.detail_tabs {
-  .detail_tabs .property_details_tabs[data-v-28842251] {
-    background: red;
-    // .el-tabs__header {
-    //   background: yellow;
-
-    //   .el-tabs__nav-wrap {
-    //     background: pink;
-    //     .el-tabs__nav-scroll {
-    //       background: red;
-    //     }
-    //   }
-    // }
+.home_details {
+  .arrow_back {
+    position: relative;
+    right: -40px;
+    width: 35px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    color: rgba(203, 213, 225, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .details_plot {
     display: flex;
@@ -274,14 +252,6 @@ export default Vue.extend({
     }
   }
 
-  .arrow_back {
-    position: absolute;
-    left: 30px;
-    border: 1px solid #cbd5e1;
-    display: flex;
-    border-radius: 12px;
-    color: rgba(203, 213, 225, 1);
-  }
   .house_details_images {
     display: flex;
     height: 550px;

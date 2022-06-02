@@ -5,7 +5,7 @@
       :visible.sync="showLoginModal"
       width="80%"
       :destroy-on-close="true"
-      custom-class="mobile-modal"
+      custom-class="login_modal"
     >
       <template slot="title">
         <h3 class="">Login or sign up</h3>
@@ -14,12 +14,12 @@
     </el-dialog>
     <el-dialog
       :visible.sync="showPasswordModal"
-      width="40%"
       :destroy-on-close="true"
-      custom-class="mobile-modal"
+      custom-class=" password_modal"
     >
       <template slot="title">
-        <h3 class="">Welcome back, Richmond</h3>
+        <h3 class="pb-20">Welcome back, Richmond</h3>
+        <hr class="hr_rule" />
       </template>
       <PasswordModal @closePasswordModal="closePasswordModal" />
     </el-dialog>

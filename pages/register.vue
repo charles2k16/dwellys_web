@@ -7,14 +7,14 @@
     <hr class="hr_rule" />
     <div class="account_form">
       <el-form ref="userAccount" v-model="account" label-position="top">
-        <div class="d-flex pb-20">
+        <div class="personal_info_section pb-20">
           <div class="account_label">
-            <el-form-item label="Name"></el-form-item>
+            <h4 class="">Name</h4>
           </div>
 
           <div class="form_div">
-            <el-row :gutter="20">
-              <el-col :xs="24" :sm="24" :md="12">
+            <el-row class="first_last">
+              <el-col :xs="24" :sm="12" class="register_first_name">
                 <el-form-item label="First Name">
                   <el-input
                     v-model="account.first_name"
@@ -23,7 +23,7 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :xs="24" :sm="24" :md="12">
+              <el-col :xs="24" :sm="12">
                 <el-form-item label="Last Name">
                   <el-input v-model="account.last_name" placeholder="Last Name">
                   </el-input>
@@ -42,9 +42,9 @@
         </div>
         <hr class="hr_rule" />
 
-        <div class="d-flex pb-20">
+        <div class="contact_info_section pb-20">
           <div class="account_label">
-            <el-form-item label="Contact information"></el-form-item>
+            <h4>Contact information</h4>
           </div>
           <div class="form_div">
             <el-form-item label="Email address">
@@ -71,8 +71,11 @@
                 and acknowledge the Privacy Policy.</small
               >
             </div>
-            <div class="mt-20 d-flex justify_end">
-              <el-button type="primary" @click="submitAccount"
+            <div class="mt-20 register_btn">
+              <el-button
+                class="submit_register_button"
+                type="primary"
+                @click="submitAccount"
                 >Agree and continue</el-button
               >
             </div>
@@ -94,25 +97,25 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import VuePhoneNumberInput from 'vue-phone-number-input';
-import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+import Vue from "vue";
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
 
 export default Vue.extend({
-  name: 'AccountPage',
+  name: "AccountPage",
   components: {
     VuePhoneNumberInput,
   },
   data() {
     return {
       account: {
-        first_name: '' as string,
-        last_name: '' as string,
-        date: '' as string,
-        email: '' as string,
-        phone: '' as string,
+        first_name: "" as string,
+        last_name: "" as string,
+        date: "" as string,
+        email: "" as string,
+        phone: "" as string,
         terms: false as boolean,
-        number: '' as string,
+        number: "" as string,
       },
     };
   },
@@ -121,7 +124,7 @@ export default Vue.extend({
   },
   methods: {
     submitAccount() {
-      console.log('submit');
+      console.log("submit");
     },
   },
 });
@@ -130,6 +133,9 @@ export default Vue.extend({
 <style lang="scss">
 .account_content {
   padding-top: 40px;
+  .register_header_line {
+    display: none;
+  }
   .user_account_footer {
     padding: 80px 0 30px;
     width: 20%;
@@ -141,13 +147,71 @@ export default Vue.extend({
   .account_form {
     padding-top: 20px;
 
+    .personal_info_section {
+      display: flex;
+    }
+    .contact_info_section {
+      padding-top: 10px;
+      display: flex;
+    }
     .form_div {
       max-width: 500px;
       width: 100%;
+      .register_first_name {
+        padding-right: 20px;
+      }
     }
   }
   .account_label {
+    padding-top: 10px;
     width: 20%;
+  }
+  .register_btn {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 425px) {
+  .account_content {
+    padding: 0 20px 10px;
+    .register_header_line {
+      display: block;
+      margin-bottom: 20px;
+    }
+    .account_form {
+      .personal_info_section {
+        flex-direction: column;
+      }
+      .contact_info_section {
+        flex-direction: column;
+      }
+      .form_div {
+        max-width: 500px;
+        width: 100%;
+        .register_first_name {
+          padding-right: 0;
+        }
+      }
+      .account_label {
+        padding-top: 10px;
+        width: 100%;
+      }
+    }
+    .user_account_footer {
+      padding: 80px 0 30px;
+      width: 100%;
+      .user_img_logo {
+        width: 75.61px;
+        height: 16.3px;
+      }
+    }
+  }
+  .register_btn {
+    display: block;
+    .submit_register_button {
+      width: 100%;
+    }
   }
 }
 </style>

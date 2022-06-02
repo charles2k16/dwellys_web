@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div class="section reset_password">
     <div>
       <div class="forgotten_text mb-20 mt-20">
         <h3>Have you forgotten your password?</h3>
@@ -22,8 +22,11 @@
             </el-input>
           </el-form-item>
         </el-form>
-        <div class="mt-20 d-flex justify_end">
-          <el-button type="primary" @click="submitEmail"
+        <div class="mt-20 register_btn">
+          <el-button
+            type="primary"
+            class="submit_register_button"
+            @click="submitEmail"
             >Send a link to reset password</el-button
           >
         </div>
@@ -33,13 +36,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 export default Vue.extend({
-  name: 'ForgottenPage',
+  name: "ForgottenPage",
 
   data() {
     return {
-      email: '' as string,
+      email: "" as string,
     };
   },
   methods: {
@@ -48,7 +51,7 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .forgotten_text {
   max-width: 500px;
   width: 100%;
@@ -67,5 +70,14 @@ export default Vue.extend({
 .reset_div {
   max-width: 500px;
   width: 100%;
+}
+
+@media (max-width: 425px) {
+  .reset_password {
+    padding: 0 20px 10px;
+  }
+  .reset_div {
+    height: 300px;
+  }
 }
 </style>

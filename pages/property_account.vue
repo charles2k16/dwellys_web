@@ -19,7 +19,7 @@
       </div>
 
       <hr class="hr_rule" />
-      <div class="account_form">
+      <div class="account_form mt-10">
         <el-form ref="userAccount" v-model="account" label-position="top">
           <div v-if="step == 1">
             <div class="d-flex pb-20">
@@ -32,7 +32,7 @@
                 <el-button type="info btn_sm" @click="showPhotoModal"
                   >Upload photo</el-button
                 >
-                <p class="w-50">
+                <p class="w-50 mt-10">
                   Must be an actual photo of you. Logos, clip-art, group photos,
                   and digitally-altered images are not allowed
                 </p>
@@ -119,7 +119,11 @@
                 <el-row>
                   <el-col :xs="24" :sm="24" :md="12">
                     <el-form-item label="ID type" class="">
-                      <el-select v-model="value" placeholder="Select ID type">
+                      <el-select
+                        v-model="value"
+                        clear="select_id"
+                        placeholder="Select ID type"
+                      >
                         <el-option
                           v-for="item in options"
                           :key="item"
@@ -150,15 +154,14 @@
                 </el-col>
                 <el-col>
                   <div class="terms_condition py-20">
-                    <small>
-                      By selecting <span class="bold">Agree and continue</span>,
-                      I agree to Dwellys
-                      <span class="bold"
+                    <p>
+                      By selecting <b>Agree and continue</b>, I agree to Dwellys
+                      <b
                         >Terms of Service, Payments Terms of Service, and
-                        Nondiscrimination Policy</span
+                        Nondiscrimination Policy</b
                       >
                       and acknowledge the Privacy Policy.
-                    </small>
+                    </p>
                   </div>
                   <div class="mt-20 d-flex justify_between">
                     <el-button class="back_btn" @click="toPrev">Back</el-button>
@@ -186,13 +189,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import VuePhoneNumberInput from 'vue-phone-number-input';
-import 'vue-phone-number-input/dist/vue-phone-number-input.css';
-import ApplicationHandler from '@/handlers/ApplicationHandler.vue';
+import Vue from "vue";
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
+import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
 
 export default Vue.extend({
-  name: 'AccountPage',
+  name: "AccountPage",
   components: {
     VuePhoneNumberInput,
     ApplicationHandler,
@@ -201,19 +204,19 @@ export default Vue.extend({
     return {
       active: 0 as number,
       step: 1 as number,
-      value: '' as string,
+      value: "" as string,
       fileList: [],
       account: {
-        first_name: '' as string,
-        last_name: '' as string,
-        date: '' as string,
-        email: '' as string,
-        phone: '' as string,
+        first_name: "" as string,
+        last_name: "" as string,
+        date: "" as string,
+        email: "" as string,
+        phone: "" as string,
         terms: false as boolean,
-        number: '' as string,
+        number: "" as string,
       },
-      options: ['Health Insurance', 'Passport', 'Voter ID'],
-      user: '' as string,
+      options: ["Health Insurance", "Passport", "Voter ID"],
+      user: "" as string,
     };
   },
   computed: {
@@ -229,14 +232,14 @@ export default Vue.extend({
       this.active++;
     },
     showPhotoModal(): void {
-      console.log('show');
+      console.log("show");
       (this as any).$refs.propertyAction.showPhotoModal(this.user);
     },
     handlePreview() {},
     handleRemove() {},
     onCountryUpdate() {},
     submitAccount() {
-      console.log('submit');
+      console.log("submit");
     },
   },
 });
@@ -282,7 +285,7 @@ export default Vue.extend({
       line-height: 16px;
     }
     .form_div {
-      max-width: 500px;
+      max-width: 560px;
       width: 100%;
     }
   }
@@ -296,7 +299,9 @@ export default Vue.extend({
     }
   }
   .terms_condition {
-    small {
+    width: 100%;
+    p,
+    b {
       font-size: 12px;
       line-height: 18px;
       letter-spacing: -0.01em;
