@@ -92,7 +92,7 @@
 /* upload */
 .el-upload-dragger {
   background: #f8fafc;
-  width: 526px;
+  width: 570px;
 }
 
 /* tabs */
@@ -203,4 +203,15 @@
 
 .el-dialog {
   border-radius: 18px;
+}
+
+@media (max-width: 425px) {
+  .el-dialog {
+    width: 100% !important;
+  }
+}
+
+.el-select > .el-input {
+  width: 100%;
+  max-width: 350px;
 }

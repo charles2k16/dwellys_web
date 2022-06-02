@@ -1,14 +1,14 @@
 <template>
   <div class="password_container">
-    <hr class="hr_rule" />
-    <div class="profile_img_container">
+    <div class="profile_img_container pb-20">
       <img src="~/assets/img/user.png" />
-      <p>Abenadanks@gmail.com</p>
+      <p class="pt-10">Abenadanks@gmail.com</p>
     </div>
     <el-form
       ref="userAccount"
       class="pt-20"
       v-model="password"
+      type="password"
       label-position="top"
     >
       <el-form-item label="Password">
@@ -34,19 +34,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'PasswordModal',
+  name: "PasswordModal",
   data() {
     return {
-      password: '' as string,
+      password: "" as string,
     };
   },
   methods: {
     closeModal() {
-      console.log('modal');
-      this.$emit('closePasswordModal');
+      console.log("modal");
+      this.$emit("closePasswordModal");
     },
     login() {},
   },
@@ -63,10 +63,19 @@ export default Vue.extend({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px 0;
   img {
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
+
     border-radius: 50%;
+  }
+}
+
+@media (max-width: 425px) {
+  .profile_img_container {
+    img {
+      max-width: 100px;
+    }
   }
 }
 </style>

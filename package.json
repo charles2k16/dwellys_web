@@ -17,6 +17,7 @@
     "@nuxtjs/auth-next": "^5.0.0-1648802546.c9880dc",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
+    "bootstrap-icons": "^1.8.3",
     "core-js": "^3.19.3",
     "element-ui": "^2.15.6",
     "nuxt": "^2.15.8",

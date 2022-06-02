@@ -9,22 +9,22 @@
 }
 
 @font-face {
-  font-family: 'SFtext_reg';
-  src: url('../fonts/SFUIText-Regular.woff');
+  font-family: "SFtext_reg";
+  src: url("../fonts/SFUIText-Regular.woff");
 }
 @font-face {
-  font-family: 'SFPro_reg';
-  src: url('../fonts/FontsFree-Net-SFProDisplay-Light.ttf');
-}
-
-@font-face {
-  font-family: 'SFtext_light';
-  src: url('../fonts/SFUIText-Light.woff');
+  font-family: "SFPro_reg";
+  src: url("../fonts/FontsFree-Net-SFProDisplay-Light.ttf");
 }
 
 @font-face {
-  font-family: 'SFtext_md';
-  src: url('../fonts/SFUIText-Medium.woff');
+  font-family: "SFtext_light";
+  src: url("../fonts/SFUIText-Light.woff");
+}
+
+@font-face {
+  font-family: "SFtext_md";
+  src: url("../fonts/SFUIText-Medium.woff");
 }
 
 html,
@@ -47,12 +47,6 @@ a {
 }
 i {
   font-weight: bold;
-}
-p {
-  font-family: var(--font-primary-light), sans-serif;
-  /* font-weight: bold; */
-  font-size: 14px;
-  line-height: 16px;
 }
 b {
   font-family: var(--font-primary-md), sans-serif;
@@ -80,7 +74,7 @@ hr.hr_rule {
 }
 p {
   font-size: 1rem;
-  font-family: Circular_light, sans-serif;
+  font-family: var(--font-primary-light), sans-serif;
   line-height: 24px;
 }
 span {
@@ -295,6 +289,7 @@ span {
   width: 100%;
   height: auto;
 }
+
 .btn_sm {
   width: 180px;
 }

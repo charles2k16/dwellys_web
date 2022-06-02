@@ -3,7 +3,9 @@
     <ApplicationHandler ref="modalHandler" />
     <div class="header_wrapper section">
       <div style="display: flex; align-items: center">
-        <img src="~/assets/img/logo.png" />
+        <NuxtLink to="/">
+          <img src="~/assets/img/logo.png" />
+        </NuxtLink>
       </div>
       <div class="header_content">
         <section class="pr-20">
@@ -15,7 +17,7 @@
       </div>
       <div class="header_content">
         <section class="pr-20">
-          <NuxtLink to="/">Messages</NuxtLink>
+          <NuxtLink to="/messages">Messages</NuxtLink>
         </section>
         <section class="login" @click="showLoginModal">
           <div class="login_text">
@@ -25,26 +27,27 @@
         </section>
       </div>
     </div>
+    <hr class="hr_rule register_header_line mt-20" />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import ApplicationHandler from '@/handlers/ApplicationHandler.vue';
+import Vue from "vue";
+import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
 
 export default Vue.extend({
-  name: 'NavHeader',
+  name: "NavHeader",
   components: {
     ApplicationHandler,
   },
   data() {
     return {
-      user: 'login',
+      user: "login",
     };
   },
   methods: {
     showLoginModal(): void {
-      console.log('show');
+      console.log("show");
       (this as any).$refs.modalHandler.showLogin(this.user);
     },
   },
@@ -83,5 +86,11 @@ a {
 .login_text img {
   width: 24px;
   height: 24px;
+}
+
+@media (max-width: 768px) {
+  .header_content {
+    display: none;
+  }
 }
 </style>

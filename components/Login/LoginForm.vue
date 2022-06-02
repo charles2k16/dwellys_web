@@ -1,38 +1,38 @@
 <template>
   <div class="login_content">
     <div class="login_form">
-      <div class="px-20">
-        <el-form ref="userAccount" v-model="email" label-position="top">
-          <el-form-item label="Email address">
-            <el-input v-model="email" type="email" placeholder="Enter email">
-            </el-input>
-          </el-form-item>
-          <div class="mt-20">
-            <el-button type="primary" class="btn_lg" @click="login"
-              >Continue</el-button
-            >
-          </div>
-        </el-form>
-        <el-col class="separater py-20">
-          <div class="first_separater"></div>
-          <div class="mx-10 bold">or</div>
-          <div class="second_separater"></div>
-        </el-col>
-        <el-col class="media_login">
-          <div class="facebook">
-            <img src="~/assets/img/facebook.png" />
-            <p>Continue with Facebook</p>
-          </div>
-          <div class="google" type="info">
-            <img src="~/assets/img/google.png" />
-            <p>Continue with Google</p>
-          </div>
-          <div class="apple" type="info">
-            <img src="~/assets/img/apple.png" />
-            <p>Apple ID</p>
-          </div>
-        </el-col>
-      </div>
+      <!-- <div class="px-20"> -->
+      <el-form ref="userAccount" v-model="email" label-position="top">
+        <el-form-item label="Email address">
+          <el-input v-model="email" type="email" placeholder="Enter email">
+          </el-input>
+        </el-form-item>
+        <div class="mt-20">
+          <el-button type="primary" class="btn_lg" @click="login"
+            >Continue</el-button
+          >
+        </div>
+      </el-form>
+      <el-col class="separater py-20">
+        <div class="first_separater"></div>
+        <div class="mx-10 bold">or</div>
+        <div class="second_separater"></div>
+      </el-col>
+      <el-col class="media_login">
+        <div class="facebook">
+          <img src="~/assets/img/facebook.png" />
+          <p>Continue with Facebook</p>
+        </div>
+        <div class="google" type="info">
+          <img src="~/assets/img/google.png" />
+          <p>Continue with Google</p>
+        </div>
+        <div class="apple" type="info">
+          <img src="~/assets/img/apple.png" />
+          <p>Apple ID</p>
+        </div>
+      </el-col>
+      <!-- </div> -->
     </div>
     <div class="login_text">
       <div class="py-20">
@@ -80,6 +80,7 @@ export default Vue.extend({
   width: 100%;
   .login_form {
     width: 50%;
+    padding-right: 20px;
     .media_login {
       display: flex;
       flex-direction: column;
@@ -90,7 +91,6 @@ export default Vue.extend({
         display: flex;
         margin-bottom: 10px;
         padding: 20px;
-        font-size: 14px;
         line-height: 20px;
         color: #44556f;
         border-radius: 8px;
@@ -131,6 +131,35 @@ export default Vue.extend({
         font-weight: 700;
         font-size: 28px;
       }
+    }
+  }
+
+  @media (max-width: 425px) {
+    .login_form {
+      width: 100%;
+      padding-right: 0;
+      .media_login {
+        .facebook,
+        .google,
+        .apple {
+          background: #f1f5f9;
+          display: flex;
+          margin-bottom: 10px;
+          padding: 10px 0;
+          line-height: 20px;
+          color: #44556f;
+          border-radius: 8px;
+          p {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    .login_text {
+      display: none;
     }
   }
 }
