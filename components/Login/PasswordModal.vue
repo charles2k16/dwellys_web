@@ -25,7 +25,11 @@
         </div>
       </div>
       <div class="mt-20">
-        <el-button type="primary" class="btn_lg" @click="login"
+        <el-button
+          type="primary"
+          class="btn_lg"
+          @click="login"
+          :disabled="!password"
           >Continue</el-button
         >
       </div>
@@ -38,17 +42,34 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "PasswordModal",
+  props: {
+    email: {
+      type: String,
+      required: true,
+      default: () => {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       password: "" as string,
     };
   },
   methods: {
+    login() {
+      console.log(this.email, this.password);
+      this.$auth.loginWith("local", {
+        data: {
+          username: this.email,
+          password: this.password,
+        },
+      });
+    },
     closeModal() {
       console.log("modal");
       this.$emit("closePasswordModal");
     },
-    login() {},
   },
 });
 </script>

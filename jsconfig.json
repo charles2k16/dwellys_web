@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "types": ["@nuxtjs/auth-next"],
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./*"],

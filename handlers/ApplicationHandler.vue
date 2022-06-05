@@ -21,7 +21,7 @@
         <h3 class="pb-20">Welcome back, Richmond</h3>
         <hr class="hr_rule" />
       </template>
-      <PasswordModal @closePasswordModal="closePasswordModal" />
+      <PasswordModal @closePasswordModal="closePasswordModal" :email="email" />
     </el-dialog>
 
     <el-dialog
@@ -55,7 +55,7 @@ export default Vue.extend({
   name: "ApplicationHandler",
   data() {
     return {
-      user: "ass" as string,
+      email: "" as string,
       showLoginModal: false as boolean,
       showPasswordModal: false as boolean,
       photoModal: false as boolean,
@@ -63,28 +63,28 @@ export default Vue.extend({
     };
   },
   methods: {
-    showLogin(user: string): void {
-      console.log(user);
+    showLogin(): void {
       this.showLoginModal = true;
     },
-    closeLoginModal() {
+    closeLoginModal(email: string): void {
+      this.email = email;
       this.showLoginModal = false;
       this.showPasswordModal = true;
     },
-    showPhotoModal() {
+    showPhotoModal(): void {
       this.photoModal = true;
     },
-    closePhotoModal() {
+    closePhotoModal(): void {
       this.photoModal = false;
     },
-    showOwnerModal(user: string) {
-      console.log(user);
+    showOwnerModal(): void {
       this.ownerModal = true;
     },
-    closeOwnerModal() {
+    closeOwnerModal(): void {
       this.ownerModal = false;
     },
-    closePasswordModal() {
+    closePasswordModal(): void {
+      // this.$emit("password", password);
       console.log("handler");
       this.showPasswordModal = false;
     },

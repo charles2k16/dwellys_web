@@ -25,6 +25,12 @@
             <img src="~/assets/img/user_icon.png" alt="" />
           </div>
         </section>
+        <section class="login" @click="$auth.logout()" v-if="$auth.loggedIn">
+          <div class="login_text">
+            <p>Logout</p>
+            <!-- <img src="~/assets/img/user_icon.png" alt="" /> -->
+          </div>
+        </section>
       </div>
     </div>
     <hr class="hr_rule register_header_line mt-20" />
