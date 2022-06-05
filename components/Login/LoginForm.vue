@@ -91,7 +91,7 @@ export default Vue.extend({
     },
     googleSignIn() {
       console.log("google");
-      this.$auth.loginWith("google");
+      this.$auth.loginWith("google").then((res) => console.log(res));
     },
   },
 });

@@ -98,10 +98,6 @@ export default {
         scope: ["profile", "email"],
         codeChallengeMethod: "",
         responseType: "code",
-        endpoints: {
-          token: "http://localhost:3000/user/google/", // somm backend url to resolve your auth with google and give you the token back
-          userInfo: "http://localhost:3000/auth/", // the endpoint to get the user info after you recived the token
-        },
       },
     },
   },
