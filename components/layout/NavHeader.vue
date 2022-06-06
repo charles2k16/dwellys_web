@@ -19,7 +19,7 @@
         <section class="pr-20">
           <NuxtLink to="/messages">Messages</NuxtLink>
         </section>
-        <section class="login" @click="showLoginModal">
+        <section class="login" @click="showLoginModal" v-if="!$auth.loggedIn">
           <div class="login_text">
             <p>Login</p>
             <img src="~/assets/img/user_icon.png" alt="" />
