@@ -33,8 +33,26 @@
 
             <el-row :gutter="20">
               <el-col :xs="24" :sm="24" :md="24">
-                <el-form-item label="Date">
+                <el-form-item label="Date of Birth">
                   <el-input v-model="account.dob" type="date"> </el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="24" :md="24">
+                <el-form-item label="Password">
+                  <el-input v-model="account.password" type="password">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="24" :md="24">
+                <el-form-item label="Confirm Password">
+                  <p style="color: red" v-if="passErr">
+                    <i class="el-icon-warning pr-10"></i>{{ passErr }}
+                  </p>
+                  <el-input v-model="confirmPass" type="password"> </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -48,9 +66,6 @@
           </div>
           <div class="form_div">
             <el-form-item label="Email address">
-              <p style="color: red" v-if="error">
-                <i class="el-icon-warning pr-10"></i>{{ error }}
-              </p>
               <el-input
                 v-model="account.email"
                 type="email"
@@ -112,16 +127,18 @@ export default Vue.extend({
   },
   data() {
     return {
+      confirmPass: "" as string,
       account: {
         first_name: "" as string,
         last_name: "" as string,
         dob: "" as string,
         email: "" as string,
         phone: "" as string,
+        password: "" as string,
         terms: false as boolean,
         number: "" as string,
       },
-      error: "" as string,
+      passErr: "" as string,
     };
   },
   computed: {
@@ -138,26 +155,18 @@ export default Vue.extend({
   methods: {
     onCountryUpdate() {},
     submitAccount() {
-      if (
-        String(this.account.email)
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          )
-      ) {
-        console.log(this.account);
-        this.error = "";
+      if (this.account.password !== this.confirmPass) {
+        this.passErr = "Passwords do not match";
+      } else {
         this.$axios
-          .post("v3/signup", this.account)
+          .post("/signup", this.account)
           .then((res) => {
             console.log(res);
           })
           .catch((err) => console.log(err));
-        this.$auth.loginWith("local", {
-          data: this.account,
-        });
-      } else {
-        this.error = "Enter a valide email address";
+        // this.$auth.loginWith("local", {
+        //   data: this.account,
+        // });
       }
     },
   },

@@ -64,7 +64,7 @@ export default {
 
     // https://sg-web-backend.herokuapp.com/api/v1
     // http://localhost:8000/api/v1
-    baseURL: "http://localhost:8000/api",
+    baseURL: "https://newapi.dwellys.com/api",
   },
 
   // router: {
