@@ -54,6 +54,7 @@ export default {
     "@nuxtjs/pwa",
     "@nuxtjs/auth-next",
     "nuxt-material-design-icons-iconfont",
+    "@nuxtjs/auth-next",
     // "nuxt-material-design-icons",
   ],
 
@@ -63,7 +64,7 @@ export default {
 
     // https://sg-web-backend.herokuapp.com/api/v1
     // http://localhost:8000/api/v1
-    baseURL: "http://localhost:8000/api/v1",
+    baseURL: "http://localhost:8000/api",
   },
 
   // router: {
@@ -80,5 +81,32 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: "/v3/login", method: "post", propertyName: "token" },
+          logout: { url: "/logout", method: "post" },
+          // user: { url: "", method: "get", propertyName: "user" },
+        },
+        // tokenType: "",
+      },
+      google: {
+        clientId:
+          "1039031868707-iakjs1b8u7i12s3jb5l11on7uc8flkpr.apps.googleusercontent.com",
+        scope: ["profile", "email"],
+        codeChallengeMethod: "",
+        responseType: "code",
+      },
+      facebook: {
+        endpoints: {
+          userInfo:
+            "https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}",
+        },
+        clientId: "2579105180293c669ed5937603135b1a",
+        scope: ["public_profile", "email"],
+      },
+    },
   },
 };

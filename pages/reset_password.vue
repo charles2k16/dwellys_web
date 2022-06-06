@@ -52,6 +52,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+$small_screen: 425px;
+
 .forgotten_text {
   max-width: 500px;
   width: 100%;
@@ -70,14 +72,14 @@ export default Vue.extend({
 .reset_div {
   max-width: 500px;
   width: 100%;
+  @media (max-width: $small_screen) {
+    height: 400px;
+  }
 }
 
-@media (max-width: 425px) {
+@media (max-width: $small_screen) {
   .reset_password {
     padding: 0 20px 10px;
-  }
-  .reset_div {
-    height: 300px;
   }
 }
 </style>

@@ -34,7 +34,7 @@
             <el-row :gutter="20">
               <el-col :xs="24" :sm="24" :md="24">
                 <el-form-item label="Date">
-                  <el-input v-model="account.date" type="date"> </el-input>
+                  <el-input v-model="account.dob" type="date"> </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -48,6 +48,9 @@
           </div>
           <div class="form_div">
             <el-form-item label="Email address">
+              <p style="color: red" v-if="error">
+                <i class="el-icon-warning pr-10"></i>{{ error }}
+              </p>
               <el-input
                 v-model="account.email"
                 type="email"
@@ -76,6 +79,7 @@
                 class="submit_register_button"
                 type="primary"
                 @click="submitAccount"
+                :disabled="!isValid"
                 >Agree and continue</el-button
               >
             </div>
@@ -111,20 +115,50 @@ export default Vue.extend({
       account: {
         first_name: "" as string,
         last_name: "" as string,
-        date: "" as string,
+        dob: "" as string,
         email: "" as string,
         phone: "" as string,
         terms: false as boolean,
         number: "" as string,
       },
+      error: "" as string,
     };
   },
   computed: {
-    isValid() {},
+    isValid(): boolean {
+      return (
+        this.account.first_name !== "" &&
+        this.account.last_name !== "" &&
+        this.account.dob !== "" &&
+        this.account.email !== "" &&
+        this.account.number !== ""
+      );
+    },
   },
   methods: {
+    onCountryUpdate() {},
     submitAccount() {
-      console.log("submit");
+      if (
+        String(this.account.email)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+      ) {
+        console.log(this.account);
+        this.error = "";
+        this.$axios
+          .post("v3/signup", this.account)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
+        this.$auth.loginWith("local", {
+          data: this.account,
+        });
+      } else {
+        this.error = "Enter a valide email address";
+      }
     },
   },
 });

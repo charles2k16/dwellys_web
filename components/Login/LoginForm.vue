@@ -4,11 +4,18 @@
       <!-- <div class="px-20"> -->
       <el-form ref="userAccount" v-model="email" label-position="top">
         <el-form-item label="Email address">
+          <p style="color: red" v-if="error">
+            <i class="el-icon-warning pr-10"></i>{{ error }}
+          </p>
           <el-input v-model="email" type="email" placeholder="Enter email">
           </el-input>
         </el-form-item>
         <div class="mt-20">
-          <el-button type="primary" class="btn_lg" @click="login"
+          <el-button
+            type="primary"
+            class="btn_lg"
+            :disabled="!email"
+            @click="login"
             >Continue</el-button
           >
         </div>
@@ -19,11 +26,11 @@
         <div class="second_separater"></div>
       </el-col>
       <el-col class="media_login">
-        <div class="facebook">
+        <div class="facebook" @click="facebookSignIn">
           <img src="~/assets/img/facebook.png" />
           <p>Continue with Facebook</p>
         </div>
-        <div class="google" type="info">
+        <div class="google" type="info" @click="googleSignIn">
           <img src="~/assets/img/google.png" />
           <p>Continue with Google</p>
         </div>
@@ -63,12 +70,32 @@ export default Vue.extend({
       step: 1 as number,
       totalSteps: 2 as number,
       email: "" as string,
-      password: "" as string,
+      error: "" as string,
     };
   },
+
   methods: {
     login() {
-      this.$emit("closeLoginModal");
+      if (
+        String(this.email)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+      ) {
+        this.error = "";
+        this.$emit("closeLoginModal", this.email);
+      } else {
+        this.error = "Enter a valide email address";
+      }
+    },
+    facebookSignIn() {
+      console.log("facebook");
+      this.$auth.loginWith("facebook");
+    },
+    googleSignIn() {
+      console.log("google");
+      this.$auth.loginWith("google");
     },
   },
 });
@@ -89,6 +116,7 @@ export default Vue.extend({
       .apple {
         background: #f1f5f9;
         display: flex;
+        cursor: pointer;
         margin-bottom: 10px;
         padding: 20px;
         line-height: 20px;
@@ -132,6 +160,7 @@ export default Vue.extend({
         font-size: 28px;
       }
     }
+    // background: #f12424;
   }
 
   @media (max-width: 425px) {
@@ -146,6 +175,7 @@ export default Vue.extend({
           display: flex;
           margin-bottom: 10px;
           padding: 10px 0;
+
           line-height: 20px;
           color: #44556f;
           border-radius: 8px;
