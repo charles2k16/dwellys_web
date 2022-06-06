@@ -99,6 +99,14 @@ export default {
         codeChallengeMethod: "",
         responseType: "code",
       },
+      facebook: {
+        endpoints: {
+          userInfo:
+            "https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}",
+        },
+        clientId: "2579105180293c669ed5937603135b1a",
+        scope: ["public_profile", "email"],
+      },
     },
   },
 };

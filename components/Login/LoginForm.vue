@@ -26,7 +26,7 @@
         <div class="second_separater"></div>
       </el-col>
       <el-col class="media_login">
-        <div class="facebook">
+        <div class="facebook" @click="facebookSignIn">
           <img src="~/assets/img/facebook.png" />
           <p>Continue with Facebook</p>
         </div>
@@ -89,9 +89,13 @@ export default Vue.extend({
         this.error = "Enter a valide email address";
       }
     },
+    facebookSignIn() {
+      console.log("facebook");
+      this.$auth.loginWith("facebook");
+    },
     googleSignIn() {
       console.log("google");
-      this.$auth.loginWith("google").then((res) => console.log(res));
+      this.$auth.loginWith("google");
     },
   },
 });
