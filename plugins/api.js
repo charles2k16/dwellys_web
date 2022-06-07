@@ -1,4 +1,4 @@
-import createApi from "~/api/apiService";
+import createApi from '~/api/apiService';
 
 export default (ctx, inject) => {
   // inject the repository in the context (ctx.app.$repository)
@@ -7,5 +7,5 @@ export default (ctx, inject) => {
   const apiService = createApi(ctx.$axios);
 
   // You can reuse the repositoryWithAxios object:
-  inject("productsApi", apiService("/products"));
+  inject('registerApi', apiService('/signup'));
 };
