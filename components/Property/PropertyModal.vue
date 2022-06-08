@@ -10,10 +10,10 @@
       <el-col class="photo_main_text">
         <small
           >Must be an actual photo of you.<br />Logos, clip-art, group photos,
-          and digitally-altered images are not allowed</small
+          and digitally-altered images are not allowed<br />
+          <p><i class="el-icon-link"></i>Learn more</p></small
         >
-        <p><i class="el-icon-link"></i>Learn more</p></el-col
-      >
+      </el-col>
     </el-row>
     <div class="d-flex justify_end">
       <el-upload
@@ -32,13 +32,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'PropertyProfile',
+  name: "PropertyProfile",
   data() {
     return {
-      email: '' as string,
+      email: "" as string,
     };
   },
   methods: {
@@ -82,7 +82,8 @@ export default Vue.extend({
     margin-right: 20px;
   }
   .photo_main_text {
-    width: 100%;
+    width: 81%;
+    line-height: 16px;
     p {
       // padding-right: 10px;
       color: var(--color-primary);

@@ -9,7 +9,7 @@
       <el-form ref="userAccount" v-model="account" label-position="top">
         <div class="personal_info_section pb-20">
           <div class="account_label">
-            <h4 class="">Name</h4>
+            <h4>Name</h4>
           </div>
 
           <div class="form_div">
@@ -215,7 +215,7 @@ export default Vue.extend({
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
   .account_content {
     padding: 0 20px 10px;
     .register_header_line {
@@ -239,6 +239,7 @@ export default Vue.extend({
       .account_label {
         padding-top: 10px;
         width: 100%;
+        padding-bottom: 20px;
       }
     }
     .user_account_footer {

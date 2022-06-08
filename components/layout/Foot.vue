@@ -47,42 +47,6 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss" scoped>
-@media (max-width: 425px) {
-  .foot {
-    padding: 0 20px;
-    width: 100%;
-    height: auto;
-    padding-bottom: 150px;
-
-    .foot_contents {
-      flex-direction: column;
-      .trademark_reserved {
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .trademark_text {
-        width: 80%;
-        font-size: 12px;
-      }
-      .conditions {
-        padding-top: 30px;
-        padding-bottom: 30px;
-        font-size: 14px;
-        justify-content: space-between;
-      }
-      .media_holder {
-        justify-content: flex-start;
-
-        span {
-          margin-right: 20px;
-        }
-        .img {
-          width: 35px;
-        }
-      }
-    }
-  }
-}
 .foot {
   margin-top: auto;
   width: 100%;
@@ -115,6 +79,42 @@ export default Vue.extend({
         .term,
         .sitemap {
           list-style-type: disc;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 426px) {
+  .foot {
+    padding: 0 20px;
+    width: 100%;
+    height: auto;
+    padding-bottom: 150px;
+
+    .foot_contents {
+      flex-direction: column;
+      .trademark_reserved {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .trademark_text {
+        width: 80%;
+        font-size: 12px;
+      }
+      .conditions {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        font-size: 14px;
+        justify-content: space-between;
+      }
+      .media_holder {
+        justify-content: flex-start;
+
+        span {
+          margin-right: 20px;
+        }
+        .img {
+          width: 35px;
         }
       }
     }

@@ -6,7 +6,6 @@
         <el-steps :active="active" :space="150" finish-status="success">
           <el-step title="Step 1" description="User information"></el-step>
           <el-step title="Step 2" description="Verification"></el-step>
-          <el-step title="Step 3" description="Photo"></el-step>
         </el-steps>
       </div>
     </div>
@@ -28,20 +27,20 @@
                   <i class="el-icon-user-solid"></i>
                 </div>
               </div>
-              <div class="d-flex_column profie__text pl-20">
+              <div class="d-flex_column profile_text pl-20">
                 <el-button type="info btn_sm" @click="showPhotoModal"
                   >Upload photo</el-button
                 >
-                <p class="w-50 mt-10">
+                <p class="mt-10">
                   Must be an actual photo of you. Logos, clip-art, group photos,
                   and digitally-altered images are not allowed
                 </p>
               </div>
             </div>
             <hr class="hr_rule" />
-            <div class="d-flex pb-20 pt-20">
+            <div class="property_forms pb-20 pt-20">
               <div class="account_label">
-                <el-form-item label="Name"></el-form-item>
+                <h4>Name</h4>
               </div>
 
               <div class="form_div">
@@ -77,9 +76,9 @@
             </div>
             <hr class="hr_rule" />
 
-            <div class="d-flex pt-20">
+            <div class="property_forms pt-20">
               <div class="account_label">
-                <el-form-item label="Contact information"></el-form-item>
+                <h4>Contact Information</h4>
               </div>
               <div class="form_div">
                 <el-form-item label="Email address">
@@ -98,8 +97,11 @@
                     @update="onCountryUpdate"
                   />
                 </el-form-item>
-                <div class="mt-20 d-flex justify_end">
-                  <el-button type="primary" class="btn_sm" @click="toNext"
+                <div class="mt-20 next_btn">
+                  <el-button
+                    type="primary"
+                    class="btn_sm submit_register_button"
+                    @click="toNext"
                     >Next</el-button
                   >
                 </div>
@@ -107,10 +109,10 @@
             </div>
           </div>
           <div v-if="step == 2">
-            <div class="d-flex pb-20 pt-20">
+            <div class="property_forms pb-20">
               <div class="account_label">
-                <el-form-item label="Validate account"></el-form-item>
-                <p>
+                <h4>Validate account</h4>
+                <p class="pt-5">
                   We need to verify your information. Please submit a copy of
                   your government ID to process your application
                 </p>
@@ -135,23 +137,23 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
-                <el-col :xs="24" :sm="24" :md="24">
-                  <el-form-item label="Upload ID">
-                    <el-upload
-                      drag
-                      action=""
-                      :on-preview="handlePreview"
-                      :on-remove="handleRemove"
-                      :file-list="fileList"
-                      multiple
-                    >
-                      <i class="el-icon-upload"></i>
-                      <div class="el-upload__text">
-                        Upload a front photo of your ID
-                      </div>
-                    </el-upload>
-                  </el-form-item>
-                </el-col>
+                <el-form-item label="Upload ID">
+                  <el-upload
+                    drag
+                    action=""
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :file-list="fileList"
+                    multiple
+                    class="upload_dragg w-100"
+                  >
+                    <i class="el-icon-upload"></i>
+                    <div class="el-upload__text w-100">
+                      Upload a front photo of your ID
+                    </div>
+                  </el-upload>
+                </el-form-item>
+
                 <el-col>
                   <div class="terms_condition py-20">
                     <p>
@@ -165,12 +167,12 @@
                   </div>
                   <div class="mt-20 d-flex justify_between">
                     <el-button class="back_btn" @click="toPrev">Back</el-button>
-                    <div>
-                      <el-button type="info" @click="toNext">Skip</el-button>
+                    <div class="register_btn">
+                      <el-button type="info" v-if="step === 1">Skip</el-button>
                       <el-button
                         type="primary"
-                        class="second_next"
-                        @click="toNext"
+                        class="second_next submit_register_button"
+                        @click="property_account"
                         >Agree and Continue</el-button
                       >
                     </div>
@@ -178,9 +180,6 @@
                 </el-col>
               </div>
             </div>
-          </div>
-          <div v-if="step == 3">
-            <p>third one</p>
           </div>
         </el-form>
       </div>
@@ -231,6 +230,9 @@ export default Vue.extend({
       this.step++;
       this.active++;
     },
+    property_account() {
+      console.log(this.account);
+    },
     showPhotoModal(): void {
       console.log("show");
       (this as any).$refs.propertyAction.showPhotoModal(this.user);
@@ -246,6 +248,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+$small_screen: 426px;
 .property_account {
   padding-bottom: 50px;
 }
@@ -254,13 +257,21 @@ export default Vue.extend({
   padding: 10px;
   display: flex;
   justify-content: flex-end;
+  @media (max-width: $small_screen) {
+    // display: block;
+    justify-content: space-between;
+  }
   .steps {
     width: 30%;
     align-self: flex-end;
+    @media (max-width: $small_screen) {
+      width: 100%;
+      padding: 0 20px;
+    }
   }
 }
 .account_content {
-  padding-top: 40px;
+  padding-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
 
@@ -281,8 +292,28 @@ export default Vue.extend({
       }
     }
     .profile_text {
-      font-size: 12px;
-      line-height: 16px;
+      p {
+        width: 50%;
+        @media (max-width: $small_screen) {
+          width: 100%;
+        }
+      }
+    }
+    .next_btn {
+      display: flex;
+      justify-content: flex-end;
+      @media (max-width: $small_screen) {
+        display: block;
+        .submit_register_button {
+          width: 100%;
+        }
+      }
+    }
+    .property_forms {
+      display: flex;
+      @media (max-width: $small_screen) {
+        flex-direction: column;
+      }
     }
     .form_div {
       max-width: 560px;
@@ -293,6 +324,12 @@ export default Vue.extend({
     width: 20%;
     padding-right: 30px;
     margin-right: 10px;
+    @media (max-width: $small_screen) {
+      width: 100%;
+      padding-bottom: 10px;
+      margin-right: 0;
+      padding-right: 0;
+    }
     p {
       color: #94a3b8;
       font-size: 13px;

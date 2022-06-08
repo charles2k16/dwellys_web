@@ -102,12 +102,17 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+$small_screen: 426px;
 .login_content {
   display: flex;
   width: 100%;
   .login_form {
     width: 50%;
     padding-right: 20px;
+    @media (max-width: $small_screen) {
+      width: 100%;
+      padding-right: 0;
+    }
     .media_login {
       display: flex;
       flex-direction: column;
@@ -122,9 +127,13 @@ export default Vue.extend({
         line-height: 20px;
         color: #44556f;
         border-radius: 8px;
+        @media (max-width: $small_screen) {
+          padding: 10px;
+          line-height: 0;
+          font-size: 14px;
+        }
         p {
-          width: 50%;
-          margin: 0 auto;
+          flex: 1;
           text-align: center;
         }
       }
@@ -137,6 +146,9 @@ export default Vue.extend({
         width: 45%;
         border: 1px solid #e2e8f0;
         height: 2px;
+        @media (max-width: $small_screen) {
+          width: 43%;
+        }
       }
     }
   }
@@ -145,6 +157,9 @@ export default Vue.extend({
     width: 50%;
     padding: 30px;
     color: white;
+    @media (max-width: $small_screen) {
+      display: none;
+    }
     img {
       width: 100px;
     }
@@ -161,36 +176,6 @@ export default Vue.extend({
       }
     }
     // background: #f12424;
-  }
-
-  @media (max-width: 425px) {
-    .login_form {
-      width: 100%;
-      padding-right: 0;
-      .media_login {
-        .facebook,
-        .google,
-        .apple {
-          background: #f1f5f9;
-          display: flex;
-          margin-bottom: 10px;
-          padding: 10px 0;
-
-          line-height: 20px;
-          color: #44556f;
-          border-radius: 8px;
-          p {
-            width: 50%;
-            margin: 0 auto;
-            text-align: center;
-          }
-        }
-      }
-    }
-
-    .login_text {
-      display: none;
-    }
   }
 }
 </style>

@@ -15,6 +15,7 @@
     <el-dialog
       :visible.sync="showPasswordModal"
       :destroy-on-close="true"
+      width="60%"
       custom-class=" password_modal"
     >
       <template slot="title">

@@ -52,7 +52,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-$small_screen: 425px;
+$small_screen: 426px;
 
 .forgotten_text {
   max-width: 500px;
