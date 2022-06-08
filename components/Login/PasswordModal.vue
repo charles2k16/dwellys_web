@@ -59,12 +59,15 @@ export default Vue.extend({
   methods: {
     login() {
       console.log(this.email, this.password);
-      this.$auth.loginWith("local", {
-        data: {
-          username: this.email,
-          password: this.password,
-        },
-      });
+      this.$auth
+        .loginWith("local", {
+          data: {
+            username: this.email,
+            password: this.password,
+          },
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     },
     closeModal() {
       console.log("modal");
