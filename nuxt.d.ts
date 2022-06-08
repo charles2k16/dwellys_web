@@ -25,7 +25,7 @@ interface apiService {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $productsApi: apiService
+    $registerApi: apiService
     // $refs: { [key: string]: Vue | Element | (Vue | Element)[] | Function | undefined; }
   }
 }
