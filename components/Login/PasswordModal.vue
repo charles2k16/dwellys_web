@@ -38,10 +38,10 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "PasswordModal",
+  name: 'PasswordModal',
   props: {
     email: {
       type: String,
@@ -53,25 +53,25 @@ export default Vue.extend({
   },
   data() {
     return {
-      password: "" as string,
+      password: '' as string,
     };
   },
   methods: {
     login() {
       console.log(this.email, this.password);
       this.$auth
-        .loginWith("local", {
+        .loginWith('local', {
           data: {
-            username: this.email,
+            email: this.email,
             password: this.password,
           },
         })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     },
     closeModal() {
-      console.log("modal");
-      this.$emit("closePasswordModal");
+      console.log('modal');
+      this.$emit('closePasswordModal');
     },
   },
 });
