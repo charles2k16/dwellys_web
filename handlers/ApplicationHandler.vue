@@ -3,7 +3,7 @@
     <!-- Login dialog -->
     <el-dialog
       :visible.sync="showLoginModal"
-      width="80%"
+      width="60%"
       :destroy-on-close="true"
       custom-class="login_modal"
     >
@@ -15,14 +15,17 @@
     <el-dialog
       :visible.sync="showPasswordModal"
       :destroy-on-close="true"
-      width="60%"
+      width="35%"
       custom-class=" password_modal"
     >
       <template slot="title">
         <h3 class="pb-20">Welcome back, Richmond</h3>
         <hr class="hr_rule" />
       </template>
-      <PasswordModal @closePasswordModal="closePasswordModal" :email="email" />
+      <PasswordModal
+        @closePasswordModal="closePasswordModal"
+        :email="loginEmail"
+      />
     </el-dialog>
 
     <el-dialog
@@ -50,13 +53,13 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "ApplicationHandler",
+  name: 'ApplicationHandler',
   data() {
     return {
-      email: "" as string,
+      loginEmail: '' as string,
       showLoginModal: false as boolean,
       showPasswordModal: false as boolean,
       photoModal: false as boolean,
@@ -68,7 +71,7 @@ export default Vue.extend({
       this.showLoginModal = true;
     },
     closeLoginModal(email: string): void {
-      this.email = email;
+      this.loginEmail = email;
       this.showLoginModal = false;
       this.showPasswordModal = true;
     },
@@ -86,7 +89,7 @@ export default Vue.extend({
     },
     closePasswordModal(): void {
       // this.$emit("password", password);
-      console.log("handler");
+      console.log('handler');
       this.showPasswordModal = false;
     },
   },

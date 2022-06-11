@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <ApplicationHandler ref="modalHandler" />
+
     <div class="header_wrapper section">
       <div style="display: flex; align-items: center">
         <NuxtLink to="/">
@@ -22,7 +23,7 @@
         <section class="login" @click="showLoginModal" v-if="!$auth.loggedIn">
           <div class="login_text">
             <p>Login</p>
-            <img src="~/assets/img/user_icon.png" alt="" />
+            <img src="~/assets/img/user_icon.png" alt="icon" />
           </div>
         </section>
         <section class="login" @click="$auth.logout()" v-if="$auth.loggedIn">
@@ -38,22 +39,21 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
+import Vue from 'vue';
+import ApplicationHandler from '@/handlers/ApplicationHandler.vue';
 
 export default Vue.extend({
-  name: "NavHeader",
+  name: 'NavHeader',
   components: {
     ApplicationHandler,
   },
   data() {
     return {
-      user: "login",
+      user: 'login',
     };
   },
   methods: {
     showLoginModal(): void {
-      console.log("show");
       (this as any).$refs.modalHandler.showLogin(this.user);
     },
   },

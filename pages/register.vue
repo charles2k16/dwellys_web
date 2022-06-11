@@ -1,31 +1,41 @@
 <template>
-  <div class="section account_content">
+  <div class="section registerForm_content">
     <div class="pb-20">
-      <h3>Create an account</h3>
+      <h3>Create an accout</h3>
       <p class="mt-10">Provide information about yourself for identity</p>
     </div>
+
     <hr class="hr_rule" />
-    <div class="account_form">
-      <el-form ref="userAccount" v-model="account" label-position="top">
+
+    <div class="registerForm_form">
+      <el-form
+        ref="registerForm"
+        :model="registerForm"
+        label-position="top"
+        :rules="validation"
+      >
         <div class="personal_info_section pb-20">
-          <div class="account_label">
+          <div class="registerForm_label">
             <h4>Name</h4>
           </div>
 
           <div class="form_div">
             <el-row class="first_last">
               <el-col :xs="24" :sm="12" class="register_first_name">
-                <el-form-item label="First Name">
+                <el-form-item label="First Name" prop="first_name">
                   <el-input
-                    v-model="account.first_name"
+                    v-model="registerForm.first_name"
                     placeholder="First name"
                   >
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12">
-                <el-form-item label="Last Name">
-                  <el-input v-model="account.last_name" placeholder="Last Name">
+                <el-form-item label="Last Name" prop="last_nname">
+                  <el-input
+                    v-model="registerForm.last_name"
+                    placeholder="Last Name"
+                  >
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -33,26 +43,27 @@
 
             <el-row :gutter="20">
               <el-col :xs="24" :sm="24" :md="24">
-                <el-form-item label="Date of Birth">
-                  <el-input v-model="account.dob" type="date"> </el-input>
+                <el-form-item label="Date of Birth" prop="dob">
+                  <el-input v-model="registerForm.dob" type="date"> </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row :gutter="20">
               <el-col :xs="24" :sm="24" :md="24">
-                <el-form-item label="Password">
-                  <el-input v-model="account.password" type="password">
+                <el-form-item label="Password" prop="password">
+                  <el-input v-model="registerForm.password" type="password">
                   </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row :gutter="20">
               <el-col :xs="24" :sm="24" :md="24">
-                <el-form-item label="Confirm Password">
-                  <p style="color: red" v-if="passErr">
-                    <i class="el-icon-warning pr-10"></i>{{ passErr }}
-                  </p>
-                  <el-input v-model="confirmPass" type="password"> </el-input>
+                <el-form-item label="Confirm Password" prop="confirm_password">
+                  <el-input
+                    v-model="registerForm.confirm_password"
+                    type="password"
+                  >
+                  </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -61,13 +72,13 @@
         <hr class="hr_rule" />
 
         <div class="contact_info_section pb-20">
-          <div class="account_label">
+          <div class="registerForm_label">
             <h4>Contact information</h4>
           </div>
           <div class="form_div">
-            <el-form-item label="Email address">
+            <el-form-item label="Email address" prop="email">
               <el-input
-                v-model="account.email"
+                v-model="registerForm.email"
                 type="email"
                 placeholder="Enter email"
               >
@@ -75,10 +86,10 @@
             </el-form-item>
             <el-form-item label="Phone number">
               <vue-phone-number-input
-                v-model="account.number"
+                v-model="phone"
                 :border-radius="7"
                 default-country-code="GH"
-                @update="onCountryUpdate"
+                @update="onPhoneUpdate"
               />
             </el-form-item>
 
@@ -93,8 +104,8 @@
               <el-button
                 class="submit_register_button"
                 type="primary"
-                @click="submitAccount"
-                :disabled="!isValid"
+                :loading="btnLoading"
+                @click="userRegister"
                 >Agree and continue</el-button
               >
             </div>
@@ -102,7 +113,7 @@
         </div>
       </el-form>
     </div>
-    <div class="user_account_footer">
+    <div class="user_registerForm_footer">
       <div class="pb-10">
         <img src="~/assets/img/logo.png" class="user_img_logo" />
       </div>
@@ -116,70 +127,110 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import VuePhoneNumberInput from "vue-phone-number-input";
-import "vue-phone-number-input/dist/vue-phone-number-input.css";
+import Vue from 'vue';
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+import { IMixinState } from '@/types/mixinsTypes';
 
 export default Vue.extend({
-  name: "AccountPage",
+  name: 'registerFormPage',
   components: {
     VuePhoneNumberInput,
   },
   data() {
+    var validatePass = (rule: any, value: string, callback: any) => {
+      if (value === '') {
+        callback(new Error('Please input the password'));
+      } else {
+        if ((this as any).registerForm.confirm_password !== '') {
+          (this as any).$refs.registerForm.validateField('confirm_password');
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule: any, value: string, callback: any) => {
+      if (value === '') {
+        callback(new Error('Please input the password again'));
+      } else if (value !== (this as any).registerForm.password) {
+        callback(new Error("Password don't match!"));
+      } else {
+        callback();
+      }
+    };
     return {
-      confirmPass: "" as string,
-      account: {
-        first_name: "" as string,
-        last_name: "" as string,
-        dob: "" as string,
-        email: "" as string,
-        phone: "" as string,
-        password: "" as string,
-        terms: false as boolean,
-        number: "" as string,
+      phone: '',
+      btnLoading: false,
+      registerForm: {
+        first_name: '' as string,
+        last_name: '' as string,
+        dob: '' as string,
+        email: '' as string,
+        password: '' as string,
+        confirm_password: '',
+        phone_number: '' as string,
+        sign_up_mode: 'email',
+        user_type: 'visitor',
+        country_id: 'd5b12443-82ee-44b7-9b23-7661543ca0b6',
       },
-      passErr: "" as string,
+      validation: {
+        email: [
+          {
+            required: true,
+            type: 'email',
+            message: 'Please enter valid email',
+            trigger: ['blur', 'change'],
+          },
+          { min: 5, message: 'Length should be 5 or more', trigger: 'blur' },
+        ],
+        first_name: [
+          {
+            required: true,
+            message: 'Please enter your first name',
+            trigger: ['blur', 'change'],
+          },
+        ],
+        last_name: [
+          {
+            required: true,
+            message: 'Please enter your last name',
+            trigger: ['blur', 'change'],
+          },
+        ],
+        password: [{ validator: validatePass, trigger: 'blur' }],
+        confirm_password: [{ validator: validatePass2, trigger: 'blur' }],
+      },
     };
   },
-  computed: {
-    isValid(): boolean {
-      return (
-        this.account.first_name !== "" &&
-        this.account.last_name !== "" &&
-        this.account.dob !== "" &&
-        this.account.email !== "" &&
-        this.account.number !== ""
-      );
-    },
-  },
   methods: {
-    onCountryUpdate() {},
-    submitAccount() {
-      if (this.account.password !== this.confirmPass) {
-        this.passErr = "Passwords do not match";
-      } else {
-        this.$axios
-          .post("/signup", this.account)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => console.log(err));
-        // this.$auth.loginWith("local", {
-        //   data: this.account,
-        // });
-      }
+    onPhoneUpdate(e: any) {
+      this.registerForm.phone_number = e.formattedNumber;
+    },
+    userRegister() {
+      this.btnLoading = true;
+      (this as any).$refs.registerForm.validate((valid: boolean) => {
+        if (valid) {
+          console.log(this.registerForm);
+        } else {
+          this.btnLoading = false;
+          (this as any as IMixinState).getNotification(
+            'Make sure all required fields are filled',
+            'error'
+          );
+          return false;
+        }
+      });
     },
   },
 });
 </script>
 
 <style lang="scss">
-.account_content {
+.registerForm_content {
   padding-top: 40px;
   .register_header_line {
     display: none;
   }
-  .user_account_footer {
+  .user_registerForm_footer {
     padding: 80px 0 30px;
     width: 20%;
     .user_img_logo {
@@ -187,7 +238,7 @@ export default Vue.extend({
       height: 16.3px;
     }
   }
-  .account_form {
+  .registerForm_form {
     padding-top: 20px;
 
     .personal_info_section {
@@ -205,7 +256,7 @@ export default Vue.extend({
       }
     }
   }
-  .account_label {
+  .registerForm_label {
     padding-top: 10px;
     width: 20%;
   }
@@ -216,13 +267,13 @@ export default Vue.extend({
 }
 
 @media (max-width: 426px) {
-  .account_content {
+  .registerForm_content {
     padding: 0 20px 10px;
     .register_header_line {
       display: block;
       margin-bottom: 20px;
     }
-    .account_form {
+    .registerForm_form {
       .personal_info_section {
         flex-direction: column;
       }
@@ -236,13 +287,13 @@ export default Vue.extend({
           padding-right: 0;
         }
       }
-      .account_label {
+      .registerForm_label {
         padding-top: 10px;
         width: 100%;
         padding-bottom: 20px;
       }
     }
-    .user_account_footer {
+    .user_registerForm_footer {
       padding: 80px 0 30px;
       width: 100%;
       .user_img_logo {

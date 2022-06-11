@@ -2,20 +2,21 @@
   <div class="login_content">
     <div class="login_form">
       <!-- <div class="px-20"> -->
-      <el-form ref="userAccount" v-model="email" label-position="top">
-        <el-form-item label="Email address">
-          <p style="color: red" v-if="error">
-            <i class="el-icon-warning pr-10"></i>{{ error }}
-          </p>
-          <el-input v-model="email" type="email" placeholder="Enter email">
-          </el-input>
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        label-position="top"
+        :rules="validation"
+      >
+        <el-form-item label="Email address" prop="email">
+          <el-input
+            v-model="loginForm.email"
+            placeholder="Enter email"
+            prefix-icon="el-icon-message"
+          />
         </el-form-item>
         <div class="mt-20">
-          <el-button
-            type="primary"
-            class="btn_lg"
-            :disabled="!email"
-            @click="login"
+          <el-button type="primary" class="btn_lg" @click="login"
             >Continue</el-button
           >
         </div>
@@ -27,30 +28,25 @@
       </el-col>
       <el-col class="media_login">
         <div class="facebook" @click="facebookSignIn">
-          <img src="~/assets/img/facebook.png" />
+          <img src="~/assets/img/facebook.png" width="25px" />
           <p>Continue with Facebook</p>
         </div>
         <div class="google" type="info" @click="googleSignIn">
           <img src="~/assets/img/google.png" />
           <p>Continue with Google</p>
         </div>
-        <div class="apple" type="info">
-          <img src="~/assets/img/apple.png" />
-          <p>Apple ID</p>
-        </div>
       </el-col>
-      <!-- </div> -->
     </div>
     <div class="login_text">
       <div class="py-20">
         <img src="~/assets/img/login_logo.png" />
       </div>
       <div>
-        <p class="pb-20 discover">
+        <p class="pb-20 discover text-white">
           Discover the world’s hub for <span>houses</span> and
           <span class="bold">properties</span> for sale and rent
         </p>
-        <p>
+        <p class="text-white">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut metus
           risus aenean mattis. Odio accumsan viverra ipsum tristique lectus
           pellentesque erat.
@@ -61,41 +57,44 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "LoginForm",
+  name: 'LoginForm',
   data() {
     return {
-      step: 1 as number,
-      totalSteps: 2 as number,
-      email: "" as string,
-      error: "" as string,
+      loginForm: {
+        email: '' as string,
+      },
+      validation: {
+        email: [
+          {
+            required: true,
+            type: 'email',
+            message: 'Please enter valid email',
+            trigger: ['blur', 'change'],
+          },
+          { min: 5, message: 'Length should be 5 or more', trigger: 'blur' },
+        ],
+      },
     };
   },
 
   methods: {
     login() {
-      if (
-        String(this.email)
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          )
-      ) {
-        this.error = "";
-        this.$emit("closeLoginModal", this.email);
-      } else {
-        this.error = "Enter a valide email address";
-      }
+      (this as any).$refs.loginForm.validate((valid: boolean) => {
+        if (valid) {
+          this.$emit('closeLoginModal', this.loginForm.email);
+        } else {
+          return false;
+        }
+      });
     },
     facebookSignIn() {
-      console.log("facebook");
-      this.$auth.loginWith("facebook");
+      this.$auth.loginWith('facebook');
     },
     googleSignIn() {
-      console.log("google");
-      this.$auth.loginWith("google");
+      this.$auth.loginWith('google');
     },
   },
 });
@@ -168,11 +167,11 @@ $small_screen: 426px;
       line-height: 28px;
     }
     .discover {
-      font-size: 24px;
+      font-size: 20px;
       line-height: 28px;
       span {
         font-weight: 700;
-        font-size: 28px;
+        font-size: 24px;
       }
     }
     // background: #f12424;

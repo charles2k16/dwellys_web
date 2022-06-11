@@ -208,7 +208,7 @@
 /* dialog */
 
 .el-dialog {
-  border-radius: 18px;
+  border-radius: 13px;
 }
 
 @media (max-width: 426px) {

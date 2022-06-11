@@ -10,9 +10,11 @@ export default Vue.extend( {
     },
     catchError ( error: any ) {
       const err = Object.assign( {}, error )
-      const message = err.response.data.message
 
-      this.getNotification( message, 'error' )
+      console.log( err )
+      // const message = err.response.data.message
+
+      // this.getNotification( message, 'error' )
     },
     getFullName ( firstName: string, lastName: string ): string {
       return `${ firstName } ${ lastName }`

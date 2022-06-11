@@ -9,22 +9,22 @@
 }
 
 @font-face {
-  font-family: "SFtext_reg";
-  src: url("../fonts/SFUIText-Regular.woff");
+  font-family: 'SFtext_reg';
+  src: url('../fonts/SFUIText-Regular.woff');
 }
 @font-face {
-  font-family: "SFPro_reg";
-  src: url("../fonts/FontsFree-Net-SFProDisplay-Light.ttf");
-}
-
-@font-face {
-  font-family: "SFtext_light";
-  src: url("../fonts/SFUIText-Light.woff");
+  font-family: 'SFPro_reg';
+  src: url('../fonts/FontsFree-Net-SFProDisplay-Light.ttf');
 }
 
 @font-face {
-  font-family: "SFtext_md";
-  src: url("../fonts/SFUIText-Medium.woff");
+  font-family: 'SFtext_light';
+  src: url('../fonts/SFUIText-Light.woff');
+}
+
+@font-face {
+  font-family: 'SFtext_md';
+  src: url('../fonts/SFUIText-Medium.woff');
 }
 
 html,
@@ -65,6 +65,7 @@ h2 {
 }
 h3 {
   font-size: 1.2rem;
+  color: #334155;
 }
 h4 {
   font-size: 1rem;
@@ -89,6 +90,9 @@ span {
 }
 .text-grey {
   color: #475569;
+}
+.text-white {
+  color: #fff;
 }
 .text-bold {
   font-weight: bold;

@@ -2,10 +2,10 @@
   <div class="password_container">
     <div class="profile_img_container pb-20">
       <img src="~/assets/img/user.png" />
-      <p class="pt-10">Abenadanks@gmail.com</p>
+      <p class="pt-10">{{ email }}</p>
     </div>
     <el-form
-      ref="userAccount"
+      ref="password"
       class="pt-20"
       v-model="password"
       type="password"
@@ -16,6 +16,7 @@
           v-model="password"
           type="password"
           placeholder="Enter your password"
+          suffix-icon="el-icon-view"
         >
         </el-input>
       </el-form-item>
@@ -29,7 +30,7 @@
           type="primary"
           class="btn_lg"
           @click="login"
-          :disabled="!password"
+          :loading="btnLoading"
           >Continue</el-button
         >
       </div>
@@ -39,6 +40,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { IMixinState } from '@/types/mixinsTypes';
 
 export default Vue.extend({
   name: 'PasswordModal',
@@ -46,19 +48,17 @@ export default Vue.extend({
     email: {
       type: String,
       required: true,
-      default: () => {
-        return {};
-      },
     },
   },
   data() {
     return {
       password: '' as string,
+      btnLoading: false as boolean,
     };
   },
   methods: {
     login() {
-      console.log(this.email, this.password);
+      this.btnLoading = true;
       this.$auth
         .loginWith('local', {
           data: {
@@ -66,11 +66,16 @@ export default Vue.extend({
             password: this.password,
           },
         })
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+        .then((response: any) => {
+          console.log(response);
+          this.btnLoading = false;
+        })
+        .catch((error: any) => {
+          this.btnLoading = false;
+          (this as any as IMixinState).catchError(error);
+        });
     },
     closeModal() {
-      console.log('modal');
       this.$emit('closePasswordModal');
     },
   },
@@ -87,11 +92,15 @@ export default Vue.extend({
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   img {
     width: 100%;
-    max-width: 200px;
-
+    max-width: 150px;
     border-radius: 50%;
+  }
+
+  p {
+    font-size: 14px;
   }
 }
 
