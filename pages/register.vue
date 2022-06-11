@@ -210,6 +210,7 @@ export default Vue.extend({
       (this as any).$refs.registerForm.validate((valid: boolean) => {
         if (valid) {
           console.log(this.registerForm);
+          this.signUp();
         } else {
           this.btnLoading = false;
           (this as any as IMixinState).getNotification(
@@ -219,6 +220,15 @@ export default Vue.extend({
           return false;
         }
       });
+    },
+    async signUp(): Promise<void> {
+      try {
+        const response = await this.$registerApi.create(this.registerForm);
+        console.log(response);
+      } catch (error) {
+        this.btnLoading = false;
+        (this as any as IMixinState).catchError(error);
+      }
     },
   },
 });
