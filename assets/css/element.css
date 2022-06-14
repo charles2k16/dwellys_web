@@ -93,6 +93,7 @@
 .el-upload-dragger {
   background: #f8fafc;
   width: 570px;
+  height: 240px;
 }
 
 @media (max-width: 426px) {
