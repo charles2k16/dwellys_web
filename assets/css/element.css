@@ -96,6 +96,12 @@
   height: 240px;
 }
 
+@media (max-width: 768px) {
+  .el-upload-dragger {
+    width: 550px;
+  }
+}
+
 @media (max-width: 426px) {
   .el-upload-dragger {
     width: 90vw;
@@ -156,6 +162,11 @@
   box-shadow: none;
   color: black;
 }
+
+.el-tabs--border-card>.el-tabs__content {
+  padding: 0;
+}
+
 .el-tabs--border-card > .el-tabs__header {
   background: #f8fafc;
 }

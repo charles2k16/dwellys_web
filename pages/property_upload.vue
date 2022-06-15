@@ -373,12 +373,12 @@ export default Vue.extend({
 <style lang="scss">
 
 $small_screen: 426px;
+$medium_screen: 769px;
 
 .property_upload {
   padding-top: 120px;
   padding-bottom: 50px;
  @media (max-width: $small_screen) {
-      
       padding: 20px 20px 0;
     }
   //   margin: 0 auto;
@@ -456,6 +456,7 @@ $small_screen: 426px;
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
         margin-bottom: 40px;
+     
         @media (max-width: $small_screen) {
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
@@ -471,9 +472,18 @@ padding: 20px;
       }
   }
   .plans_price {
-    display: flex;
+    // display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 50%);
+        @media (max-width: $medium_screen) {
+          margin: 0 auto;
+          width: 90%;
+     grid-template-columns: repeat(2, 300px);
+      
+     }
      @media (max-width: $small_screen) {
-      flex-direction: column;
+          width: 100%;
+       grid-template-columns: repeat(1, 1fr);
       
      }
   }

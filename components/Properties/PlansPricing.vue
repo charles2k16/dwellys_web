@@ -87,6 +87,7 @@ export default Vue.extend({
 
 <style lang="scss">
 $small_screen: 426px;
+$medium_screen: 768px;
 .plans {
     display: flex;
     flex-direction: column;
@@ -94,9 +95,8 @@ $small_screen: 426px;
     border-radius: 10px;
     padding: 25px;
     text-align: center;
-     @media (max-width: $small_screen) {
+     @media (max-width: $medium_screen) {
       margin-bottom: 20px;
-      
      }
     h3 {
         padding-bottom: 5px;
@@ -112,9 +112,6 @@ $small_screen: 426px;
         font-weight: 700;
 font-size: 30px;
 line-height: 28px;
-    }
-    .plan_btn {
-
     }
     .recommendations {
         font-size: 14px;

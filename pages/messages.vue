@@ -16,115 +16,34 @@
             ></el-input>
           </section>
         </div>
-        <div class="customers mt-20">
+        <div class="customers mt-20" >
           <!-- customers -->
-          <div class="customer p-10">
-            <div>
+          <div class="customer p-10" v-for="(customer, index) in customers" :key="index" @click="getCustomer(customer)" :style="customer.isSelect && {'border-left': '3px solid #de0b0b'}">
+            <div class="">
               <div class="d-flex justify_between pb-10">
                 <div class="d-flex justify_between">
-                  <img src="~/assets/img/customer1.png" />
+                  <img :src="getImage(customer.img)" />
                   <div class="customer_message_seen"></div>
-                  <p class="pl-10">James Babatunde</p>
+                  <p class="pl-10"> {{customer.name}} </p>
                 </div>
-                <span style="color: #64748b; font-size: 11px">2 mins ago</span>
+                <span style="color: #64748b; font-size: 11px"> {{customer.lastSeen}} </span>
               </div>
               <p style="color: #64748b; font-size: 11px">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a
-                nunc, etiam ut ut vitae mattis.
+                {{customer.newMessage}}
               </p>
             </div>
           </div>
-          <div class="customer p-10">
-            <div>
-              <div class="d-flex justify_between pb-10">
-                <div class="d-flex justify_between">
-                  <img src="~/assets/img/customer2.png" />
-                  <div class="customer_message_seen"></div>
-                  <p class="pl-10">Martin Yeboah</p>
-                </div>
-                <span style="color: #64748b; font-size: 11px">2 mins ago</span>
-              </div>
-              <p style="color: #64748b; font-size: 11px">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a
-                nunc, etiam ut ut vitae mattis.
-              </p>
-            </div>
-          </div>
-          <div class="customer p-10">
-            <div>
-              <div class="d-flex justify_between pb-10">
-                <div class="d-flex justify_between">
-                  <img src="~/assets/img/customer3.png" />
-                  <div class="customer_message_seen"></div>
-                  <p class="pl-10">Kwadwo Asare</p>
-                </div>
-                <span style="color: #64748b; font-size: 11px">2 mins ago</span>
-              </div>
-              <p style="color: #64748b; font-size: 11px">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a
-                nunc, etiam ut ut vitae mattis.
-              </p>
-            </div>
-          </div>
-          <div class="customer p-10">
-            <div>
-              <div class="d-flex justify_between pb-10">
-                <div class="d-flex justify_between">
-                  <img src="~/assets/img/customer1.png" />
-                  <div class="customer_message_seen"></div>
-                  <p class="pl-10">James Babatunde</p>
-                </div>
-                <span style="color: #64748b; font-size: 11px">2 mins ago</span>
-              </div>
-              <p style="color: #64748b; font-size: 11px">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a
-                nunc, etiam ut ut vitae mattis.
-              </p>
-            </div>
-          </div>
-          <div class="customer p-10">
-            <div>
-              <div class="d-flex justify_between pb-10">
-                <div class="d-flex justify_between">
-                  <img src="~/assets/img/customer2.png" />
-                  <div class="customer_message_seen"></div>
-                  <p class="pl-10">Martin Yeboah</p>
-                </div>
-                <span style="color: #64748b; font-size: 11px">2 mins ago</span>
-              </div>
-              <p style="color: #64748b; font-size: 11px">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a
-                nunc, etiam ut ut vitae mattis.
-              </p>
-            </div>
-          </div>
-          <div class="customer p-10">
-            <div>
-              <div class="d-flex justify_between pb-10">
-                <div class="d-flex justify_between">
-                  <img src="~/assets/img/customer3.png" />
-                  <div class="customer_message_seen"></div>
-                  <p class="pl-10">Kwadwo Asare</p>
-                </div>
-                <span style="color: #64748b; font-size: 11px">2 mins ago</span>
-              </div>
-              <p style="color: #64748b; font-size: 11px">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a
-                nunc, etiam ut ut vitae mattis.
-              </p>
-            </div>
-          </div>
+        
         </div>
       </div>
-
-      <div class="chats ml-20">
+      <div class="chats ml-20" v-if="customer.name">
         <div class="chat_header d-flex justify_between px-10">
           <div class="d-flex flex_column p-10">
-            <img src="~/assets/img/customer3.png" />
+            <img :src="getImage(customer.img)" />
             <div class="chat_seen"></div>
             <div class="pl-10">
-              <p>Kwadwo Asare</p>
-              <span style="color: #64748b; font-size: 11px">2 mins ago</span>
+              <p>{{customer.name}} </p>
+              <span style="color: #64748b; font-size: 11px">{{customer.lastSeen}} </span>
             </div>
           </div>
           <div>
@@ -174,12 +93,23 @@
           </div>
         </div>
       </div>
+       <div class="w-100 d-flex justify_center" v-else>
+      <h4>Click a client to view chats</h4>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+
+ interface property {
+  name: String,
+  newMessage: String,
+  img: String,
+  lastSeen: String,
+  isSelect: Boolean,
+  }
 
 export default Vue.extend({
   name: "AccountPage",
@@ -188,12 +118,30 @@ export default Vue.extend({
     return {
       search: "" as string,
       text: "" as string,
+      customers: [
+        {name: "James Babatunde", newMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a nunc, etiam ut ut vitae mattis.', isSelect: false, lastSeen: '2 mins ago', img: 'customer1.png'},
+        {name: "Martin Yeboah", newMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a nunc, etiam ut ut vitae mattis.', isSelect: false, lastSeen: '2 mins ago', img: 'customer2.png'},
+        {name: "Kwadwo Asare", newMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a nunc, etiam ut ut vitae mattis.', isSelect: false, lastSeen: '2 mins ago', img: 'customer3.png'},
+        {name: "Agbeko Sly", newMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a nunc, etiam ut ut vitae mattis.', isSelect: false, lastSeen: '2 mins ago', img: 'customer1.png'},
+        {name: " Joyce Kutah", newMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a nunc, etiam ut ut vitae mattis.', isSelect: false, lastSeen: '2 mins ago', img: 'customer1.png'},
+        {name: "Agbeko Sly", newMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a nunc, etiam ut ut vitae mattis.', isSelect: false, lastSeen: '2 mins ago', img: 'customer2.png'},
+        {name: "Agbeko Sly", newMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus a nunc, etiam ut ut vitae mattis.', isSelect: false, lastSeen: '2 mins ago', img: 'customer3.png'},
+      ],
+      customer: {}
+
     };
   },
   computed: {
     isValid() {},
   },
   methods: {
+      getImage(pic: string): string {
+      return require("../assets/img/" + pic);
+    },
+    getCustomer(newCustomer:property ) {
+       this.customers.filter(customer => customer.name === newCustomer.name ? customer.isSelect = true : customer.isSelect = false);
+       this.customer = newCustomer
+    },
     submitAccount() {
       console.log("submit");
     },
@@ -232,10 +180,9 @@ export default Vue.extend({
 
       .customer {
         border-bottom: 1px solid #e2e8f0;
-        &:active {
-          border-left: 4px solid #cf0100;
-          background: #f1f5f9;
-        }
+        cursor: pointer;
+       
+          
         .customer_message_seen {
           width: 7px;
           height: 7px;
@@ -245,6 +192,7 @@ export default Vue.extend({
           left: -12px;
           top: 15px;
         }
+        
       }
     }
   }

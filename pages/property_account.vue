@@ -305,6 +305,7 @@ $small_screen: 426px;
       @media (max-width: $small_screen) {
         display: block;
         .submit_register_button {
+        
           width: 100%;
         }
       }
@@ -346,6 +347,7 @@ $small_screen: 426px;
   }
   .second_next {
     width: 180px;
+      padding: 12px;
   }
 }
 </style>

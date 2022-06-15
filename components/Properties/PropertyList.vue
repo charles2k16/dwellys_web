@@ -35,25 +35,23 @@
               <p class="house_plot">Plot No, 34, Dade St, Tema</p>
             </div>
             <div class="card_footer">
-              <div>
+              <div class="pl-5">
                 <div class="d-flex align_center">
-                  <span class="material-icons-outlined mr-10"> king_bed </span
-                  ><b>3</b>
+                  <img src="~/assets/svg/bed.png" class="pr-10" />
+                  <b>3</b>
                 </div>
                 <p>Bedrooms</p>
               </div>
-              <div class="house_bathroom px-20">
+              <div class="house_bathroom">
                 <div class="d-flex align_center">
-                  <span class="material-icons mr-10" style="color: #475569">
-                    bathtub </span
-                  ><b>4</b>
+                  <img src="~/assets/svg/bath.png"  class="pr-10"/>
+                   <b>4</b>
                 </div>
                 <p>Bathrooms</p>
               </div>
               <div>
                 <div class="d-flex align_center">
-                  <span class="material-icons mr-10"> desktop_windows </span
-                  ><b>1</b>
+                 <img src="~/assets/svg/tv.png" class="pr-10" /><b>1</b>
                 </div>
                 <p>Living area</p>
               </div>
@@ -139,7 +137,10 @@ export default Vue.extend({
     .house_bathroom {
       border-left: 1px solid #e2e8f0;
       border-right: 1px solid #e2e8f0;
-      //   padding: 0 10px;
+        padding: 0 20px;
+        @media (max-width: 1024px) {
+          padding: 0 10px;
+        }
     }
   }
 }

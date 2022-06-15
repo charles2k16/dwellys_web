@@ -235,6 +235,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+$small_screen: 426px;
 .registerForm_content {
   padding-top: 40px;
   .register_header_line {
@@ -263,6 +264,9 @@ export default Vue.extend({
       width: 100%;
       .register_first_name {
         padding-right: 20px;
+        @media (max-width: 768px) {
+          padding-right: 0;
+        }
       }
     }
   }
@@ -276,9 +280,11 @@ export default Vue.extend({
   }
 }
 
-@media (max-width: 426px) {
+
+
+@media (max-width: $small_screen) {
   .registerForm_content {
-    padding: 0 20px 10px;
+    // padding: 0 20px 10px;
     .register_header_line {
       display: block;
       margin-bottom: 20px;

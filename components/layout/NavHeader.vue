@@ -65,7 +65,7 @@ a {
 }
 .header {
   line-height: 18px;
-  padding: 20px 20px 0;
+  padding: 20px 0 0;
 }
 .header_wrapper {
   display: flex;
