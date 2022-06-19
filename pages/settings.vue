@@ -1,15 +1,15 @@
 <template>
   <div class="settings">
-    <div class="pt-20">
+    <div class="pt-20 ">
       <div class="settings_header">
         <h3 class="pb-20 pt-20 section">Settings</h3>
       </div>
       <el-tabs
         v-model="activeName"
-        closable="settings_tabs"
         @tab-click="handleClick"
+        class="nav_scroll"
       >
-        <el-tab-pane label="My details" name="first"
+        <el-tab-pane label="My details" name="first" class="new_tab"
           ><div class="section">
             <el-form>
               <div class="d-flex pb-20 pt-20">

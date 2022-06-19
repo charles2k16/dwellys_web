@@ -163,6 +163,14 @@
   color: black;
 }
 
+.nav_scroll>.el-tabs__header {
+  background: #F8FAFC;
+  
+}
+.nav_scroll>.el-tabs__nav {
+  padding: 0 40px;
+}
+
 .el-tabs--border-card>.el-tabs__content {
   padding: 0;
 }
