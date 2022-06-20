@@ -3,18 +3,20 @@
     <el-row class="house_section" :gutter="20">
       <el-col
         :xs="24"
-        :sm="6"
+        :sm="12"
+        :md="6"
         v-for="(house, index) in houses"
         :key="index"
         class="pb-20"
       >
         <el-card shadow="hover" class="house_card">
-          <div class="card_img">
-            <img :src="getImage(house.img)" class="house_img" />
-            <!-- images -->
-          </div>
+          <div
+            class="card_img"
+            :style="{
+              backgroundImage: `url(${getImage(house.img)})`,
+            }"
+          ></div>
           <div class="card_body">
-            <!-- amount -->
             <p class="house_amount">$700/mth</p>
             <p class="house_plot">Plot No, 34, Dade St, Tema</p>
           </div>
@@ -42,7 +44,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "HomeCard",
+  name: "DetailCard",
   data() {
     return {
       email: "" as string,

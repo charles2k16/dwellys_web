@@ -37,7 +37,7 @@
       <template slot="title">
         <h3>Upload your photo</h3>
       </template>
-      <PropertyModal />
+      <PropertyPhotoUpload />
     </el-dialog>
     <el-dialog
       :visible.sync="ownerModal"
@@ -48,18 +48,18 @@
       <template slot="title">
         <h3>Send a message</h3>
       </template>
-      <PropertyMessage />
+      <SendMessage />
     </el-dialog>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'ApplicationHandler',
+  name: "ApplicationHandler",
   data() {
     return {
-      loginEmail: '' as string,
+      loginEmail: "" as string,
       showLoginModal: false as boolean,
       showPasswordModal: false as boolean,
       photoModal: false as boolean,
@@ -89,7 +89,7 @@ export default Vue.extend({
     },
     closePasswordModal(): void {
       // this.$emit("password", password);
-      console.log('handler');
+      console.log("handler");
       this.showPasswordModal = false;
     },
   },

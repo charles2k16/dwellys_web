@@ -1,20 +1,28 @@
 <template>
-  <div class="home_details d-flex pt-20">
+  <div class="home_details pt-20">
     <ApplicationHandler ref="propertyAction" />
     <!-- <div class="pt-20 d-flex"> -->
     <!-- back arrow -->
-    <div class="arrow_back_container">
-      <NuxtLink to="/">
+
+    <div class="" style="padding-bottom: 100px">
+      <div class="align_center mb-10">
         <div class="arrow_back">
-          <span class="material-icons"> arrow_back </span>
+          <NuxtLink to="/">
+            <span class="material-icons">arrow_back</span>
+          </NuxtLink>
         </div>
-      </NuxtLink>
-    </div>
-    <div class="section" style="padding-bottom: 100px">
-      <div>
-        <p style="color: #1e293b; line-height: 24px" class="pb-10">
+        <p
+          style="
+            color: #1e293b;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+          "
+        >
           <b>3 bed room house in Community 25, Tema</b>
         </p>
+      </div>
+      <div class="section">
         <div class="d-flex justify_between pb-10" style="color: #475569">
           <div class="details_plot">
             <section>
@@ -47,45 +55,32 @@
           </div>
         </el-row>
       </div>
-      <div class="d-flex justify_between">
+      <div class="section justify_between property_info">
         <div class="pt-20 basic_info">
-          <p
-            style="font-size: 20px; line-height: 24px; color: #1e293b"
-            class="pb-10"
-          >
+          <h3 style="line-height: 24px; color: #1e293b" class="pb-10">
             Basic information
-          </p>
+          </h3>
           <div class="pb-20 info_cards">
-            <el-col :md="4" :sm="6">
-              <el-card shadow="never" class="info_card">
-                <p class="d-flex">
-                  <span class="material-icons mr-5"> king_bed </span>2 Bedrooms
-                </p>
-              </el-card>
-            </el-col>
-            <el-col :md="4" :sm="6">
-              <el-card shadow="never" class="info_card">
-                <p class="d-flex">
-                  <span class="material-icons mr-5"> bathtub </span>2 bathrooms
-                </p>
-              </el-card>
-            </el-col>
-            <el-col :md="4" :sm="6">
-              <el-card shadow="never" class="info_card">
-                <p class="d-flex">
-                  <span class="material-icons mr-5"> weekend </span>1 living
-                  area
-                </p>
-              </el-card>
-            </el-col>
-            <el-col :md="4" :sm="6">
-              <el-card shadow="never" class="info_card">
-                <p class="d-flex">
-                  <span class="material-icons mr-5"> drive_eta </span>2 car
-                  garage
-                </p>
-              </el-card>
-            </el-col>
+            <el-card shadow="never" class="info_card">
+              <p class="d-flex">
+                <span class="material-icons mr-5"> king_bed </span>2 Bedrooms
+              </p>
+            </el-card>
+            <el-card shadow="never" class="info_card">
+              <p class="d-flex">
+                <span class="material-icons mr-5"> bathtub </span>2 bathrooms
+              </p>
+            </el-card>
+            <el-card shadow="never" class="info_card">
+              <p class="d-flex">
+                <span class="material-icons mr-5"> weekend </span>1 living area
+              </p>
+            </el-card>
+            <el-card shadow="never" class="info_card">
+              <p class="d-flex">
+                <span class="material-icons mr-5"> drive_eta </span>2 car garage
+              </p>
+            </el-card>
           </div>
           <div class="house_details_description">
             <h3 class="description_header">Description</h3>
@@ -138,11 +133,11 @@
         </div>
       </div>
 
-      <div class="amenities pb-20">
+      <div class="section amenities pb-20">
         <!-- amenities -->
         <hr class="hr_rule" />
         <div class="amenities_content">
-          <p>Amenities</p>
+          <h3>Amenities</h3>
           <ul class="amenites_list">
             <li>Air conditioning</li>
             <li>Fans</li>
@@ -159,9 +154,9 @@
           <!-- similar properties -->
         </div>
       </div>
-      <div>
+      <div class="section">
         <hr class="hr_rule" />
-        <p class="pt-20">Similar properties</p>
+        <h3 class="pt-20">Similar properties</h3>
         <div class="pt-20">
           <DetailCard />
         </div>
@@ -214,22 +209,30 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+$medium_screen: 768px;
+$small_screen: 426px;
+
 .home_details {
   .arrow_back {
-    position: relative;
-    right: -40px;
+    margin-left: 25px;
     width: 35px;
+    padding-top: 5px;
     border: 1px solid #cbd5e1;
     border-radius: 12px;
     color: rgba(203, 213, 225, 1);
+    font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 20px;
   }
   .details_plot {
     display: flex;
     justify-content: space-between;
     width: 500px;
+    @media (max-width: $medium_screen) {
+      width: 65%;
+    }
   }
   .details_plot,
   .share {
@@ -237,17 +240,31 @@ export default Vue.extend({
       font-size: 20px;
     }
   }
-  .basic_info {
-    width: 70%;
+  .property_info {
+    display: flex;
+    @media (max-width: $medium_screen) {
+      flex-direction: column;
+    }
 
-    .info_cards {
-      .info_card {
-        background: #f8fafc;
-        padding: 10px;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        margin: 0;
-        width: fit-content;
+    .basic_info {
+      width: 70%;
+      @media (max-width: $medium_screen) {
+        margin-top: 30px;
+        width: 100%;
+      }
+      .info_cards {
+        display: flex;
+        @media (max-width: $medium_screen) {
+          width: 100%;
+        }
+        .info_card {
+          background: #f8fafc;
+          padding: 10px;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          margin: 0 10px;
+          width: 150px;
+        }
       }
     }
   }
@@ -255,6 +272,10 @@ export default Vue.extend({
   .house_details_images {
     display: flex;
     height: 550px;
+    @media (max-width: $medium_screen) {
+      flex-direction: column;
+      height: 800px;
+    }
     .house_1 {
       background-image: url("~/assets/img/image1.png");
       background-repeat: no-repeat;
@@ -264,10 +285,20 @@ export default Vue.extend({
       flex: 1;
       margin-right: 20px;
       border-radius: 10px;
+      @media (max-width: $medium_screen) {
+        height: 400px;
+        margin-right: 0;
+      }
     }
     .second_imgs {
       display: flex;
       flex-direction: column;
+      @media (max-width: $medium_screen) {
+        padding-top: 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 300px;
+      }
 
       .house_2 {
         background-image: url("~/assets/img/image2.png");
@@ -278,6 +309,12 @@ export default Vue.extend({
         border-radius: 10px;
         max-width: 280px;
         height: 50%;
+        @media (max-width: 768px) {
+          width: 100%;
+          max-width: 400px;
+          margin-right: 20px;
+          height: 300px;
+        }
       }
       .house_3 {
         background-image: url("~/assets/img/image3.png");
@@ -289,11 +326,17 @@ export default Vue.extend({
         max-width: 280px;
         border-radius: 10px;
         margin-top: 20px;
+        @media (max-width: $medium_screen) {
+          margin-top: 0;
+          width: 100%;
+          max-width: 400px;
+          height: 300px;
+        }
       }
     }
   }
   .amenities {
-    width: 70%;
+    // width: 70%;
     padding-top: 20px;
     .amenities_content {
       padding-top: 30px;
@@ -316,13 +359,14 @@ export default Vue.extend({
           padding-bottom: 20px;
           font-size: 14px;
           line-height: 20px;
+          margin-left: 15px;
 
           &::before {
-            content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
-            color: red; /* Change the color */
-            font-weight: bold; /* If you want it to be bold */
-            display: inline-block; /* Needed to add space between the bullet and the text */
-            width: 1em; /* Also needed for space (tweak if needed) */
+            content: "\2022";
+            color: red;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
             margin-left: -1em;
           }
         }
@@ -343,6 +387,9 @@ export default Vue.extend({
       line-height: 20px;
       color: #334155;
       width: 70%;
+      @media (max-width: $medium_screen) {
+        width: 100%;
+      }
     }
   }
 

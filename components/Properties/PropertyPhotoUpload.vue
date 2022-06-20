@@ -35,7 +35,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "PropertyProfile",
+  name: "PropertyPhotoUpload",
   data() {
     return {
       email: "" as string,

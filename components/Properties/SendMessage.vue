@@ -27,7 +27,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "PropertyMessage",
+  name: "SendMessage",
   data() {
     return {
       message: "" as string,
