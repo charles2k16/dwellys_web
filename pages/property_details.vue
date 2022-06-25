@@ -1,5 +1,5 @@
 <template>
-  <div class="home_details pt-20">
+  <div class="section home_details pt-20">
     <ApplicationHandler ref="propertyAction" />
     <!-- <div class="pt-20 d-flex"> -->
     <!-- back arrow -->
@@ -22,7 +22,7 @@
           <b>3 bed room house in Community 25, Tema</b>
         </p>
       </div>
-      <div class="section">
+      <div>
         <div class="d-flex justify_between pb-10" style="color: #475569">
           <div class="details_plot">
             <section>
@@ -55,7 +55,7 @@
           </div>
         </el-row>
       </div>
-      <div class="section justify_between property_info">
+      <div class="justify_between property_info">
         <div class="pt-20 basic_info">
           <h3 style="line-height: 24px; color: #1e293b" class="pb-10">
             Basic information
@@ -133,7 +133,7 @@
         </div>
       </div>
 
-      <div class="section amenities pb-20">
+      <div class="amenities pb-20">
         <!-- amenities -->
         <hr class="hr_rule" />
         <div class="amenities_content">
@@ -154,7 +154,7 @@
           <!-- similar properties -->
         </div>
       </div>
-      <div class="section">
+      <div>
         <hr class="hr_rule" />
         <h3 class="pt-20">Similar properties</h3>
         <div class="pt-20">
@@ -214,7 +214,6 @@ $small_screen: 426px;
 
 .home_details {
   .arrow_back {
-    margin-left: 25px;
     width: 35px;
     padding-top: 5px;
     border: 1px solid #cbd5e1;

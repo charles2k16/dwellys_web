@@ -37,7 +37,7 @@
       <template slot="title">
         <h3>Upload your photo</h3>
       </template>
-      <PropertyPhotoUpload />
+      <PropertyPhotoUpload @avatar="ownerAvatar" />
     </el-dialog>
     <el-dialog
       :visible.sync="ownerModal"
@@ -91,6 +91,9 @@ export default Vue.extend({
       // this.$emit("password", password);
       console.log("handler");
       this.showPasswordModal = false;
+    },
+    ownerAvatar(file: Object) {
+      this.$emit("avatar", file);
     },
   },
 });

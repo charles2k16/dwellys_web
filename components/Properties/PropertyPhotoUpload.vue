@@ -19,10 +19,10 @@
       <el-upload
         class="upload-demo"
         action="#"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :file-list="fileList"
-        list-type="picture"
+        :multiple="false"
+        :auto-upload="false"
+        :on-change="toggleUpload"
+        :show-file-list="false"
       >
         <el-button type="info">Select an image of you</el-button>
       </el-upload>
@@ -34,15 +34,30 @@
 <script lang="ts">
 import Vue from "vue";
 
+interface upload {
+  name: String;
+  percentage: Number;
+  raw: Object;
+  size: Number;
+  status: String;
+  uid: Number;
+}
+
 export default Vue.extend({
   name: "PropertyPhotoUpload",
   data() {
     return {
-      email: "" as string,
+      email: "" as String,
+      avatar: {} as object,
     };
   },
   methods: {
     login() {},
+    toggleUpload(file: upload) {
+      console.log(file);
+      this.avatar = file;
+      this.$emit("avatar", this.avatar);
+    },
   },
 });
 </script>

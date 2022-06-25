@@ -1,6 +1,6 @@
 <template>
   <div class="property_account">
-    <ApplicationHandler ref="propertyAction" />
+    <ApplicationHandler ref="propertyAction" @avatar="getAvatar" />
     <div class="steps_content">
       <div class="steps">
         <el-steps :active="active" :space="150" finish-status="success">
@@ -19,7 +19,12 @@
 
       <hr class="hr_rule" />
       <div class="account_form mt-10">
-        <el-form ref="userAccount" v-model="account" label-position="top">
+        <el-form
+          ref="property_account"
+          :rules="account_validation"
+          :model="property_account"
+          label-position="top"
+        >
           <div v-if="step == 1">
             <div class="d-flex pb-20">
               <div>
@@ -46,18 +51,18 @@
               <div class="form_div">
                 <el-row :gutter="20">
                   <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item label="First Name">
+                    <el-form-item label="First Name" prop="first_name">
                       <el-input
-                        v-model="account.first_name"
+                        v-model="property_account.first_name"
                         placeholder="First name"
                       >
                       </el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item label="Last Name">
+                    <el-form-item label="Last Name" prop="last_name">
                       <el-input
-                        v-model="account.last_name"
+                        v-model="property_account.last_name"
                         placeholder="Last Name"
                       >
                       </el-input>
@@ -67,8 +72,9 @@
 
                 <el-row :gutter="20">
                   <el-col :xs="24" :sm="24" :md="24">
-                    <el-form-item label="Date">
-                      <el-input v-model="account.date" type="date"> </el-input>
+                    <el-form-item label="Date of Birth" prop="dob">
+                      <el-input v-model="property_account.dob" type="date">
+                      </el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -81,17 +87,21 @@
                 <h4>Contact Information</h4>
               </div>
               <div class="form_div">
-                <el-form-item label="Email address">
+                <el-form-item label="Email address" prop="email">
                   <el-input
-                    v-model="account.email"
+                    v-model="property_account.email"
                     type="email"
                     placeholder="Enter email"
                   >
                   </el-input>
                 </el-form-item>
-                <el-form-item label="Phone number" style="margin-bottom: 0">
+                <el-form-item
+                  label="Phone number"
+                  prop="phone"
+                  style="margin-top: 10px"
+                >
                   <vue-phone-number-input
-                    v-model="account.number"
+                    v-model="property_account.phone"
                     :border-radius="7"
                     default-country-code="GH"
                     @update="onCountryUpdate"
@@ -120,9 +130,9 @@
               <div class="form_div">
                 <el-row>
                   <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item label="ID type" class="">
+                    <el-form-item label="ID type" prop="id_type">
                       <el-select
-                        v-model="value"
+                        v-model="property_account.id_type"
                         clear="select_id"
                         placeholder="Select ID type"
                       >
@@ -137,14 +147,15 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
-                <el-form-item label="Upload ID">
+                <el-form-item label="Upload ID" prop="id_card">
                   <el-upload
                     drag
                     action=""
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
                     :file-list="fileList"
-                    multiple
+                    :limit="1"
+                    :multiple="false"
                     class="upload_dragg w-100"
                   >
                     <i class="el-icon-upload"></i>
@@ -153,7 +164,6 @@
                     </div>
                   </el-upload>
                 </el-form-item>
-
                 <el-col>
                   <div class="terms_condition py-20">
                     <p>
@@ -172,7 +182,7 @@
                       <el-button
                         type="primary"
                         class="second_next submit_register_button"
-                        @click="property_account"
+                        @click="submit_account"
                         >Agree and Continue</el-button
                       >
                     </div>
@@ -205,33 +215,100 @@ export default Vue.extend({
       step: 1 as number,
       value: "" as string,
       fileList: [],
-      account: {
+      property_account: {
+        avatar: {} as object,
         first_name: "" as string,
         last_name: "" as string,
-        date: "" as string,
+        dob: "" as string,
         email: "" as string,
         phone: "" as string,
         terms: false as boolean,
-        number: "" as string,
+      },
+      account_validation: {
+        first_name: [
+          {
+            required: true,
+            message: "Please enter your first name",
+            trigger: ["blur", "change"],
+          },
+        ],
+        last_name: [
+          {
+            required: true,
+            message: "Please enter your last name",
+            trigger: ["blur", "change"],
+          },
+        ],
+        dob: [
+          {
+            required: true,
+            message: "Please enter your date of birth",
+            trigger: ["blur", "change"],
+          },
+        ],
+        email: [
+          {
+            required: true,
+            type: "email",
+            message: "Please enter valid email",
+            trigger: ["blur", "change"],
+          },
+          { min: 5, message: "Length should be 5 or more", trigger: "blur" },
+        ],
+        phone: [
+          {
+            required: true,
+            message: "Please enter your phone number",
+            trigger: ["blur", "change"],
+          },
+        ],
+        id_type: [
+          {
+            required: true,
+            message: "Please select ID type",
+            trigger: "change",
+          },
+        ],
+        id_card: [
+          {
+            required: true,
+            message: "Please select an ID card",
+            trigger: "change",
+          },
+        ],
       },
       options: ["Health Insurance", "Passport", "Voter ID"],
       user: "" as string,
+      countries: [],
     };
   },
-  computed: {
-    isValid() {},
+  async fetch() {
+    const countries = await this.$countriesApi.index();
+
+    this.countries = countries;
   },
   methods: {
     toPrev() {
       this.step--;
-      this.active--;
     },
     toNext() {
-      this.step++;
-      this.active++;
+      (this as any).$refs.property_account.validate((valid: boolean) => {
+        if (valid) {
+          this.step++;
+        } else {
+          return false;
+        }
+      });
     },
-    property_account() {
-      console.log(this.account);
+
+    submit_account() {
+      (this as any).$refs.property_account.validate((valid: boolean) => {
+        if (valid) {
+          console.log(this.property_account);
+        } else {
+          return false;
+        }
+      });
     },
     showPhotoModal(): void {
       console.log("show");
@@ -240,6 +317,9 @@ export default Vue.extend({
     handlePreview() {},
     handleRemove() {},
     onCountryUpdate() {},
+    getAvatar(avatar: Object) {
+      this.property_account.avatar = avatar;
+    },
     submitAccount() {
       console.log("submit");
     },
@@ -305,7 +385,6 @@ $small_screen: 426px;
       @media (max-width: $small_screen) {
         display: block;
         .submit_register_button {
-        
           width: 100%;
         }
       }
@@ -324,6 +403,7 @@ $small_screen: 426px;
   .account_label {
     width: 20%;
     padding-right: 30px;
+    padding-top: 10px;
     margin-right: 10px;
     @media (max-width: $small_screen) {
       width: 100%;
@@ -347,7 +427,7 @@ $small_screen: 426px;
   }
   .second_next {
     width: 180px;
-      padding: 12px;
+    padding: 12px;
   }
 }
 </style>
