@@ -198,13 +198,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import VuePhoneNumberInput from "vue-phone-number-input";
-import "vue-phone-number-input/dist/vue-phone-number-input.css";
-import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
+import Vue from 'vue';
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+import ApplicationHandler from '@/handlers/ApplicationHandler.vue';
 
 export default Vue.extend({
-  name: "AccountPage",
+  name: 'AccountPage',
   components: {
     VuePhoneNumberInput,
     ApplicationHandler,
@@ -213,76 +213,77 @@ export default Vue.extend({
     return {
       active: 0 as number,
       step: 1 as number,
-      value: "" as string,
+      value: '' as string,
       fileList: [],
       property_account: {
         avatar: {} as object,
-        first_name: "" as string,
-        last_name: "" as string,
-        dob: "" as string,
-        email: "" as string,
-        phone: "" as string,
+        first_name: '' as string,
+        last_name: '' as string,
+        dob: '' as string,
+        email: '' as string,
+        phone: '' as string,
+        id_type: '' as string,
         terms: false as boolean,
       },
       account_validation: {
         first_name: [
           {
             required: true,
-            message: "Please enter your first name",
-            trigger: ["blur", "change"],
+            message: 'Please enter your first name',
+            trigger: ['blur', 'change'],
           },
         ],
         last_name: [
           {
             required: true,
-            message: "Please enter your last name",
-            trigger: ["blur", "change"],
+            message: 'Please enter your last name',
+            trigger: ['blur', 'change'],
           },
         ],
         dob: [
           {
             required: true,
-            message: "Please enter your date of birth",
-            trigger: ["blur", "change"],
+            message: 'Please enter your date of birth',
+            trigger: ['blur', 'change'],
           },
         ],
         email: [
           {
             required: true,
-            type: "email",
-            message: "Please enter valid email",
-            trigger: ["blur", "change"],
+            type: 'email',
+            message: 'Please enter valid email',
+            trigger: ['blur', 'change'],
           },
-          { min: 5, message: "Length should be 5 or more", trigger: "blur" },
+          { min: 5, message: 'Length should be 5 or more', trigger: 'blur' },
         ],
         phone: [
           {
             required: true,
-            message: "Please enter your phone number",
-            trigger: ["blur", "change"],
+            message: 'Please enter your phone number',
+            trigger: ['blur', 'change'],
           },
         ],
         id_type: [
           {
             required: true,
-            message: "Please select ID type",
-            trigger: "change",
+            message: 'Please select ID type',
+            trigger: 'change',
           },
         ],
         id_card: [
           {
             required: true,
-            message: "Please select an ID card",
-            trigger: "change",
+            message: 'Please select an ID card',
+            trigger: 'change',
           },
         ],
       },
-      options: ["Health Insurance", "Passport", "Voter ID"],
-      user: "" as string,
+      options: ['Health Insurance', 'Passport', 'Voter ID'],
+      user: '' as string,
       countries: [],
     };
   },
-  async fetch() {
+  async created() {
     const countries = await this.$countriesApi.index();
 
     this.countries = countries;
@@ -300,7 +301,6 @@ export default Vue.extend({
         }
       });
     },
-
     submit_account() {
       (this as any).$refs.property_account.validate((valid: boolean) => {
         if (valid) {
@@ -311,7 +311,6 @@ export default Vue.extend({
       });
     },
     showPhotoModal(): void {
-      console.log("show");
       (this as any).$refs.propertyAction.showPhotoModal(this.user);
     },
     handlePreview() {},
@@ -321,7 +320,7 @@ export default Vue.extend({
       this.property_account.avatar = avatar;
     },
     submitAccount() {
-      console.log("submit");
+      console.log('submit');
     },
   },
 });
