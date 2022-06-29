@@ -65,7 +65,11 @@ export default {
     // http://localhost:8000/api/v1
     // baseURL: 'https://newapi.dwellys.com/api/v3',
     baseURL: "http://localhost:8000/api/v3",
+    headers: { "Access-Control-Allow-Origin": "*" },
   },
+  // server: {
+  //   port: 8000,
+  // },
 
   // router: {
   //   middleware: ['auth'],

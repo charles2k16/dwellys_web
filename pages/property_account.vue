@@ -101,10 +101,10 @@
                   style="margin-top: 10px"
                 >
                   <vue-phone-number-input
-                    v-model="property_account.phone"
+                    v-model="phone_number"
                     :border-radius="7"
                     default-country-code="GH"
-                    @update="onCountryUpdate"
+                    @update="onPhoneUpdate"
                   />
                 </el-form-item>
                 <div class="mt-20 next_btn">
@@ -147,13 +147,11 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
-                <el-form-item label="Upload ID" prop="id_card">
+                <el-form-item label="Upload ID" prop="id_card_upload">
                   <el-upload
                     drag
                     action=""
-                    :on-preview="handlePreview"
-                    :on-remove="handleRemove"
-                    :file-list="fileList"
+                    :on-change="toggleUpload"
                     :limit="1"
                     :multiple="false"
                     class="upload_dragg w-100"
@@ -181,6 +179,7 @@
                       <el-button type="info" v-if="step === 1">Skip</el-button>
                       <el-button
                         type="primary"
+                        :loading="btnLoading"
                         class="second_next submit_register_button"
                         @click="submit_account"
                         >Agree and Continue</el-button
@@ -198,95 +197,99 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import VuePhoneNumberInput from 'vue-phone-number-input';
-import 'vue-phone-number-input/dist/vue-phone-number-input.css';
-import ApplicationHandler from '@/handlers/ApplicationHandler.vue';
+import Vue from "vue";
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
+import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
+import { IMixinState } from "@/types/mixinsTypes";
 
 export default Vue.extend({
-  name: 'AccountPage',
+  name: "AccountPage",
   components: {
     VuePhoneNumberInput,
     ApplicationHandler,
   },
+
   data() {
     return {
       active: 0 as number,
       step: 1 as number,
-      value: '' as string,
-      fileList: [],
+      phone: "",
+      btnLoading: false as boolean,
       property_account: {
         avatar: {} as object,
-        first_name: '' as string,
-        last_name: '' as string,
-        dob: '' as string,
-        email: '' as string,
-        phone: '' as string,
-        id_type: '' as string,
-        terms: false as boolean,
+        first_name: "" as string,
+        last_name: "" as string,
+        dob: "" as string,
+        email: "" as string,
+        phone_number: "" as string,
+        id_type: "" as string,
+        id_card_upload: {},
+        country_id: "" as String,
+        user_type: "lister",
       },
       account_validation: {
         first_name: [
           {
             required: true,
-            message: 'Please enter your first name',
-            trigger: ['blur', 'change'],
+            message: "Please enter your first name",
+            trigger: ["blur", "change"],
           },
         ],
         last_name: [
           {
             required: true,
-            message: 'Please enter your last name',
-            trigger: ['blur', 'change'],
+            message: "Please enter your last name",
+            trigger: ["blur", "change"],
           },
         ],
         dob: [
           {
             required: true,
-            message: 'Please enter your date of birth',
-            trigger: ['blur', 'change'],
+            message: "Please enter your date of birth",
+            trigger: ["blur", "change"],
           },
         ],
         email: [
           {
             required: true,
-            type: 'email',
-            message: 'Please enter valid email',
-            trigger: ['blur', 'change'],
+            type: "email",
+            message: "Please enter valid email",
+            trigger: ["blur", "change"],
           },
-          { min: 5, message: 'Length should be 5 or more', trigger: 'blur' },
+          { min: 5, message: "Length should be 5 or more", trigger: "blur" },
         ],
-        phone: [
+        phone_number: [
           {
             required: true,
-            message: 'Please enter your phone number',
-            trigger: ['blur', 'change'],
+            message: "Please enter your phone number",
+            trigger: ["blur", "change"],
           },
         ],
         id_type: [
           {
             required: true,
-            message: 'Please select ID type',
-            trigger: 'change',
+            message: "Please select ID type",
+            trigger: "change",
           },
         ],
-        id_card: [
+        id_card_upload: [
           {
             required: true,
-            message: 'Please select an ID card',
-            trigger: 'change',
+            message: "Please select an ID card",
+            trigger: "change",
           },
         ],
       },
-      options: ['Health Insurance', 'Passport', 'Voter ID'],
-      user: '' as string,
+      options: ["SSNIT", "Passport", "Voter"],
+      user: "" as string,
       countries: [],
     };
   },
   async created() {
     const countries = await this.$countriesApi.index();
-
-    this.countries = countries;
+    this.countries = countries.data;
+    console.log(countries);
   },
   methods: {
     toPrev() {
@@ -301,26 +304,42 @@ export default Vue.extend({
         }
       });
     },
+    toggleUpload(file: any) {
+      this.property_account.id_card_upload = file;
+    },
+    showPhotoModal() {
+      (this as any).$refs.propertyAction.showPhotoModal(this.user);
+    },
+    onPhoneUpdate(e: any) {
+      console.log(e);
+      this.property_account.phone_number = e.formattedNumber;
+    },
+    getAvatar(avatar: any) {
+      this.property_account.avatar = avatar;
+    },
     submit_account() {
+      this.btnLoading = true;
       (this as any).$refs.property_account.validate((valid: boolean) => {
         if (valid) {
-          console.log(this.property_account);
+          this.signUp();
         } else {
+          this.btnLoading = false;
+          (this as any as IMixinState).getNotification(
+            "Make sure all required fields are filled",
+            "error"
+          );
           return false;
         }
       });
     },
-    showPhotoModal(): void {
-      (this as any).$refs.propertyAction.showPhotoModal(this.user);
-    },
-    handlePreview() {},
-    handleRemove() {},
-    onCountryUpdate() {},
-    getAvatar(avatar: Object) {
-      this.property_account.avatar = avatar;
-    },
-    submitAccount() {
-      console.log('submit');
+    async signUp(): Promise<void> {
+      try {
+        const response = await this.$registerApi.create(this.property_account);
+        console.log(response);
+      } catch (error) {
+        this.btnLoading = false;
+        (this as any as IMixinState).catchError(error);
+      }
     },
   },
 });

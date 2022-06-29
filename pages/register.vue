@@ -1,7 +1,7 @@
 <template>
   <div class="section registerForm_content">
     <div class="pb-20">
-      <h3>Create an accout</h3>
+      <h3>Create an account</h3>
       <p class="mt-10">Provide information about yourself for identity</p>
     </div>
 
@@ -127,30 +127,30 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import VuePhoneNumberInput from 'vue-phone-number-input';
-import 'vue-phone-number-input/dist/vue-phone-number-input.css';
-import { IMixinState } from '@/types/mixinsTypes';
+import Vue from "vue";
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
+import { IMixinState } from "@/types/mixinsTypes";
 
 export default Vue.extend({
-  name: 'registerFormPage',
+  name: "registerFormPage",
   components: {
     VuePhoneNumberInput,
   },
   data() {
     var validatePass = (rule: any, value: string, callback: any) => {
-      if (value === '') {
-        callback(new Error('Please input the password'));
+      if (value === "") {
+        callback(new Error("Please input the password"));
       } else {
-        if ((this as any).registerForm.confirm_password !== '') {
-          (this as any).$refs.registerForm.validateField('confirm_password');
+        if ((this as any).registerForm.confirm_password !== "") {
+          (this as any).$refs.registerForm.validateField("confirm_password");
         }
         callback();
       }
     };
     var validatePass2 = (rule: any, value: string, callback: any) => {
-      if (value === '') {
-        callback(new Error('Please input the password again'));
+      if (value === "") {
+        callback(new Error("Please input the password again"));
       } else if (value !== (this as any).registerForm.password) {
         callback(new Error("Password don't match!"));
       } else {
@@ -158,46 +158,46 @@ export default Vue.extend({
       }
     };
     return {
-      phone: '',
+      phone: "",
       btnLoading: false,
       registerForm: {
-        first_name: '' as string,
-        last_name: '' as string,
-        dob: '' as string,
-        email: '' as string,
-        password: '' as string,
-        confirm_password: '',
-        phone_number: '' as string,
-        sign_up_mode: 'email',
-        user_type: 'visitor',
-        country_id: 'd5b12443-82ee-44b7-9b23-7661543ca0b6',
+        first_name: "" as string,
+        last_name: "" as string,
+        dob: "" as string,
+        email: "" as string,
+        password: "" as string,
+        confirm_password: "",
+        phone_number: "" as string,
+        sign_up_mode: "email",
+        user_type: "visitor",
+        country_id: "d5b12443-82ee-44b7-9b23-7661543ca0b6",
       },
       validation: {
         email: [
           {
             required: true,
-            type: 'email',
-            message: 'Please enter valid email',
-            trigger: ['blur', 'change'],
+            type: "email",
+            message: "Please enter valid email",
+            trigger: ["blur", "change"],
           },
-          { min: 5, message: 'Length should be 5 or more', trigger: 'blur' },
+          { min: 5, message: "Length should be 5 or more", trigger: "blur" },
         ],
         first_name: [
           {
             required: true,
-            message: 'Please enter your first name',
-            trigger: ['blur', 'change'],
+            message: "Please enter your first name",
+            trigger: ["blur", "change"],
           },
         ],
         last_name: [
           {
             required: true,
-            message: 'Please enter your last name',
-            trigger: ['blur', 'change'],
+            message: "Please enter your last name",
+            trigger: ["blur", "change"],
           },
         ],
-        password: [{ validator: validatePass, trigger: 'blur' }],
-        confirm_password: [{ validator: validatePass2, trigger: 'blur' }],
+        password: [{ validator: validatePass, trigger: "blur" }],
+        confirm_password: [{ validator: validatePass2, trigger: "blur" }],
       },
     };
   },
@@ -214,8 +214,8 @@ export default Vue.extend({
         } else {
           this.btnLoading = false;
           (this as any as IMixinState).getNotification(
-            'Make sure all required fields are filled',
-            'error'
+            "Make sure all required fields are filled",
+            "error"
           );
           return false;
         }
@@ -279,8 +279,6 @@ $small_screen: 426px;
     justify-content: flex-end;
   }
 }
-
-
 
 @media (max-width: $small_screen) {
   .registerForm_content {
