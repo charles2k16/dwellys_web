@@ -223,8 +223,16 @@ export default Vue.extend({
     },
     async signUp(): Promise<void> {
       try {
-        const response = await this.$registerApi.create(this.registerForm);
-        console.log(response);
+        // const response = await this.$registerApi.create(this.registerForm);
+        // console.log(response);
+        this.$axios
+          .post("http://localhost:8000/api/v3/signup", this.registerForm)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } catch (error) {
         this.btnLoading = false;
         (this as any as IMixinState).catchError(error);
