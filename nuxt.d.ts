@@ -31,6 +31,7 @@ declare module "vue/types/vue" {
   interface Vue {
     $registerApi: apiService;
     $countriesApi: apiService;
+    $propertyTypesApi: apiService;
     // $refs: { [key: string]: Vue | Element | (Vue | Element)[] | Function | undefined; }
   }
 }

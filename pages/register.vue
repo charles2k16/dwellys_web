@@ -160,6 +160,7 @@ export default Vue.extend({
     return {
       phone: "",
       btnLoading: false,
+      countries: [],
       registerForm: {
         first_name: "" as string,
         last_name: "" as string,
@@ -170,7 +171,7 @@ export default Vue.extend({
         phone_number: "" as string,
         sign_up_mode: "email",
         user_type: "visitor",
-        country_id: "d5b12443-82ee-44b7-9b23-7661543ca0b6",
+        country_id: "",
       },
       validation: {
         email: [
@@ -201,8 +202,19 @@ export default Vue.extend({
       },
     };
   },
+  async created() {
+    const countries = await this.$countriesApi.index();
+    this.countries = countries.data;
+    console.log(this.countries);
+  },
   methods: {
     onPhoneUpdate(e: any) {
+      console.log(e);
+      this.countries.filter((country: any) =>
+        country.short_name == e.countryCode
+          ? (this.registerForm.country_id = country.id)
+          : ""
+      );
       this.registerForm.phone_number = e.formattedNumber;
     },
     userRegister() {
@@ -211,13 +223,13 @@ export default Vue.extend({
         if (valid) {
           console.log(this.registerForm);
           this.signUp();
+          this.btnLoading = false;
         } else {
           this.btnLoading = false;
           (this as any as IMixinState).getNotification(
             "Make sure all required fields are filled",
             "error"
           );
-          return false;
         }
       });
     },

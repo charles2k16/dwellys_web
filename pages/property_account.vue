@@ -336,6 +336,7 @@ export default Vue.extend({
       try {
         const response = await this.$registerApi.create(this.property_account);
         console.log(response);
+        this.btnLoading = false;
       } catch (error) {
         this.btnLoading = false;
         (this as any as IMixinState).catchError(error);

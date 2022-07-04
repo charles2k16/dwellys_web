@@ -9,4 +9,5 @@ export default (ctx, inject) => {
   // You can reuse the repositoryWithAxios object:
   inject("registerApi", apiService("/signup"));
   inject("countriesApi", apiService("/countries"));
+  inject("propertyTypesApi", apiService("/propertytypes"));
 };
