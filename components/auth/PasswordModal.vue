@@ -39,11 +39,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IMixinState } from "@/types/mixinsTypes";
+import Vue from 'vue';
+import { IMixinState } from '@/types/mixinsTypes';
 
 export default Vue.extend({
-  name: "PasswordModal",
+  name: 'PasswordModal',
   props: {
     email: {
       type: String,
@@ -52,7 +52,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      password: "" as string,
+      password: '' as string,
       btnLoading: false as boolean,
     };
   },
@@ -60,7 +60,7 @@ export default Vue.extend({
     login() {
       this.btnLoading = true;
       this.$auth
-        .loginWith("local", {
+        .loginWith('local', {
           data: {
             email: this.email,
             password: this.password,
@@ -69,8 +69,10 @@ export default Vue.extend({
         .then((response: any) => {
           const { user, token } = response.data.data;
           console.log(response);
+
+          this.$auth.setUserToken(token);
           this.$auth.setUser(user);
-          this.$auth.$storage.setLocalStorage("user_token", token);
+
           this.btnLoading = false;
         })
         .catch((error: any) => {
@@ -79,7 +81,7 @@ export default Vue.extend({
         });
     },
     closeModal() {
-      this.$emit("closePasswordModal");
+      this.$emit('closePasswordModal');
     },
   },
 });
