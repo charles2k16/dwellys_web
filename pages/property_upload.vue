@@ -194,7 +194,7 @@
           </div>
         </div>
         <div class="plans_price pb-20">
-          <PlansPricing :pricingPlans="pricingPlans" @price="getPrice" />
+          <PlansPricing :pricingPlans="pricingPlans" @getPlan="getPrice" />
         </div>
       </div>
       <hr class="hr_rule" />
@@ -206,6 +206,7 @@
           type="primary"
           class="btn_sm submit_register_button"
           @click="submitUpload"
+          :loading="btnLoading"
           v-if="step === 6"
           >Submit</el-button
         >
@@ -225,6 +226,7 @@
 import Vue from "vue";
 import VuePhoneNumberInput from "vue-phone-number-input";
 import "vue-phone-number-input/dist/vue-phone-number-input.css";
+import { IMixinState } from "@/types/mixinsTypes";
 import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
 
 export default Vue.extend({
@@ -241,6 +243,7 @@ export default Vue.extend({
       amenitiesId: [] as Array<string>,
       propertySelected: false as boolean,
       selectedProperty: "",
+      btnLoading: false as boolean,
       propertyTypes: [],
       propertySpecs: {
         specifications: [] as Array<object>,
@@ -287,63 +290,20 @@ export default Vue.extend({
         },
       ],
       pricingPlans: [],
-      // amenities: [
-      //   {
-      //     img: "ac_unit.png",
-      //     title: "Air condition",
-      //     isSelect: false,
-      //   },
-      //   {
-      //     img: "electrical_services.png",
-      //     title: "Generator",
-      //     isSelect: false,
-      //   },
-      //   {
-      //     img: "kitchen.png",
-      //     title: "Refrigerator",
-      //     isSelect: false,
-      //   },
-      //   {
-      //     img: "language.png",
-      //     title: "Internet",
-      //     isSelect: false,
-      //   },
-      //   {
-      //     img: "local_laundry_service.png",
-      //     title: "Washine machine",
-      //     isSelect: false,
-      //   },
-      //   {
-      //     img: "mode_fan.png",
-      //     title: "Fan",
-      //     isSelect: false,
-      //   },
-      //   {
-      //     img: "oil_barrel.png",
-      //     title: "Water storage",
-      //     isSelect: false,
-      //   },
-      //   {
-      //     img: "pool.png",
-      //     title: "Pool",
-      //     isSelect: false,
-      //   },
-      //   {
-      //     img: "yard.png",
-      //     title: "Garden",
-      //     isSelect: false,
-      //   },
-      // ],
 
       propertyUpload: {
+        name: "" as string,
         property_type_id: "" as string,
         latitude: "" as string,
         longitude: "" as string,
         specifications: [] as Array<object>,
         amenities: [] as Array<string>,
         description: "" as string,
-        photo: [],
+        photo: [] as Array<object>,
         price: 0 as number,
+        location: "Accra Central",
+        region: "Greater Accra",
+        city: "Accra",
         other_specifications: [{ name: "", number: 0 }],
       },
     };
@@ -363,9 +323,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    submitUpload() {
-      console.log("submit");
-    },
     getImage(pic: any): string {
       return "http://localhost:8000/" + pic;
     },
@@ -377,12 +334,13 @@ export default Vue.extend({
     },
     toggleUpload(file: any) {
       console.log(file);
+      this.propertyUpload.photo.push(file);
 
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = function () {
-        console.log("RESULT", reader.result);
-      };
+      // let reader = new FileReader();
+      // reader.readAsDataURL(file);
+      // reader.onloadend = function () {
+      //   console.log("RESULT", reader.result);
+      // };
     },
     addSpecSection() {
       let newSection = { name: "", number: 0 };
@@ -393,6 +351,7 @@ export default Vue.extend({
     async getProperty(newProperty: any) {
       this.propertyUpload.property_type_id = newProperty.id;
       this.propertyUpload.description = newProperty.description;
+      this.propertyUpload.name = newProperty.name;
       this.selectedProperty = newProperty.name;
 
       const property = await this.$propertyTypesApi.show(newProperty.id);
@@ -433,6 +392,20 @@ export default Vue.extend({
     showPosition(position: any) {
       this.propertyUpload.latitude = position.coords.latitude;
       this.propertyUpload.longitude = position.coords.longitude;
+    },
+    async submitUpload() {
+      console.log(this.propertyUpload);
+      this.btnLoading = true;
+      await this.$listingApi
+        .create(this.propertyUpload)
+        .then((res: any) => {
+          console.log(res, "res");
+          this.btnLoading = false;
+          // this.$message.success("Property Uploaded Successfully!");
+        })
+        .catch((err: any) => {
+          console.log(err, "error");
+        });
     },
   },
 });

@@ -224,6 +224,7 @@ export default Vue.extend({
           console.log(this.registerForm);
           this.signUp();
           this.btnLoading = false;
+          // this.$message.success("Registered Successfully!");
         } else {
           this.btnLoading = false;
           (this as any as IMixinState).getNotification(

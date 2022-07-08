@@ -33,6 +33,7 @@ declare module "vue/types/vue" {
     $countriesApi: apiService;
     $propertyTypesApi: apiService;
     $listingPlansApi: apiService;
+    $listingApi: apiService;
     // $refs: { [key: string]: Vue | Element | (Vue | Element)[] | Function | undefined; }
   }
 }
