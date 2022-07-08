@@ -235,14 +235,14 @@ export default Vue.extend({
     },
     async signUp(): Promise<void> {
       try {
-        // const response = await this.$registerApi.create(this.registerForm);
-        // console.log(response);
-        this.$axios
-          .post("http://localhost:8000/api/v3/signup", this.registerForm)
-          .then((res) => {
+        // this.$axios
+        // .post("http://localhost:8000/api/v3/signup", this.registerForm)
+        await this.$registerApi
+          .create(this.registerForm)
+          .then((res: any) => {
             console.log(res);
           })
-          .catch((err) => {
+          .catch((err: any) => {
             console.log(err);
           });
       } catch (error) {

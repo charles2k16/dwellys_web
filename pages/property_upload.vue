@@ -10,25 +10,39 @@
             >
           </div>
           <div class="block slider">
-            <el-slider v-model="step" disabled :min="1" :max="5"></el-slider>
+            <el-slider v-model="step" disabled :min="1" :max="6"></el-slider>
           </div>
         </div>
         <div class="property_content_container">
           <div class="property_content">
-            <div
-              v-for="(property, index) in properties"
-              :key="index"
-              @click="getProperty(property)"
-              :style="property.isSelect && { background: ' #F1F5F9' }"
-            >
-              <div class="property_main_content">
+            <div v-for="property in propertyTypes" :key="property.id">
+              <div
+                class="property_main_content"
+                @click="getProperty(property)"
+                :style="
+                  selectedProperty == property.name && {
+                    backgroundColor: '#F1F5F9',
+                  }
+                "
+              >
                 <div class="d-flex_column">
                   <p>
-                    <b> {{ property.title }} </b>
+                    <b> {{ property.name }} </b>
                   </p>
-                  <p>{{ property.details }}</p>
+                  <p class="property_description">
+                    {{ property.description }}
+                  </p>
                 </div>
-                <img :src="getImage(property.img)" />
+                <!-- <div
+                  :style="{
+                    backgroundImage: `url(${getImage(property.photo)})`,
+                  }"
+                  class="property_upload_photo"
+                ></div> -->
+                <img
+                  :src="getImage(property.photo)"
+                  class="property_upload_photo"
+                />
               </div>
             </div>
           </div>
@@ -41,39 +55,60 @@
             <small>Number of bedrooms, bathrooms, garage, kitchen, etc</small>
           </div>
           <div class="block slider">
-            <el-slider v-model="step" disabled :min="1" :max="5"></el-slider>
+            <el-slider v-model="step" disabled :min="1" :max="6"></el-slider>
           </div>
         </div>
         <div class="property_content_container">
           <div class="property_content">
-            <div v-for="(property, index) in propertiesSpecs" :key="index">
-              <div class="property_main_content" @click="getProperty(property)">
+            <div v-for="spec in propertySpecs.specifications" :key="spec.id">
+              <div class="property_main_content">
                 <div class="d-flex_column">
                   <p>
-                    <b> {{ property.title }} </b>
+                    <b> {{ spec.name }} </b>
                   </p>
                 </div>
                 <div class="d-flex">
-                  <el-input-number
-                    :min="0"
-                    size="small"
-                    v-model="property.no"
-                  ></el-input-number>
-                  <!-- <el-button
-                  :disabled="property.no === 0"
-                  @click="property.no--"
-                  class="reduceSpecs"
-                >
-                  -
-                </el-button>
-                <el-button class="d-flex justify_center">{{
-                  property.no
-                }}</el-button>
-                <el-button @click="property.no++" class="addSpecs ml-10"
-                  >+</el-button
-                > -->
+                  <el-input-number :min="0" size="small" v-model="spec.number">
+                    {{ spec.number ? spec.number : 0 }}
+                    <!-- v-model="propertyUpload.specifications.number" -->
+                  </el-input-number>
                 </div>
               </div>
+            </div>
+            <div
+              v-for="spec in propertyUpload.other_specifications"
+              :key="spec.id"
+            >
+              <div class="other_specs">
+                <div class="inner_specs">
+                  <div class="d-flex_column">
+                    <el-input
+                      v-model="spec.name"
+                      placeholder="Please specify if other"
+                    >
+                    </el-input>
+                  </div>
+                  <div class="d-flex">
+                    <el-input-number
+                      :min="0"
+                      size="small"
+                      v-model="spec.number"
+                    >
+                      {{ spec.number }}
+                    </el-input-number>
+                  </div>
+                </div>
+                <p>
+                  For other living areas, please specify, eg, Patio, lounge,
+                  pool
+                </p>
+              </div>
+            </div>
+            <div class="d-flex justify_end">
+              <el-button @click="addSpecSection"
+                ><i class="el-icon-plus mr-10"></i>Add another
+                section</el-button
+              >
             </div>
           </div>
         </div>
@@ -85,7 +120,7 @@
             <small>Please check the plausible amenities</small>
           </div>
           <div class="block slider">
-            <el-slider v-model="step" disabled :min="1" :max="5"></el-slider>
+            <el-slider v-model="step" disabled :min="1" :max="6"></el-slider>
           </div>
         </div>
         <div class="grid_content_container">
@@ -93,12 +128,16 @@
             <div v-for="(property, index) in amenities" :key="index">
               <div
                 class="grid_content"
-                :style="property.isSelect && { background: '#E2E8F0' }"
                 @click="getAmenities(property)"
+                :style="
+                  propertyUpload.amenities.includes(property.id)
+                    ? { background: '#E2E8F0' }
+                    : { background: '#fff' }
+                "
               >
                 <div class="">
-                  <img :src="getSvg(property.img)" class="pt-10" />
-                  <p class="mt-30">{{ property.title }}</p>
+                  <!-- <img :src="getSvg(property.img)" class="pt-10" /> -->
+                  <p class="mt-30">{{ property.name }}</p>
                 </div>
               </div>
             </div>
@@ -112,7 +151,7 @@
             <small>Please check the plausible amenities</small>
           </div>
           <div class="block slider">
-            <el-slider v-model="step" disabled :min="1" :max="5"></el-slider>
+            <el-slider v-model="step" disabled :min="1" :max="6"></el-slider>
           </div>
         </div>
         <div class="property_content_container pb-20">
@@ -122,7 +161,7 @@
             action=""
             :on-preview="handlePreview"
             :on-remove="handleRemove"
-            :file-list="fileList"
+            :on-change="toggleUpload"
             multiple
           >
             <i class="el-icon-upload"></i>
@@ -135,15 +174,27 @@
       <div v-if="step === 5">
         <div class="center">
           <div class="property_upload_head">
+            <h3>Select property location</h3>
+            <small>Select the location of the property</small>
+          </div>
+          <div class="block slider">
+            <el-slider v-model="step" disabled :min="1" :max="6"></el-slider>
+          </div>
+        </div>
+        <div class="property_content_container pb-20">map</div>
+      </div>
+      <div v-if="step === 6">
+        <div class="center">
+          <div class="property_upload_head">
             <h3>Plans and pricing</h3>
             <small>Please check the plausible amenities</small>
           </div>
           <div class="block slider">
-            <el-slider v-model="step" disabled :min="1" :max="5"></el-slider>
+            <el-slider v-model="step" disabled :min="1" :max="6"></el-slider>
           </div>
         </div>
         <div class="plans_price pb-20">
-          <PlansPricing :pricingPlans="pricingPlans" />
+          <PlansPricing :pricingPlans="pricingPlans" @price="getPrice" />
         </div>
       </div>
       <hr class="hr_rule" />
@@ -155,7 +206,7 @@
           type="primary"
           class="btn_sm submit_register_button"
           @click="submitUpload"
-          v-if="step === 5"
+          v-if="step === 6"
           >Submit</el-button
         >
         <el-button
@@ -187,41 +238,15 @@ export default Vue.extend({
     return {
       step: 1 as number,
       fileList: [],
+      amenitiesId: [] as Array<string>,
+      propertySelected: false as boolean,
+      selectedProperty: "",
       propertyTypes: [],
-      propertiesSpecs: [
-        {
-          title: "Bedrooms" as string,
-          no: 0 as number,
-        },
-        {
-          title: "Bathrooms" as string,
-          no: 0 as number,
-        },
-        {
-          title: "Bedrooms" as string,
-          no: 0 as number,
-        },
-        {
-          title: "Bathrooms" as string,
-          no: 0 as number,
-        },
-        {
-          title: "Kitchens" as string,
-          no: 0 as number,
-        },
-        {
-          title: "Living area" as string,
-          no: 0 as number,
-        },
-        {
-          title: "Guest rooms" as string,
-          no: 0 as number,
-        },
-        {
-          title: "Apartment" as string,
-          no: 0 as number,
-        },
-      ],
+      propertySpecs: {
+        specifications: [] as Array<object>,
+      },
+      amenities: [],
+
       properties: [
         {
           title: "Apartment",
@@ -261,124 +286,153 @@ export default Vue.extend({
           isSelect: false,
         },
       ],
-      amenities: [
-        {
-          img: "ac_unit.png",
-          title: "Air condition",
-          isSelect: false,
-        },
-        {
-          img: "electrical_services.png",
-          title: "Generator",
-          isSelect: false,
-        },
-        {
-          img: "kitchen.png",
-          title: "Refrigerator",
-          isSelect: false,
-        },
-        {
-          img: "language.png",
-          title: "Internet",
-          isSelect: false,
-        },
-        {
-          img: "local_laundry_service.png",
-          title: "Washine machine",
-          isSelect: false,
-        },
-        {
-          img: "mode_fan.png",
-          title: "Fan",
-          isSelect: false,
-        },
-        {
-          img: "oil_barrel.png",
-          title: "Water storage",
-          isSelect: false,
-        },
-        {
-          img: "pool.png",
-          title: "Pool",
-          isSelect: false,
-        },
-        {
-          img: "yard.png",
-          title: "Garden",
-          isSelect: false,
-        },
-      ],
-      pricingPlans: [
-        {
-          title: "Quick Deals",
-          recommend: "Recommended for individuals",
-          amount: "Ghc20.00",
-          duration: "For 1 month",
+      pricingPlans: [],
+      // amenities: [
+      //   {
+      //     img: "ac_unit.png",
+      //     title: "Air condition",
+      //     isSelect: false,
+      //   },
+      //   {
+      //     img: "electrical_services.png",
+      //     title: "Generator",
+      //     isSelect: false,
+      //   },
+      //   {
+      //     img: "kitchen.png",
+      //     title: "Refrigerator",
+      //     isSelect: false,
+      //   },
+      //   {
+      //     img: "language.png",
+      //     title: "Internet",
+      //     isSelect: false,
+      //   },
+      //   {
+      //     img: "local_laundry_service.png",
+      //     title: "Washine machine",
+      //     isSelect: false,
+      //   },
+      //   {
+      //     img: "mode_fan.png",
+      //     title: "Fan",
+      //     isSelect: false,
+      //   },
+      //   {
+      //     img: "oil_barrel.png",
+      //     title: "Water storage",
+      //     isSelect: false,
+      //   },
+      //   {
+      //     img: "pool.png",
+      //     title: "Pool",
+      //     isSelect: false,
+      //   },
+      //   {
+      //     img: "yard.png",
+      //     title: "Garden",
+      //     isSelect: false,
+      //   },
+      // ],
 
-          isSelect: false,
-        },
-        {
-          title: "Quick Sale",
-          recommend: "Recommended for individuals",
-          amount: "Ghc20.00",
-          duration: "For 1 month",
-
-          isSelect: false,
-        },
-        {
-          title: " Quick Rent",
-          recommend: "Recommended for individuals",
-          amount: "Ghc20.00",
-          duration: "For 1 month",
-
-          isSelect: false,
-        },
-        {
-          title: "Quick Rent",
-          recommend: "Recommended for individuals",
-          amount: "Ghc20.00",
-          duration: "For 1 month",
-          isSelect: false,
-        },
-      ],
+      propertyUpload: {
+        property_type_id: "" as string,
+        latitude: "" as string,
+        longitude: "" as string,
+        specifications: [] as Array<object>,
+        amenities: [] as Array<string>,
+        description: "" as string,
+        photo: [],
+        price: 0 as number,
+        other_specifications: [{ name: "", number: 0 }],
+      },
     };
   },
-  computed: {
-    isValid() {},
-  },
+
   async created() {
-    const token = this.$auth.$storage.getLocalStorage("user_token");
     const propertyTypes = await this.$propertyTypesApi.index();
-    this.propertyTypes = propertyTypes;
+    this.propertyTypes = propertyTypes.data;
     console.log(propertyTypes);
-    console.log(token);
+
+    const listingPlans = await this.$listingPlansApi.index();
+    this.pricingPlans = listingPlans.data;
+    console.log(listingPlans);
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    }
   },
   methods: {
     submitUpload() {
       console.log("submit");
     },
     getImage(pic: any): string {
-      return require("../assets/img/" + pic);
+      return "http://localhost:8000/" + pic;
     },
     getSvg(pic: string): string {
       return require("../assets/svg/" + pic);
     },
-    getProperty(newProperty: any): void {
-      //  newProperty.isSelect = true;
-      this.properties.filter((property) =>
-        property.title === newProperty.title
-          ? (property.isSelect = true)
-          : (property.isSelect = false)
-      );
+    getPrice(price: any) {
+      this.propertyUpload.price = price;
+    },
+    toggleUpload(file: any) {
+      console.log(file);
+
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = function () {
+        console.log("RESULT", reader.result);
+      };
+    },
+    addSpecSection() {
+      let newSection = { name: "", number: 0 };
+      this.propertyUpload.other_specifications.push(newSection);
+    },
+    handlePreview() {},
+    handleRemove() {},
+    async getProperty(newProperty: any) {
+      this.propertyUpload.property_type_id = newProperty.id;
+      this.propertyUpload.description = newProperty.description;
+      this.selectedProperty = newProperty.name;
+
+      const property = await this.$propertyTypesApi.show(newProperty.id);
+      this.propertySpecs = property.data;
+      this.amenities = property.data.amenities;
+
+      console.log(property);
     },
     getAmenities(property: any): void {
-      property.isSelect = !property.isSelect;
+      let singlePlan = Object.assign([], this.propertyUpload.amenities);
+      if (this.propertyUpload.amenities) {
+        let amenityIndex = this.propertyUpload.amenities.indexOf(property.id);
+        singlePlan.includes(property.id)
+          ? this.propertyUpload.amenities.splice(amenityIndex, 1)
+          : this.propertyUpload.amenities.push(property.id);
+        console.log(amenityIndex);
+      }
+
+      console.log(this.propertyUpload.amenities);
     },
+
     toPrev(): void {
       this.step--;
     },
-    toNext(): void {
+    toNext() {
       this.step++;
+
+      if (this.step == 3 && this.propertySpecs) {
+        this.propertySpecs.specifications.filter((spec: any) =>
+          this.propertyUpload.specifications.push({
+            number: spec.number,
+            property_type_specification_id: spec.id,
+          })
+        );
+      }
+      console.log(this.propertyUpload);
+    },
+    showPosition(position: any) {
+      this.propertyUpload.latitude = position.coords.latitude;
+      this.propertyUpload.longitude = position.coords.longitude;
     },
   },
 });
@@ -428,14 +482,23 @@ $medium_screen: 769px;
         display: flex;
         justify-content: space-between;
         border: 1px solid #e2e8f0;
-        padding: 15px;
         border-radius: 12px;
         margin-bottom: 10px;
+        padding: 15px;
         cursor: pointer;
         @media (max-width: $small_screen) {
           img {
             display: none;
           }
+        }
+        .property_description {
+          font-size: 12px;
+        }
+        .property_upload_photo {
+          border-radius: 7px;
+          max-width: 70px;
+          height: 50px;
+          width: 100%;
         }
       }
     }
@@ -495,6 +558,20 @@ $medium_screen: 769px;
       width: 100%;
       grid-template-columns: repeat(1, 1fr);
     }
+  }
+  .other_specs {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    padding: 15px;
+    p {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+  }
+  .inner_specs {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>

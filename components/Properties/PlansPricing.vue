@@ -3,16 +3,16 @@
     <div v-for="(plan, index) in pricingPlans" :key="index" class="mx-10">
       <div
         class="plans"
-        :style="plan.isSelect && { border: '1px solid #de0b0b' }"
+        @click="getPlan(plan)"
+        :style="selectedPlan == plan.name && { border: '1px solid #de0b0b' }"
       >
-        <h3>{{ plan.title }}</h3>
-        <p class="plan_recommend">{{ plan.recommend }}</p>
-        <h4 class="plan_pricing">{{ plan.amount }}</h4>
-        <p class="plan_duration">{{ plan.duration }}</p>
+        <h3>{{ plan.name }}</h3>
+        <p class="plan_recommend">{{ plan.description }}</p>
+        <h4 class="plan_pricing">{{ plan.currency }}{{ plan.price }}</h4>
+        <p class="plan_duration">For {{ plan.no_of_days }} days</p>
         <el-button
           class="plan_btn mb-10"
-          @click="getPlan(plan)"
-          :type="plan.isSelect && 'primary'"
+          :type="selectedPlan == plan.name ? 'primary' : ''"
           >Select plan</el-button
         >
         <div class="pt-20 recommendations">
@@ -38,67 +38,24 @@
 <script lang="ts">
 import Vue from "vue";
 
-interface property {
-  title: String;
-  recommend: String;
-  amount: String;
-  duration: String;
-  isSelect?: Boolean;
-}
-
 export default Vue.extend({
   name: "PlansPricing",
-  //   props: {
-  //    pricingPlans: {
-  //         required: true,
-  //         type: Array,
-  //     }
-  //   },
+  props: {
+    pricingPlans: {
+      required: true,
+      type: Array,
+    },
+  },
   data() {
     return {
-      pricingPlans: [
-        {
-          title: "Quick Deals",
-          recommend: "Recommended for individuals",
-          amount: "Ghc20.00",
-          duration: "For 1 month",
-
-          isSelect: true,
-        },
-        {
-          title: "Quick Sale",
-          recommend: "Recommended for individuals",
-          amount: "Ghc20.00",
-          duration: "For 1 month",
-
-          isSelect: false,
-        },
-        {
-          title: " Quick Rent",
-          recommend: "Recommended for individuals",
-          amount: "Ghc20.00",
-          duration: "For 1 month",
-
-          isSelect: false,
-        },
-        {
-          title: "Quick Rent",
-          recommend: "Recommended for individuals",
-          amount: "Ghc20.00",
-          duration: "For 1 month",
-          isSelect: false,
-        },
-      ],
+      selectedPlan: "" as string,
     };
   },
   methods: {
-    getPlan(newPlan: property): void {
-      console.log("clicked");
-      this.pricingPlans.filter((plan) =>
-        plan.title === newPlan.title
-          ? (plan.isSelect = true)
-          : (plan.isSelect = false)
-      );
+    getPlan(newPlan: any) {
+      this.selectedPlan = newPlan.name;
+
+      this.$emit("getPlan", newPlan.price);
     },
   },
 });

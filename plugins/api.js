@@ -10,4 +10,5 @@ export default (ctx, inject) => {
   inject("registerApi", apiService("/signup"));
   inject("countriesApi", apiService("/countries"));
   inject("propertyTypesApi", apiService("/propertytypes"));
+  inject("listingPlansApi", apiService("/listingplans"));
 };
