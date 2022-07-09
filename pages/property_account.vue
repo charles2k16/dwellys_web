@@ -133,7 +133,6 @@
                     <el-form-item label="ID type" prop="id_type">
                       <el-select
                         v-model="property_account.id_type"
-                        clear="select_id"
                         placeholder="Select ID type"
                       >
                         <el-option

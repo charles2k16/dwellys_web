@@ -130,7 +130,7 @@
                 class="grid_content"
                 @click="getAmenities(property)"
                 :style="
-                  propertyUpload.amenities.includes(property.id)
+                  propertyUpload.property_amenities_id.includes(property.id)
                     ? { background: '#E2E8F0' }
                     : { background: '#fff' }
                 "
@@ -181,7 +181,60 @@
             <el-slider v-model="step" disabled :min="1" :max="6"></el-slider>
           </div>
         </div>
-        <div class="property_content_container pb-20">map</div>
+        <div class="property_content_container pb-20">
+          <el-row class="pb-20">
+            <el-col :sm="12" class="pb-20 d-flex_column pr-20">
+              <span>Select Country</span>
+              <el-select
+                v-model="country"
+                placeholder="Select"
+                class="region pt-10"
+                @change="getCountry($event)"
+              >
+                <el-option
+                  v-for="country in countries"
+                  :key="country.id"
+                  :value="country.full_name"
+                >
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :sm="12" class="pb-20 d-flex_column">
+              <span class="pb-10">Location</span>
+              <el-input
+                v-model="propertyUpload.location"
+                placeholder="Location"
+              >
+              </el-input>
+            </el-col>
+          </el-row>
+          <el-row class="pb-20">
+            <el-col :sm="12" class="pb-20 d-flex_column pr-20">
+              <span>Select Region</span>
+              <el-select
+                v-model="propertyUpload.region"
+                placeholder="Select"
+                class="region pt-10"
+              >
+                <el-option
+                  v-for="region in regions"
+                  :key="region"
+                  :value="region"
+                >
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :sm="12" class="d-flex_column">
+              <span>City</span>
+              <el-input
+                v-model="propertyUpload.city"
+                placeholder="City"
+                class="pt-10"
+              >
+              </el-input>
+            </el-col>
+          </el-row>
+        </div>
       </div>
       <div v-if="step === 6">
         <div class="center">
@@ -207,6 +260,7 @@
           class="btn_sm submit_register_button"
           @click="submitUpload"
           :loading="btnLoading"
+          :disabled="!submitVal"
           v-if="step === 6"
           >Submit</el-button
         >
@@ -214,6 +268,7 @@
           type="primary"
           class="btn_sm submit_register_button"
           @click="toNext"
+          :disabled="!isValid"
           v-else
           >Next</el-button
         >
@@ -239,8 +294,7 @@ export default Vue.extend({
   data() {
     return {
       step: 1 as number,
-      fileList: [],
-      amenitiesId: [] as Array<string>,
+      country: "" as string,
       propertySelected: false as boolean,
       selectedProperty: "",
       btnLoading: false as boolean,
@@ -248,6 +302,7 @@ export default Vue.extend({
       propertySpecs: {
         specifications: [] as Array<object>,
       },
+      regions: ["Greater Accra", "Ashanti Region", ""],
       amenities: [],
 
       properties: [
@@ -290,14 +345,15 @@ export default Vue.extend({
         },
       ],
       pricingPlans: [],
-
+      countries: [],
       propertyUpload: {
         name: "" as string,
         property_type_id: "" as string,
+        country_id: "" as string,
         latitude: "" as string,
         longitude: "" as string,
         specifications: [] as Array<object>,
-        amenities: [] as Array<string>,
+        property_amenities_id: [] as Array<string>,
         description: "" as string,
         photo: [] as Array<object>,
         price: 0 as number,
@@ -318,9 +374,46 @@ export default Vue.extend({
     this.pricingPlans = listingPlans.data;
     console.log(listingPlans);
 
+    const countries = await this.$countriesApi.index();
+    this.countries = countries.data;
+    console.log(this.countries);
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     }
+  },
+  computed: {
+    isValid() {
+      let valid = false;
+      if (this.step == 1 && this.propertyUpload.property_type_id != "") {
+        valid = true;
+      } else if (this.step == 2) {
+        valid = true;
+      } else if (
+        this.step == 3 &&
+        this.propertyUpload.property_amenities_id.length > 0
+      ) {
+        valid = true;
+      } else if (this.step == 4 && this.propertyUpload.photo.length > 0) {
+        valid = true;
+      } else if (
+        this.step == 5 &&
+        this.propertyUpload.country_id != "" &&
+        this.propertyUpload.location != "" &&
+        this.propertyUpload.region != "" &&
+        this.propertyUpload.city != ""
+      ) {
+        valid = true;
+      }
+      return valid;
+    },
+    submitVal() {
+      let valid = false;
+      if (this.step == 6 && this.propertyUpload.price) {
+        valid = true;
+      }
+      return valid;
+    },
   },
   methods: {
     getImage(pic: any): string {
@@ -361,16 +454,20 @@ export default Vue.extend({
       console.log(property);
     },
     getAmenities(property: any): void {
-      let singlePlan = Object.assign([], this.propertyUpload.amenities);
-      if (this.propertyUpload.amenities) {
-        let amenityIndex = this.propertyUpload.amenities.indexOf(property.id);
+      let singlePlan = Object.assign(
+        [],
+        this.propertyUpload.property_amenities_id
+      );
+      if (this.propertyUpload.property_amenities_id) {
+        let amenityIndex = this.propertyUpload.property_amenities_id.indexOf(
+          property.id
+        );
         singlePlan.includes(property.id)
-          ? this.propertyUpload.amenities.splice(amenityIndex, 1)
-          : this.propertyUpload.amenities.push(property.id);
-        console.log(amenityIndex);
+          ? this.propertyUpload.property_amenities_id.splice(amenityIndex, 1)
+          : this.propertyUpload.property_amenities_id.push(property.id);
       }
 
-      console.log(this.propertyUpload.amenities);
+      console.log(this.propertyUpload.property_amenities_id);
     },
 
     toPrev(): void {
@@ -388,6 +485,14 @@ export default Vue.extend({
         );
       }
       console.log(this.propertyUpload);
+    },
+    getCountry(e: any) {
+      console.log(e);
+      this.countries.filter((country: any) =>
+        country.full_name == e
+          ? (this.propertyUpload.country_id = country.id)
+          : ""
+      );
     },
     showPosition(position: any) {
       this.propertyUpload.latitude = position.coords.latitude;
@@ -545,6 +650,10 @@ $medium_screen: 769px;
   .inner_specs {
     display: flex;
     justify-content: space-between;
+  }
+
+  .region {
+    width: 100%;
   }
 }
 </style>
