@@ -66,7 +66,7 @@ export default {
     baseURL:
       process.env.NODE_ENV !== 'production'
         ? 'http://localhost:8000/api/v1'
-        : 'https://newapi.dwellys.com/api',
+        : 'https://newapi.dwellys.com/api/v3',
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
