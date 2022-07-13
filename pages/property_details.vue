@@ -176,6 +176,12 @@ export default Vue.extend({
   components: {
     ApplicationHandler,
   },
+  props: {
+    property: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       activeName: "first" as string,

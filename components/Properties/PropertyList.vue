@@ -5,41 +5,43 @@
         :xs="24"
         :sm="12"
         :md="6"
-        v-for="(house, index) in houses"
+        v-for="(property, index) in listings"
         :key="index"
         class="pb-20"
       >
-        <NuxtLink to="/property_details">
-          <el-card shadow="hover" class="house_card">
-            <div
-              class="card_img"
-              :style="{
-                backgroundImage: `url(${getImage(house.img)})`,
-              }"
-            >
-              <div class="d-flex justify_between house_text p-10">
-                <p
-                  style="
-                    background: white;
-                    padding: 2px 10px;
-                    border-radius: 7.34885px;
-                  "
-                >
-                  Rent
-                </p>
-                <span
-                  class="material-icons"
-                  style="color: white"
-                  @click="favProperty(house.fav)"
-                >
-                  favorite_border
-                </span>
-              </div>
+        <el-card shadow="hover" class="house_card">
+          <div class="card_img">
+            <!-- :style="{ backgroundImage: `url(${getImage(
+              property.listing_detail.listing_images[0] )})`, }" -->
+            <div class="d-flex justify_between house_text p-10">
+              <p
+                style="
+                  background: white;
+                  padding: 2px 10px;
+                  border-radius: 7.34885px;
+                "
+              >
+                {{ property.listing_detail.category.name }}
+              </p>
+              <span
+                class="material-icons fav"
+                @click.self="favProperty(property)"
+              >
+                <!-- style="color: white" -->
+                favorite_border
+              </span>
             </div>
+          </div>
+          <nuxt-link :to="{ name: 'property_details', params: { property } }">
             <div class="card_body">
               <!-- amount -->
-              <p class="house_amount">$700/mth</p>
-              <p class="house_plot">Plot No, 34, Dade St, Tema</p>
+              <p class="house_amount">
+                ${{ property.listing_detail.price }}/mth
+              </p>
+              <p class="house_plot">
+                {{ property.listing_detail.region }},
+                {{ property.listing_detail.city }}
+              </p>
             </div>
             <div class="card_footer">
               <div class="pl-5">
@@ -65,8 +67,8 @@
                 <p>Living area</p>
               </div>
             </div>
-          </el-card>
-        </NuxtLink>
+          </nuxt-link>
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -76,6 +78,12 @@
 import Vue from "vue";
 
 export default Vue.extend({
+  props: {
+    listings: {
+      required: true,
+      type: Array,
+    },
+  },
   name: "PropertyList",
   data() {
     return {
@@ -163,6 +171,10 @@ export default Vue.extend({
         padding: 0 30px;
       }
     }
+  }
+  .fav {
+    color: white;
+    cursor: pointer;
   }
 }
 </style>

@@ -96,7 +96,7 @@
             <p class="pb-20">
               {{ tab.title }}
             </p>
-            <PropertyList :type="tab.label" />
+            <PropertyList :type="tab.label" :listings="listings" />
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -105,40 +105,43 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'IndexPage',
+  name: "IndexPage",
   data() {
     return {
-      activeName: 'first' as string,
-      home: '' as string,
+      activeName: "first" as string,
+      home: "" as string,
+      listings: [] as Array<object>,
       sendForm: {
         amount: null,
         recipient_amt: null,
-        payment_method: '' as string,
+        payment_method: "" as string,
       },
       tabOptions: [
-        { label: 'All', title: 'Rent a home' },
-        { label: 'House', title: '     Rent a house' },
-        { label: 'Apartment', title: 'Rent an Apartment' },
-        { label: 'Town house', title: 'Rent a Town house' },
+        { label: "All", title: "Rent a home" },
+        { label: "House", title: "     Rent a house" },
+        { label: "Apartment", title: "Rent an Apartment" },
+        { label: "Town house", title: "Rent a Town house" },
 
-        { label: ' Office', title: ' Rent an office' },
-        { label: 'Land', title: '            Buy a land' },
+        { label: " Office", title: " Rent an office" },
+        { label: "Land", title: "            Buy a land" },
       ],
     };
   },
+  async created() {
+    // const listings = await this.$listingApi.index();
+    // this.listings = listings.data;
+    // console.log(listings);
+  },
   methods: {
     onCountryUpdate(country: object) {
-      console.log(country, 'event');
+      console.log(country, "event");
     },
     handleClick(tab: string, event: object) {
       console.log(tab, event);
     },
-  },
-  created() {
-    console.log(this.$auth);
   },
 });
 </script>
@@ -147,7 +150,7 @@ export default Vue.extend({
 .home {
   color: var(--text-white);
   .home_landing_page {
-    background-image: url('~/assets/img/home.png');
+    background-image: url("~/assets/img/home.png");
     background-repeat: no-repeat;
     background-size: 100% 400px;
     height: 400px;

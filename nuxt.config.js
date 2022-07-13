@@ -104,7 +104,7 @@ export default {
         endpoints: {
           login: { url: "/login", method: "post" },
           logout: { url: "/logout", method: "post" },
-          // user: { url: "", method: "get", propertyName: "user" },
+          user: false,
         },
       },
       google: {
@@ -112,10 +112,11 @@ export default {
           "1039031868707-iakjs1b8u7i12s3jb5l11on7uc8flkpr.apps.googleusercontent.com",
         scope: ["profile", "email"],
         codeChallengeMethod: "",
-        responseType: "id_token token",
+        responseType: "code",
         endpoints: {
-          token: "https://newapi.dwellys.com/api/v3/login", // somm backend url to resolve your auth with google and give you the token back
-          userInfo: "http://localhost:3000/login", // the endpoint to get the user info after you recived the token
+          token: "http://localhost:8000/api/v3/loginwithsocialmedia", // somm backend url to resolve your auth with google and give you the token back
+          userInfo: false, // the endpoint to get the user info after you recived the token
+          redirect_uri: "http://localhost:3000",
         },
       },
       facebook: {
