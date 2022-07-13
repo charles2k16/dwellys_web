@@ -146,7 +146,7 @@ export default Vue.extend({
         .loginWith("facebook")
         .then((response: any) => {
           // const { user, token } = response.data.data;
-          console.log(response.data);
+          console.log(response);
           // this.$auth.setUserToken(token);
           // this.$auth.setUser(user);
           // this.$emit("closeLoginModal");

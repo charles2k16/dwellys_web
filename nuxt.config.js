@@ -121,10 +121,12 @@ export default {
       },
       facebook: {
         endpoints: {
+          token: "http://localhost:8000/api/v3/loginwithsocialmedia",
           userInfo:
             "https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}",
         },
-        clientId: "2579105180293c669ed5937603135b1a",
+        // clientId: "2579105180293c669ed5937603135b1a",
+        clientId: "3270395229903696",
         scope: ["public_profile", "email"],
       },
     },
