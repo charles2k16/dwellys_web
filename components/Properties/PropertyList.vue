@@ -111,7 +111,10 @@ export default Vue.extend({
       return require("../../assets/img/" + pic);
     },
     toDetails(property: any): void {
-      console.log(property);
+      this.$router.push({
+        name: "property_details",
+        params: { property: property },
+      });
     },
   },
 });
