@@ -10,7 +10,7 @@
         class="pb-20"
       >
         <el-card shadow="hover" class="house_card">
-          <div class="card_img">
+          <div class="card_img" @click.self="toDetails(property)">
             <!-- :style="{ backgroundImage: `url(${getImage(
               property.listing_detail.listing_images[0] )})`, }" -->
             <div class="d-flex justify_between house_text p-10">
@@ -25,49 +25,53 @@
               </p>
               <span
                 class="material-icons fav"
-                @click.self="favProperty(property)"
+                @click="favProperty(property)"
+                :style="
+                  favProperties.includes(property)
+                    ? { color: 'red' }
+                    : { background: '#fff' }
+                "
               >
-                <!-- style="color: white" -->
                 favorite_border
               </span>
             </div>
           </div>
-          <nuxt-link :to="{ name: 'property_details', params: { property } }">
-            <div class="card_body">
-              <!-- amount -->
-              <p class="house_amount">
-                ${{ property.listing_detail.price }}/mth
-              </p>
-              <p class="house_plot">
-                {{ property.listing_detail.region }},
-                {{ property.listing_detail.city }}
-              </p>
+          <!-- <nuxt-link
+            :to="{ name: 'property_details', params: { property: property } }"
+          > -->
+          <div class="card_body">
+            <!-- amount -->
+            <p class="house_amount">${{ property.listing_detail.price }}/mth</p>
+            <p class="house_plot">
+              {{ property.listing_detail.region }},
+              {{ property.listing_detail.city }}
+            </p>
+          </div>
+          <div class="card_footer">
+            <div class="pl-5">
+              <div class="d-flex align_center">
+                <img src="~/assets/svg/bed.png" class="property_img pr-10" />
+                <b>3</b>
+              </div>
+              <p>Bedrooms</p>
             </div>
-            <div class="card_footer">
-              <div class="pl-5">
-                <div class="d-flex align_center">
-                  <img src="~/assets/svg/bed.png" class="property_img pr-10" />
-                  <b>3</b>
-                </div>
-                <p>Bedrooms</p>
+            <div class="house_bathroom">
+              <div class="d-flex align_center">
+                <img src="~/assets/svg/bath.png" class="property_img pr-10" />
+                <b>4</b>
               </div>
-              <div class="house_bathroom">
-                <div class="d-flex align_center">
-                  <img src="~/assets/svg/bath.png" class="property_img pr-10" />
-                  <b>4</b>
-                </div>
-                <p>Bathrooms</p>
-              </div>
-              <div>
-                <div class="d-flex align_center">
-                  <img src="~/assets/svg/tv.png" class="property_img pr-10" /><b
-                    >1</b
-                  >
-                </div>
-                <p>Living area</p>
-              </div>
+              <p>Bathrooms</p>
             </div>
-          </nuxt-link>
+            <div>
+              <div class="d-flex align_center">
+                <img src="~/assets/svg/tv.png" class="property_img pr-10" /><b
+                  >1</b
+                >
+              </div>
+              <p>Living area</p>
+            </div>
+          </div>
+          <!-- </nuxt-link> -->
         </el-card>
       </el-col>
     </el-row>
@@ -89,27 +93,25 @@ export default Vue.extend({
     return {
       email: "" as string,
       roote: "~/assets/img/",
-      houses: [
-        {
-          img: "Frame1.png",
-          fav: false,
-        },
-        { img: "Frame2.png", fav: false },
-        { img: "Frame3.png", fav: false },
-        { img: "Frame4.png", fav: false },
-        { img: "Frame5.png", fav: false },
-        { img: "Frame6.png", fav: false },
-        { img: "Frame7.png", fav: false },
-        { img: "Frame8.png", fav: false },
-      ],
+      favProperties: [] as Array<object>,
     };
   },
   methods: {
-    favProperty(fav: Boolean) {
-      fav = !fav;
+    favProperty(fav: any) {
+      let singleProperty = Object.assign([], this.favProperties);
+      if (this.favProperties) {
+        let favIndex = this.favProperties.indexOf(fav);
+        singleProperty.includes(fav)
+          ? this.favProperties.splice(favIndex, 1)
+          : this.favProperties.push(fav);
+      }
+      console.log(this.favProperties);
     },
     getImage(pic: string): string {
       return require("../../assets/img/" + pic);
+    },
+    toDetails(property: any): void {
+      console.log(property);
     },
   },
 });
@@ -173,7 +175,7 @@ export default Vue.extend({
     }
   }
   .fav {
-    color: white;
+    color: grey;
     cursor: pointer;
   }
 }

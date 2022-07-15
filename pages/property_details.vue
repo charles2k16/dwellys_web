@@ -19,7 +19,11 @@
             align-items: center;
           "
         >
-          <b>3 bed room house in Community 25, Tema</b>
+          <b
+            >{{ propertyDetails.listing_detail.city }} -
+            {{ propertyDetails.listing_detail.location }},
+            {{ propertyDetails.listing_detail.region }}
+          </b>
         </p>
       </div>
       <div>
@@ -85,13 +89,7 @@
           <div class="house_details_description">
             <h3 class="description_header">Description</h3>
             <p class="description_content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut metus
-              risus aenean mattis. Odio accumsan viverra ipsum tristique lectus
-              pellentesque erat. Fermentum faucibus et nisl donec sollicitudin
-              aenean vel ornare vulputate. Lorem dolor elementum quis tempor
-              morbi. Dolor varius praesent iaculis et accumsan at fusce aliquam
-              ultricies. Amet aenean justo proin nulla ac arcu. Vitae dui, elit
-              velit nulla quis euismod nunc. .
+              {{ propertyDetails.listing_detail.description }}
             </p>
           </div>
         </div>
@@ -102,13 +100,17 @@
                 <div style="height: 200px">
                   <p style="padding-bottom: 5px">Rent</p>
                   <p class="pb-20">
-                    <b style="font-size: 24px; line-height: 28px">$400.00</b>/
-                    month
+                    <b style="font-size: 24px; line-height: 28px"
+                      >${{ propertyDetails.listing_detail.price }}</b
+                    >/ month
                   </p>
                   <div class="d-flex">
                     <img src="~/assets/img/user_detail_img.png" />
                     <div class="ml-20">
-                      <p>Abena Dankwa Have</p>
+                      <p>
+                        {{ propertyDetails.lister.first_name }}
+                        {{ propertyDetails.lister.last_name }}
+                      </p>
                       <p style="font-size: 12px; color: #64748b">
                         Independent agent
                       </p>
@@ -138,16 +140,20 @@
         <hr class="hr_rule" />
         <div class="amenities_content">
           <h3>Amenities</h3>
-          <ul class="amenites_list">
-            <li>Air conditioning</li>
-            <li>Fans</li>
+          <ul
+            class="amenites_list"
+            v-for="amenity in propertyDetails.amenities"
+            :key="amenity.amenity.name"
+          >
+            <li>{{ amenity.amenity.name }}</li>
+            <!-- <li>Fans</li>
             <li>Refrigerator</li>
             <li>Swimming pool</li>
             <li>Water reservoir</li>
             <li>Washing Machine</li>
             <li>Garden</li>
             <li>Internet</li>
-            <li>Generator</li>
+            <li>Generator</li> -->
           </ul>
         </div>
         <div>
@@ -176,15 +182,16 @@ export default Vue.extend({
   components: {
     ApplicationHandler,
   },
-  props: {
-    property: {
-      type: Object,
-      required: true,
-    },
-  },
+  // props: {
+  //   property: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  // },
   data() {
     return {
       activeName: "first" as string,
+      propertyDetails: this.$route.params.property,
       home: "" as string,
       sendForm: {
         amount: null,
@@ -198,6 +205,9 @@ export default Vue.extend({
       ],
       user: "",
     };
+  },
+  created() {
+    console.log(this.propertyDetails);
   },
   methods: {
     onCountryUpdate(country: object) {

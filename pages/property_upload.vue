@@ -14,7 +14,7 @@
           </div>
         </div>
 
-        <div class="property_content_container">
+        <div class="property_content_container" v-loading="pageLoad">
           <div class="d-flex_column pb-20 pt-20 justify_center">
             <!-- <el-col :sm="32" class="pb-20 d-flex_column pr-20"> -->
             <p><b>Select Category</b></p>
@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div v-if="step === 2">
+      <div v-if="step === 2" v-loading="propLoad">
         <div class="center">
           <div class="property_upload_head">
             <h3>Provide information on the property specification</h3>
@@ -315,6 +315,8 @@ export default Vue.extend({
       step: 1 as number,
       country: "" as string,
       category: " " as string,
+      pageLoad: false as boolean,
+      propLoad: false as boolean,
       propertySelected: false as boolean,
       selectedProperty: "",
       btnLoading: false as boolean,
@@ -390,7 +392,7 @@ export default Vue.extend({
   async created() {
     const propertyTypes = await this.$propertyTypesApi.index();
     this.propertyTypes = propertyTypes.data;
-    console.log(propertyTypes);
+    this.propertyTypes ? (this.pageLoad = false) : (this.pageLoad = true);
 
     const listingPlans = await this.$listingPlansApi.index();
     this.pricingPlans = listingPlans.data;
@@ -486,6 +488,7 @@ export default Vue.extend({
       const property = await this.$propertyTypesApi.show(newProperty.id);
       this.propertySpecs = property.data;
       this.amenities = property.data.amenities;
+      this.propertySpecs ? (this.propLoad = false) : (this.propLoad = true);
 
       console.log(property);
     },

@@ -92,10 +92,7 @@
           v-for="(tab, index) in tabOptions"
           :key="index"
         >
-          <div class="section pt-20">
-            <p class="pb-20">
-              {{ tab.title }}
-            </p>
+          <div class="section pt-20" v-loading="pageLoad">
             <PropertyList :type="tab.label" :listings="listings" />
           </div>
         </el-tab-pane>
@@ -114,6 +111,7 @@ export default Vue.extend({
       activeName: "first" as string,
       home: "" as string,
       listings: [] as Array<object>,
+      pageLoad: false as boolean,
       sendForm: {
         amount: null,
         recipient_amt: null,
@@ -124,16 +122,17 @@ export default Vue.extend({
         { label: "House", title: "     Rent a house" },
         { label: "Apartment", title: "Rent an Apartment" },
         { label: "Town house", title: "Rent a Town house" },
-
         { label: " Office", title: " Rent an office" },
         { label: "Land", title: "            Buy a land" },
       ],
     };
   },
   async created() {
-    // const listings = await this.$listingApi.index();
-    // this.listings = listings.data;
-    // console.log(listings);
+    this.pageLoad = true;
+    const listings = await this.$listingApi.index();
+    this.listings = listings.data;
+    this.listings ? (this.pageLoad = false) : (this.pageLoad = true);
+    console.log(listings);
   },
   methods: {
     onCountryUpdate(country: object) {
