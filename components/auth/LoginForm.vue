@@ -15,8 +15,21 @@
             prefix-icon="el-icon-message"
           />
         </el-form-item>
+        <el-form-item label="Password">
+          <el-input
+            v-model="loginForm.password"
+            type="password"
+            placeholder="Enter your password"
+            suffix-icon="el-icon-view"
+          >
+          </el-input>
+        </el-form-item>
         <div class="mt-20">
-          <el-button type="primary" class="btn_lg" @click="login"
+          <el-button
+            type="primary"
+            class="btn_lg"
+            @click="login"
+            :loading="btnLoading"
             >Continue</el-button
           >
         </div>
@@ -57,44 +70,117 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
+import { IMixinState } from "@/types/mixinsTypes";
 
 export default Vue.extend({
-  name: 'LoginForm',
+  name: "LoginForm",
   data() {
     return {
+      btnLoading: false as boolean,
       loginForm: {
-        email: '' as string,
+        email: "" as string,
+        password: "" as string,
       },
       validation: {
         email: [
           {
             required: true,
-            type: 'email',
-            message: 'Please enter valid email',
-            trigger: ['blur', 'change'],
+            type: "email",
+            message: "Please enter valid email",
+            trigger: ["blur", "change"],
           },
-          { min: 5, message: 'Length should be 5 or more', trigger: 'blur' },
+          { min: 5, message: "Length should be 5 or more", trigger: "blur" },
         ],
       },
     };
   },
 
   methods: {
-    login() {
+    signIn() {
       (this as any).$refs.loginForm.validate((valid: boolean) => {
         if (valid) {
-          this.$emit('closeLoginModal', this.loginForm.email);
+          this.login();
+          this.btnLoading = false;
+          // this.$message.success({
+          //   message: "You have successfully loggedin",
+          //   type: "success",
+          // });
         } else {
-          return false;
+          this.btnLoading = false;
+          (this as any as IMixinState).getNotification(
+            "Make sure all required fields are filled",
+            "error"
+          );
         }
       });
     },
+    login() {
+      this.btnLoading = true;
+      this.$auth
+        .loginWith("local", {
+          data: {
+            email: this.loginForm.email,
+            password: this.loginForm.password,
+          },
+        })
+        .then((response: any) => {
+          const { user, token } = response.data.data;
+          console.log(response.data);
+
+          this.$auth.setUserToken(token);
+          this.$auth.setUser(user);
+          this.$emit("closeLoginModal");
+          // this.$message.success({
+          //   message: response.data.message,
+          //   type: "success",
+          // });
+        })
+        .catch((error: any) => {
+          this.btnLoading = false;
+          (this as any as IMixinState).catchError(error);
+        });
+    },
     facebookSignIn() {
-      this.$auth.loginWith('facebook');
+      this.$auth
+        .loginWith("facebook")
+        .then((response: any) => {
+          // const { user, token } = response.data.data;
+          console.log(response);
+          // this.$auth.setUserToken(token);
+          // this.$auth.setUser(user);
+          // this.$emit("closeLoginModal");
+          // this.$message.success({
+          //   message: response.data.message,
+          //   type: "success",
+          // });
+        })
+        .catch((error: any) => {
+          console.log(error);
+          // this.btnLoading = false;
+          // (this as any as IMixinState).catchError(error);
+        });
     },
     googleSignIn() {
-      this.$auth.loginWith('google');
+      this.$auth
+        .loginWith("google")
+        .then((response: any) => {
+          // const { user, token } = response.data.data;
+          console.log(response);
+
+          // this.$auth.setUserToken(token);
+          // this.$auth.setUser(user);
+          // this.$emit("closeLoginModal");
+          // this.$message.success({
+          //   message: response.data.message,
+          //   type: "success",
+          // });
+        })
+        .catch((error: any) => {
+          console.log(error);
+          // this.btnLoading = false;
+          // (this as any as IMixinState).catchError(error);
+        });
     },
   },
 });

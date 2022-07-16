@@ -13,7 +13,26 @@
             <el-slider v-model="step" disabled :min="1" :max="6"></el-slider>
           </div>
         </div>
-        <div class="property_content_container">
+
+        <div class="property_content_container" v-loading="pageLoad">
+          <div class="d-flex_column pb-20 pt-20 justify_center">
+            <!-- <el-col :sm="32" class="pb-20 d-flex_column pr-20"> -->
+            <p><b>Select Category</b></p>
+            <el-select
+              v-model="category"
+              placeholder="Select"
+              class="category pt-10"
+              @change="getCategory($event)"
+            >
+              <el-option
+                v-for="category in categories"
+                :key="category.id"
+                :value="category.name"
+              >
+              </el-option>
+            </el-select>
+            <!-- </el-col> -->
+          </div>
           <div class="property_content">
             <div v-for="property in propertyTypes" :key="property.id">
               <div
@@ -48,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div v-if="step === 2">
+      <div v-if="step === 2" v-loading="propLoad">
         <div class="center">
           <div class="property_upload_head">
             <h3>Provide information on the property specification</h3>
@@ -295,6 +314,9 @@ export default Vue.extend({
     return {
       step: 1 as number,
       country: "" as string,
+      category: " " as string,
+      pageLoad: false as boolean,
+      propLoad: false as boolean,
       propertySelected: false as boolean,
       selectedProperty: "",
       btnLoading: false as boolean,
@@ -303,6 +325,7 @@ export default Vue.extend({
         specifications: [] as Array<object>,
       },
       regions: ["Greater Accra", "Ashanti Region", ""],
+      categories: [],
       amenities: [],
 
       properties: [
@@ -350,6 +373,7 @@ export default Vue.extend({
         name: "" as string,
         property_type_id: "" as string,
         country_id: "" as string,
+        listing_category_id: "" as string,
         latitude: "" as string,
         longitude: "" as string,
         specifications: [] as Array<object>,
@@ -368,7 +392,7 @@ export default Vue.extend({
   async created() {
     const propertyTypes = await this.$propertyTypesApi.index();
     this.propertyTypes = propertyTypes.data;
-    console.log(propertyTypes);
+    this.propertyTypes ? (this.pageLoad = false) : (this.pageLoad = true);
 
     const listingPlans = await this.$listingPlansApi.index();
     this.pricingPlans = listingPlans.data;
@@ -378,6 +402,10 @@ export default Vue.extend({
     this.countries = countries.data;
     console.log(this.countries);
 
+    const categories = await this.$listingCategoriesApi.index();
+    this.categories = categories.data;
+    console.log(this.categories);
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.showPosition);
     }
@@ -385,7 +413,11 @@ export default Vue.extend({
   computed: {
     isValid() {
       let valid = false;
-      if (this.step == 1 && this.propertyUpload.property_type_id != "") {
+      if (
+        this.step == 1 &&
+        this.propertyUpload.property_type_id != "" &&
+        this.propertyUpload.listing_category_id != ""
+      ) {
         valid = true;
       } else if (this.step == 2) {
         valid = true;
@@ -426,14 +458,20 @@ export default Vue.extend({
       this.propertyUpload.price = price;
     },
     toggleUpload(file: any) {
-      console.log(file);
-      this.propertyUpload.photo.push(file);
+      // console.log(file);
+      // this.propertyUpload.photo.push(file);
 
-      // let reader = new FileReader();
-      // reader.readAsDataURL(file);
-      // reader.onloadend = function () {
-      //   console.log("RESULT", reader.result);
-      // };
+      let reader = new FileReader();
+      reader.readAsDataURL(file.raw);
+      reader.onloadend = () => {
+        // console.log("RESULT", reader.result);
+        reader.result;
+      };
+      let img = setTimeout(() => {
+        console.log(reader.result);
+        return reader.result;
+      }, 500);
+      console.log(img);
     },
     addSpecSection() {
       let newSection = { name: "", number: 0 };
@@ -450,6 +488,7 @@ export default Vue.extend({
       const property = await this.$propertyTypesApi.show(newProperty.id);
       this.propertySpecs = property.data;
       this.amenities = property.data.amenities;
+      this.propertySpecs ? (this.propLoad = false) : (this.propLoad = true);
 
       console.log(property);
     },
@@ -494,6 +533,14 @@ export default Vue.extend({
           : ""
       );
     },
+    getCategory(e: any) {
+      console.log(e);
+      this.categories.filter((category: any) =>
+        category.name == e
+          ? (this.propertyUpload.listing_category_id = category.id)
+          : ""
+      );
+    },
     showPosition(position: any) {
       this.propertyUpload.latitude = position.coords.latitude;
       this.propertyUpload.longitude = position.coords.longitude;
@@ -507,6 +554,7 @@ export default Vue.extend({
           console.log(res, "res");
           this.btnLoading = false;
           // this.$message.success("Property Uploaded Successfully!");
+          this.$router.replace("/");
         })
         .catch((err: any) => {
           console.log(err, "error");
@@ -548,6 +596,8 @@ $medium_screen: 769px;
     padding-top: 20px;
     width: 50%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
     @media (max-width: $small_screen) {
       width: 100%;
       margin: 0;
@@ -654,6 +704,11 @@ $medium_screen: 769px;
 
   .region {
     width: 100%;
+  }
+
+  .category {
+    width: 70%;
+    margin: 0 auto;
   }
 }
 </style>

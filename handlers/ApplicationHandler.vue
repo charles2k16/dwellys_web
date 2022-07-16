@@ -8,24 +8,9 @@
       custom-class="login_modal"
     >
       <template slot="title">
-        <h3 class="">Login or sign up</h3>
+        <h3 class="">Login or sign in</h3>
       </template>
       <LoginForm @closeLoginModal="closeLoginModal" />
-    </el-dialog>
-    <el-dialog
-      :visible.sync="showPasswordModal"
-      :destroy-on-close="true"
-      width="35%"
-      custom-class=" password_modal"
-    >
-      <template slot="title">
-        <h3 class="pb-20">Welcome back, Richmond</h3>
-        <hr class="hr_rule" />
-      </template>
-      <PasswordModal
-        @closePasswordModal="closePasswordModal"
-        :email="loginEmail"
-      />
     </el-dialog>
 
     <el-dialog
@@ -61,7 +46,6 @@ export default Vue.extend({
     return {
       loginEmail: "" as string,
       showLoginModal: false as boolean,
-      showPasswordModal: false as boolean,
       photoModal: false as boolean,
       ownerModal: false as boolean,
     };
@@ -73,7 +57,6 @@ export default Vue.extend({
     closeLoginModal(email: string): void {
       this.loginEmail = email;
       this.showLoginModal = false;
-      this.showPasswordModal = true;
     },
     showPhotoModal(): void {
       this.photoModal = true;
@@ -86,11 +69,6 @@ export default Vue.extend({
     },
     closeOwnerModal(): void {
       this.ownerModal = false;
-    },
-    closePasswordModal(): void {
-      // this.$emit("password", password);
-      console.log("handler");
-      this.showPasswordModal = false;
     },
     ownerAvatar(file: Object) {
       this.$emit("avatar", file);
