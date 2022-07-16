@@ -72,6 +72,7 @@ export default Vue.extend({
     },
     ownerAvatar(file: Object) {
       this.$emit("avatar", file);
+      this.photoModal = false;
     },
   },
 });

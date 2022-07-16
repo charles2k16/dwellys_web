@@ -131,7 +131,7 @@ export default Vue.extend({
           this.$auth.setUserToken(token);
           this.$auth.setUser(user);
           this.$emit("closeLoginModal");
-          // this.$message.success({
+          // this.$message({
           //   message: response.data.message,
           //   type: "success",
           // });
@@ -150,7 +150,7 @@ export default Vue.extend({
           // this.$auth.setUserToken(token);
           // this.$auth.setUser(user);
           // this.$emit("closeLoginModal");
-          // this.$message.success({
+          // this.$message({
           //   message: response.data.message,
           //   type: "success",
           // });
@@ -171,7 +171,7 @@ export default Vue.extend({
           // this.$auth.setUserToken(token);
           // this.$auth.setUser(user);
           // this.$emit("closeLoginModal");
-          // this.$message.success({
+          // this.$message({
           //   message: response.data.message,
           //   type: "success",
           // });

@@ -129,10 +129,10 @@ export default Vue.extend({
   },
   async created() {
     this.pageLoad = true;
-    const listings = await this.$listingApi.index();
-    this.listings = listings.data;
-    this.listings ? (this.pageLoad = false) : (this.pageLoad = true);
-    console.log(listings);
+    // const listings = await this.$listingApi.index();
+    // this.listings = listings.data;
+    // this.listings ? (this.pageLoad = false) : (this.pageLoad = true);
+    // console.log(listings);
   },
   methods: {
     onCountryUpdate(country: object) {

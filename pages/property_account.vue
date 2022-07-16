@@ -101,7 +101,7 @@
                   style="margin-top: 10px"
                 >
                   <vue-phone-number-input
-                    v-model="phone_number"
+                    v-model="phone"
                     :border-radius="7"
                     default-country-code="GH"
                     @update="onPhoneUpdate"
@@ -224,7 +224,7 @@ export default Vue.extend({
         phone_number: "" as string,
         id_type: "" as string,
         id_card_upload: {},
-        country_id: "" as String,
+        country_id: "39a40751-d7d2-4346-99e5-b0235b520ce5" as String,
         user_type: "lister",
       },
       account_validation: {
@@ -312,6 +312,11 @@ export default Vue.extend({
     onPhoneUpdate(e: any) {
       console.log(e);
       this.property_account.phone_number = e.formattedNumber;
+      this.countries.filter((country: any) =>
+        country.short_name == e.countryCode
+          ? (this.property_account.country_id = country.id)
+          : ""
+      );
     },
     getAvatar(avatar: any) {
       this.property_account.avatar = avatar;

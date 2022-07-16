@@ -1,8 +1,11 @@
 <template>
   <el-row :sm="24" :md="12" class="p-20">
     <div class="photo_content">
-      <div class="profile_holder mr-20">
+      <div class="profile_holder mr-20" v-if="!avatar.name">
         <i class="el-icon-user-solid"></i>
+      </div>
+      <div v-else class="acc_photo">
+        <img :src="imageUrl" />
       </div>
     </div>
     <el-row class="photo_text">
@@ -26,7 +29,13 @@
       >
         <el-button type="info">Select an image of you</el-button>
       </el-upload>
-      <el-button type="primary" class="ml-20">Save</el-button>
+      <el-button
+        type="primary"
+        class="ml-20"
+        @click="save"
+        :disabled="!avatar.name"
+        >Save</el-button
+      >
     </div>
   </el-row>
 </template>
@@ -49,13 +58,17 @@ export default Vue.extend({
     return {
       email: "" as String,
       avatar: {} as object,
+      imageUrl: "",
     };
   },
   methods: {
     login() {},
     toggleUpload(file: upload) {
       console.log(file);
+      this.imageUrl = URL.createObjectURL(file.raw);
       this.avatar = file;
+    },
+    save() {
       this.$emit("avatar", this.avatar);
     },
   },
@@ -82,6 +95,12 @@ export default Vue.extend({
     i {
       font-size: 140px;
       color: #cbd5e1;
+    }
+  }
+  .acc_photo {
+    height: 220px;
+    img {
+      border-radius: 40%;
     }
   }
 }

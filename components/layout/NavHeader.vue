@@ -53,6 +53,7 @@
               <section @click="drawer = false" class="pb-20">
                 <NuxtLink to="/messages">Messages</NuxtLink>
               </section>
+
               <section
                 class="login"
                 @click="showLoginModal"
@@ -115,6 +116,9 @@ export default Vue.extend({
       drawer: false as boolean,
       direction: "rtl",
     };
+  },
+  created() {
+    console.log(this.$auth);
   },
   methods: {
     showLoginModal(): void {

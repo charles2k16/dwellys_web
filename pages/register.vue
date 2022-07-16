@@ -242,6 +242,10 @@ export default Vue.extend({
           .create(this.registerForm)
           .then((res: any) => {
             console.log(res);
+            // this.$message({
+            //   message: res.message,
+            //   type: "success",
+            // });
           })
           .catch((err: any) => {
             console.log(err);
