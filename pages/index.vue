@@ -123,16 +123,16 @@ export default Vue.extend({
         { label: "Apartment", title: "Rent an Apartment" },
         { label: "Town house", title: "Rent a Town house" },
         { label: " Office", title: " Rent an office" },
-        { label: "Land", title: "            Buy a land" },
+        { label: "Land", title: " Buy a land" },
       ],
     };
   },
   async created() {
-    this.pageLoad = true;
-    // const listings = await this.$listingApi.index();
-    // this.listings = listings.data;
-    // this.listings ? (this.pageLoad = false) : (this.pageLoad = true);
-    // console.log(listings);
+    this.pageLoad = false;
+    const listings = await this.$listingApi.index();
+    this.listings = listings.data;
+    this.listings ? (this.pageLoad = false) : (this.pageLoad = true);
+    console.log(listings);
   },
   methods: {
     onCountryUpdate(country: object) {

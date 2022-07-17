@@ -31,8 +31,8 @@
           <div class="details_plot">
             <section>
               <p class="d-flex">
-                <span class="material-icons mr-5"> room </span>Plot No, 34, Dade
-                St, Tema
+                <span class="material-icons mr-5"> room </span
+                >{{ propertyDetails.listing_detail.city }}
               </p>
             </section>
             <section>
@@ -105,7 +105,10 @@
                     >/ month
                   </p>
                   <div class="d-flex">
-                    <img src="~/assets/img/user_detail_img.png" />
+                    <img
+                      :src="src + propertyDetails.lister.avatar"
+                      class="property_avatar"
+                    />
                     <div class="ml-20">
                       <p>
                         {{ propertyDetails.lister.first_name }}
@@ -190,6 +193,7 @@ export default Vue.extend({
   // },
   data() {
     return {
+      src: "http://localhost:8000/",
       activeName: "first" as string,
       propertyDetails: this.$route.params.property,
       home: "" as string,
@@ -411,6 +415,12 @@ $small_screen: 426px;
   .info_side_card {
     width: 100%;
     max-width: 300px;
+  }
+
+  .property_avatar {
+    width: 50px;
+    // height:
+    border-radius: 50%;
   }
 }
 </style>

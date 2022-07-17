@@ -426,7 +426,7 @@ export default Vue.extend({
         this.propertyUpload.property_amenities_id.length > 0
       ) {
         valid = true;
-      } else if (this.step == 4 && this.propertyUpload.photo.length > 0) {
+      } else if (this.step == 4) {
         valid = true;
       } else if (
         this.step == 5 &&
@@ -467,11 +467,6 @@ export default Vue.extend({
         // console.log("RESULT", reader.result);
         reader.result;
       };
-      let img = setTimeout(() => {
-        console.log(reader.result);
-        return reader.result;
-      }, 500);
-      console.log(img);
     },
     addSpecSection() {
       let newSection = { name: "", number: 0 };

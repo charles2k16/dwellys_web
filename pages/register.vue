@@ -169,9 +169,9 @@ export default Vue.extend({
         password: "" as string,
         confirm_password: "",
         phone_number: "" as string,
-        sign_up_mode: "email",
-        user_type: "visitor",
-        country_id: "",
+        sign_up_mode: "email" as string,
+        user_type: "visitor" as string,
+        country_id: "39a40751-d7d2-4346-99e5-b0235b520ce5" as string,
       },
       validation: {
         email: [
@@ -225,6 +225,7 @@ export default Vue.extend({
           this.signUp();
           this.btnLoading = false;
           // this.$message.success("Registered Successfully!");
+          // this.$confirm('this.confirm'), {}
         } else {
           this.btnLoading = false;
           (this as any as IMixinState).getNotification(
@@ -238,18 +239,9 @@ export default Vue.extend({
       try {
         // this.$axios
         // .post("http://localhost:8000/api/v3/signup", this.registerForm)
-        await this.$registerApi
-          .create(this.registerForm)
-          .then((res: any) => {
-            console.log(res);
-            // this.$message({
-            //   message: res.message,
-            //   type: "success",
-            // });
-          })
-          .catch((err: any) => {
-            console.log(err);
-          });
+        const register = await this.$registerApi.create(this.registerForm);
+        console.log(register.message);
+        // (this as any as IMixinState).$message(() => register.message);
       } catch (error) {
         this.btnLoading = false;
         (this as any as IMixinState).catchError(error);
