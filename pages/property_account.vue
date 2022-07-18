@@ -29,7 +29,15 @@
             <div class="d-flex pb-20">
               <div>
                 <div class="profile_holder mr-20">
-                  <i class="el-icon-user-solid"></i>
+                  <i
+                    class="el-icon-user-solid"
+                    v-if="!property_account.avatar"
+                  ></i>
+                  <img
+                    :src="property_account.avatar"
+                    v-else
+                    class="property_avatar"
+                  />
                 </div>
               </div>
               <div class="d-flex_column profile_text pl-20">
@@ -64,6 +72,32 @@
                       <el-input
                         v-model="property_account.last_name"
                         placeholder="Last Name"
+                      >
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+
+                <el-row :gutter="20">
+                  <el-col :xs="24" :sm="24" :md="12">
+                    <el-form-item label="Password" prop="password">
+                      <el-input
+                        v-model="property_account.password"
+                        placeholder="Enter password"
+                        type="password"
+                      >
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :xs="24" :sm="24" :md="12">
+                    <el-form-item
+                      label="Confirm Password"
+                      prop="confirm_password"
+                    >
+                      <el-input
+                        v-model="property_account.confirm_password"
+                        placeholder="confirm password"
+                        type="password"
                       >
                       </el-input>
                     </el-form-item>
@@ -130,9 +164,9 @@
               <div class="form_div">
                 <el-row>
                   <el-col :xs="24" :sm="24" :md="12">
-                    <el-form-item label="ID type" prop="id_type">
+                    <el-form-item label="ID type" prop="id_card_type">
                       <el-select
-                        v-model="property_account.id_type"
+                        v-model="property_account.id_card_type"
                         placeholder="Select ID type"
                       >
                         <el-option
@@ -146,11 +180,18 @@
                     </el-form-item>
                   </el-col>
                 </el-row>
+                <el-form-item label="ID card number" prop="id_card_number">
+                  <el-input
+                    v-model="property_account.id_card_number"
+                    placeholder="Enter ID number"
+                  >
+                  </el-input>
+                </el-form-item>
                 <el-form-item label="Upload ID" prop="id_card_upload">
                   <el-upload
                     drag
                     action=""
-                    :on-change="toggleUpload"
+                    :on-change="propertyCard"
                     :limit="1"
                     :multiple="false"
                     class="upload_dragg w-100"
@@ -210,20 +251,45 @@ export default Vue.extend({
   },
 
   data() {
+    var validatePass = (rule: any, value: string, callback: any) => {
+      if (value === "") {
+        callback(new Error("Please input the password"));
+      } else {
+        if ((this as any).property_account.confirm_password !== "") {
+          (this as any).$refs.property_account.validateField(
+            "confirm_password"
+          );
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule: any, value: string, callback: any) => {
+      if (value === "") {
+        callback(new Error("Please input the password again"));
+      } else if (value !== (this as any).property_account.password) {
+        callback(new Error("Password don't match!"));
+      } else {
+        callback();
+      }
+    };
     return {
       active: 0 as number,
       step: 1 as number,
       phone: "",
       btnLoading: false as boolean,
       property_account: {
-        avatar: {} as object,
+        avatar: "" as any,
         first_name: "" as string,
         last_name: "" as string,
         dob: "" as string,
+        sign_up_mode: "email",
         email: "" as string,
+        password: "" as string,
+        confirm_password: "" as string,
         phone_number: "" as string,
-        id_type: "" as string,
-        id_card_upload: {},
+        id_card_type: "" as string,
+        id_card_upload: "" as any,
+        id_card_number: "" as string,
         country_id: "39a40751-d7d2-4346-99e5-b0235b520ce5" as String,
         user_type: "lister",
       },
@@ -249,6 +315,13 @@ export default Vue.extend({
             trigger: ["blur", "change"],
           },
         ],
+        id_card_number: [
+          {
+            required: true,
+            message: "Please enter ID number",
+            trigger: ["blur", "change"],
+          },
+        ],
         email: [
           {
             required: true,
@@ -265,7 +338,7 @@ export default Vue.extend({
             trigger: ["blur", "change"],
           },
         ],
-        id_type: [
+        id_card_type: [
           {
             required: true,
             message: "Please select ID type",
@@ -278,6 +351,12 @@ export default Vue.extend({
             message: "Please select an ID card",
             trigger: "change",
           },
+        ],
+        password: [
+          { validator: validatePass, trigger: "blur", required: true },
+        ],
+        confirm_password: [
+          { validator: validatePass2, trigger: "blur", required: true },
         ],
       },
       options: ["SSNIT", "Passport", "Voter"],
@@ -303,8 +382,12 @@ export default Vue.extend({
         }
       });
     },
-    toggleUpload(file: any) {
-      this.property_account.id_card_upload = file;
+    propertyCard(file: any) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file.raw);
+      reader.onloadend = () => {
+        this.property_account.id_card_upload = reader.result;
+      };
     },
     showPhotoModal() {
       (this as any).$refs.propertyAction.showPhotoModal(this.user);
@@ -320,6 +403,7 @@ export default Vue.extend({
     },
     getAvatar(avatar: any) {
       this.property_account.avatar = avatar;
+      console.log(this.property_account);
     },
     submit_account() {
       this.btnLoading = true;
@@ -340,6 +424,12 @@ export default Vue.extend({
       try {
         const response = await this.$registerApi.create(this.property_account);
         console.log(response);
+
+        (this as any as IMixinState).$confirm(response.message, {
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+          type: "success",
+        });
         this.btnLoading = false;
       } catch (error) {
         this.btnLoading = false;
@@ -451,6 +541,12 @@ $small_screen: 426px;
   .second_next {
     width: 180px;
     padding: 12px;
+  }
+
+  .property_avatar {
+    border-radius: 50%;
+    height: 130px;
+    width: 130px;
   }
 }
 </style>

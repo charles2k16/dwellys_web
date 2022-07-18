@@ -82,18 +82,26 @@
         <section class="pr-20">
           <NuxtLink to="/messages">Messages</NuxtLink>
         </section>
-        <section class="login" @click="showLoginModal" v-if="!$auth.loggedIn">
-          <div class="login_text">
-            <p>Login</p>
-            <img src="~/assets/img/user_icon.png" alt="icon" />
-          </div>
-        </section>
-        <section class="login" @click="$auth.logout()" v-if="$auth.loggedIn">
-          <div class="login_text">
-            <p>Logout</p>
-            <!-- <img src="~/assets/img/user_icon.png" alt="" /> -->
-          </div>
-        </section>
+
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <img
+              :src="src + $auth.user.avatar"
+              alt="avatar"
+              class="user_avatar"
+              v-if="$auth.user"
+            />
+            <img src="~/assets/img/user_icon.png" alt="icon" v-else />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item v-if="!$auth.loggedIn">
+              <p @click="showLoginModal">Login</p>
+            </el-dropdown-item>
+            <el-dropdown-item v-if="$auth.loggedIn" style="color: red">
+              <p @click="$auth.logout()">Logout</p></el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </div>
     <hr class="hr_rule register_header_line mt-20" />
@@ -112,6 +120,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      src: "http://localhost:8000/",
       user: "login" as string,
       drawer: false as boolean,
       direction: "rtl",
@@ -166,7 +175,12 @@ a {
   width: 24px;
   height: 24px;
 }
-
+.user_avatar {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  margin-left: 10px;
+}
 /* @media (max-width: 768px) {
   .header_content {
     display: none;

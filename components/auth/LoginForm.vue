@@ -127,14 +127,16 @@ export default Vue.extend({
         .then((response: any) => {
           const { user, token } = response.data.data;
           console.log(response.data);
+          (this as any as IMixinState).$message({
+            showClose: true,
+            message: response.data.message,
+            type: "success",
+          });
 
           this.$auth.setUserToken(token);
           this.$auth.setUser(user);
+
           this.$emit("closeLoginModal");
-          // this.$message({
-          //   message: response.data.message,
-          //   type: "success",
-          // });
         })
         .catch((error: any) => {
           this.btnLoading = false;
