@@ -414,7 +414,7 @@ $small_screen: 426px;
   }
 
   .property_avatar {
-    width: 50px;
+    width: 60px;
     // height:
     border-radius: 50%;
   }

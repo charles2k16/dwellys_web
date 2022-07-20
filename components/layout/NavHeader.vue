@@ -1,21 +1,21 @@
 <template>
   <div class="header">
     <ApplicationHandler ref="modalHandler" />
-
+    <!-- {{ $auth }} -->
     <div class="header_wrapper section">
       <div style="display: flex; align-items: center">
         <NuxtLink to="/">
           <img src="~/assets/img/logo.png" />
         </NuxtLink>
       </div>
-      <div class="header_content hidden-sm-and-down">
+      <!-- <div class="header_content hidden-sm-and-down">
         <section class="pr-20">
           <NuxtLink to="/">Property valuation</NuxtLink>
         </section>
         <section class="pl-10">
           <NuxtLink to="/property_account">Become an agent</NuxtLink>
         </section>
-      </div>
+      </div> -->
       <div class="drawer hidden-md-and-up">
         <svg
           @click="drawer = true"
@@ -95,10 +95,28 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item v-if="!$auth.loggedIn">
-              <p @click="showLoginModal">Login</p>
+              <p class="py-10" @click="showLoginModal">Login</p>
+            </el-dropdown-item>
+
+            <el-dropdown-item>
+              <section class="py-10">
+                <NuxtLink to="/">Property valuation</NuxtLink>
+              </section>
+            </el-dropdown-item>
+            <el-dropdown-item v-if="!$auth.user.user_type == 'lister'">
+              <section class="py-10">
+                <NuxtLink to="/property_upload">Property Upload</NuxtLink>
+              </section>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <section class="py-10">
+                <NuxtLink to="/property_account">Become an agent</NuxtLink>
+              </section>
             </el-dropdown-item>
             <el-dropdown-item v-if="$auth.loggedIn" style="color: red">
-              <p @click="$auth.logout()">Logout</p></el-dropdown-item
+              <p class="py-10" @click="$auth.logout()">
+                Logout
+              </p></el-dropdown-item
             >
           </el-dropdown-menu>
         </el-dropdown>
@@ -127,6 +145,9 @@ export default Vue.extend({
     };
   },
   created() {
+    console.log(this.$auth);
+  },
+  updated() {
     console.log(this.$auth);
   },
   methods: {

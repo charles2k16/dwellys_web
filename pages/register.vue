@@ -223,8 +223,7 @@ export default Vue.extend({
         if (valid) {
           console.log(this.registerForm);
           this.signUp();
-          // this.$message.success("Registered Successfully!");
-          // this.$confirm('this.confirm'), {}
+          this.$router.replace("/login");
         } else {
           this.loading = false;
           (this as any as IMixinState).getNotification(
