@@ -95,7 +95,6 @@ export default Vue.extend({
       },
     };
   },
-
   methods: {
     signIn() {
       (this as any).$refs.loginForm.validate((valid: boolean) => {
@@ -135,6 +134,7 @@ export default Vue.extend({
 
           this.$auth.setUserToken(token);
           this.$auth.setUser(user);
+          this.$auth.$storage.setLocalStorage("user_data", user);
 
           this.$emit("closeLoginModal");
         })

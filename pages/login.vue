@@ -128,6 +128,7 @@ export default Vue.extend({
 
           this.$auth.setUserToken(token);
           this.$auth.setUser(user);
+          // this.$auth.$storage.setLocalStorage("user_data", user);
           (this as any as IMixinState).$message({
             showClose: true,
             message: response.data.message,

@@ -86,7 +86,7 @@
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
             <img
-              :src="src + $auth.user.avatar"
+              :src="src + userData.avatar"
               alt="avatar"
               class="user_avatar"
               v-if="$auth.user"
@@ -103,7 +103,7 @@
                 <NuxtLink to="/">Property valuation</NuxtLink>
               </section>
             </el-dropdown-item>
-            <el-dropdown-item v-if="!$auth.user == 'lister'">
+            <el-dropdown-item v-if="userData.user_type == 'lister'">
               <section class="py-10">
                 <NuxtLink to="/property_upload">Property Upload</NuxtLink>
               </section>
@@ -138,6 +138,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      userData: {} as any,
       src: "http://localhost:8000/",
       user: "login" as string,
       drawer: false as boolean,
@@ -145,10 +146,13 @@ export default Vue.extend({
     };
   },
   created() {
+    this.userData = this.$auth.$storage.getLocalStorage("user_data");
+    console.log(this.$auth.$storage.getLocalStorage("user_data"));
     console.log(this.$auth);
   },
   updated() {
-    console.log(this.$auth);
+    this.userData = this.$auth.$storage.getLocalStorage("user_data");
+    console.log(this.$auth.$storage.getLocalStorage("user_data"));
   },
   methods: {
     showLoginModal(): void {

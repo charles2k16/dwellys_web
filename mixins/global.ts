@@ -9,7 +9,6 @@ export default Vue.extend({
   },
   methods: <IMixinState>{
     background_style(image: string) {
-      console.log(image, "global");
       const placeholder =
         "https://property.myludhiana.com/wp-content/uploads/2016/05/property_placeholder.jpg";
       const imageUrl = `${this.apiUrl}/${image}`;
