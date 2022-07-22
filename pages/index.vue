@@ -128,15 +128,25 @@ export default Vue.extend({
     };
   },
   async created() {
-    this.pageLoad = false;
+    this.pageLoad = true;
     const listings = await this.$listingApi.index();
-    this.listings = listings.data;
-    this.listings ? (this.pageLoad = false) : (this.pageLoad = true);
-    console.log(listings);
+    this.loadListing(listings.data);
   },
   methods: {
     onCountryUpdate(country: object) {
       console.log(country, "event");
+    },
+    loadListing(properties: any) {
+      const data = properties.map((property: any) => {
+        property.photos =
+          property.listing_detail.listing_images.length > 0
+            ? property.listing_detail.listing_images[0].photo
+            : "no photo";
+        return property;
+      });
+      this.listings = data;
+      this.pageLoad = false;
+      console.log(data);
     },
     handleClick(tab: string, event: object) {
       console.log(tab, event);

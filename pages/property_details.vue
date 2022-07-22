@@ -39,6 +39,7 @@
               <p class="d-flex">
                 <span class="material-icons mr-5"> schedule </span>Last updated
                 2 mins ago
+                <!-- {{ propertyDetails.updated_at }} -->
               </p>
             </section>
           </div>
@@ -216,6 +217,7 @@
 import Vue from "vue";
 // import { products } from '@/assets/data/index.js'
 import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
+// import moment from "moment";
 
 export default Vue.extend({
   name: "PropertyDetails",
@@ -258,6 +260,9 @@ export default Vue.extend({
     prevImage(image: any) {
       this.image = image;
     },
+    //  lastUpdate (date:any) {
+    //     return moment(date).format("MMMM Do YYYY");
+    //   },
     showOwner(): void {
       console.log("show");
       (this as any).$refs.propertyAction.showOwnerModal(this.user);

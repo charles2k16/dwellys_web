@@ -10,9 +10,11 @@
         class="pb-20"
       >
         <el-card shadow="hover" class="house_card">
-          <div class="card_img" @click.self="toDetails(property)">
-            <!-- :style="{ backgroundImage: `url(${getImage(
-              property.listing_detail.listing_images[0] )})`, }" -->
+          <div
+            class="card_img"
+            @click.self="toDetails(property)"
+            :style="background_style(property.photos)"
+          >
             <div class="d-flex justify_between house_text p-10">
               <p
                 style="
@@ -80,6 +82,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { IMixinState } from "@/types/mixinsTypes";
 
 export default Vue.extend({
   props: {
@@ -91,6 +94,7 @@ export default Vue.extend({
   name: "PropertyList",
   data() {
     return {
+      src: "http://localhost:8000/",
       email: "" as string,
       roote: "~/assets/img/",
       favProperties: [] as Array<object>,

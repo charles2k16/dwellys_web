@@ -103,7 +103,7 @@
                 <NuxtLink to="/">Property valuation</NuxtLink>
               </section>
             </el-dropdown-item>
-            <el-dropdown-item v-if="!$auth.user.user_type == 'lister'">
+            <el-dropdown-item v-if="!$auth.user == 'lister'">
               <section class="py-10">
                 <NuxtLink to="/property_upload">Property Upload</NuxtLink>
               </section>
