@@ -95,7 +95,6 @@ export default Vue.extend({
       },
     };
   },
-
   methods: {
     signIn() {
       (this as any).$refs.loginForm.validate((valid: boolean) => {
@@ -127,14 +126,17 @@ export default Vue.extend({
         .then((response: any) => {
           const { user, token } = response.data.data;
           console.log(response.data);
+          (this as any as IMixinState).$message({
+            showClose: true,
+            message: response.data.message,
+            type: "success",
+          });
 
           this.$auth.setUserToken(token);
           this.$auth.setUser(user);
+          this.$auth.$storage.setLocalStorage("user_data", user);
+
           this.$emit("closeLoginModal");
-          // this.$message.success({
-          //   message: response.data.message,
-          //   type: "success",
-          // });
         })
         .catch((error: any) => {
           this.btnLoading = false;
@@ -150,7 +152,7 @@ export default Vue.extend({
           // this.$auth.setUserToken(token);
           // this.$auth.setUser(user);
           // this.$emit("closeLoginModal");
-          // this.$message.success({
+          // this.$message({
           //   message: response.data.message,
           //   type: "success",
           // });
@@ -171,7 +173,7 @@ export default Vue.extend({
           // this.$auth.setUserToken(token);
           // this.$auth.setUser(user);
           // this.$emit("closeLoginModal");
-          // this.$message.success({
+          // this.$message({
           //   message: response.data.message,
           //   type: "success",
           // });

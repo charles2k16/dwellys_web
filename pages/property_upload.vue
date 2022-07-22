@@ -174,20 +174,30 @@
           </div>
         </div>
         <div class="property_content_container pb-20">
-          <el-upload
-            class="upload-demo"
-            drag
-            action=""
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :on-change="toggleUpload"
-            multiple
-          >
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">
-              Drop file here or <em>click to upload</em>
-            </div>
-          </el-upload>
+          <div class="property_image_uploader">
+            <input
+              type="file"
+              @change="toggleUpload"
+              style="display: none"
+              id="img"
+            />
+            <label
+              for="img"
+              class="property_image_main d-flex_column justify_center"
+            >
+              <i class="el-icon-upload"></i><br />
+              Drop file here or <em>click to upload</em></label
+            >
+          </div>
+          <div>
+            <img
+              v-for="image in listing_photos"
+              :key="image.photo"
+              :src="image.photo"
+              width="70px"
+              class="mx-10 mt-10"
+            />
+          </div>
         </div>
       </div>
       <div v-if="step === 5">
@@ -289,7 +299,8 @@
           @click="toNext"
           :disabled="!isValid"
           v-else
-          >Next</el-button
+        >
+          Next</el-button
         >
       </div>
     </div>
@@ -328,58 +339,19 @@ export default Vue.extend({
       categories: [],
       amenities: [],
 
-      properties: [
-        {
-          title: "Apartment",
-          details: "fitted especially with housekeeping facilities",
-          img: "property1.png",
-          isSelect: false,
-        },
-        {
-          title: "House",
-          details: "fitted especially with housekeeping facilities",
-          img: "property2.png",
-
-          isSelect: false,
-        },
-        {
-          title: "Single room self contain",
-          details: "fitted especially with housekeeping facilities",
-          img: "property2.png",
-          isSelect: false,
-        },
-        {
-          title: "Single room",
-          details: "fitted especially with housekeeping facilities",
-          img: "property2.png",
-          isSelect: false,
-        },
-        {
-          title: "Apartment",
-          details: "fitted especially with housekeeping facilities",
-          img: "property2.png",
-          isSelect: false,
-        },
-        {
-          title: "Apartment",
-          details: "fitted especially with housekeeping facilities",
-          img: "property1.png",
-          isSelect: false,
-        },
-      ],
       pricingPlans: [],
       countries: [],
+      listing_photos: [] as any,
       propertyUpload: {
         name: "" as string,
         property_type_id: "" as string,
         country_id: "" as string,
         listing_category_id: "" as string,
-        latitude: "" as string,
-        longitude: "" as string,
+        latitude: "5.627703749893443" as string,
+        longitude: "-0.08697846429555343" as string,
         specifications: [] as Array<object>,
         property_amenities_id: [] as Array<string>,
         description: "" as string,
-        photo: [] as Array<object>,
         price: 0 as number,
         location: "Accra Central",
         region: "Greater Accra",
@@ -426,7 +398,7 @@ export default Vue.extend({
         this.propertyUpload.property_amenities_id.length > 0
       ) {
         valid = true;
-      } else if (this.step == 4 && this.propertyUpload.photo.length > 0) {
+      } else if (this.step == 4) {
         valid = true;
       } else if (
         this.step == 5 &&
@@ -457,21 +429,14 @@ export default Vue.extend({
     getPrice(price: any) {
       this.propertyUpload.price = price;
     },
-    toggleUpload(file: any) {
-      // console.log(file);
-      // this.propertyUpload.photo.push(file);
-
+    toggleUpload(event: any) {
       let reader = new FileReader();
-      reader.readAsDataURL(file.raw);
+      reader.readAsDataURL(event.target.files[0]);
       reader.onloadend = () => {
-        // console.log("RESULT", reader.result);
-        reader.result;
+        // reader.result;
+        let img = { tag: "front", is_featured: false, photo: reader.result };
+        this.listing_photos.push(img);
       };
-      let img = setTimeout(() => {
-        console.log(reader.result);
-        return reader.result;
-      }, 500);
-      console.log(img);
     },
     addSpecSection() {
       let newSection = { name: "", number: 0 };
@@ -548,17 +513,29 @@ export default Vue.extend({
     async submitUpload() {
       console.log(this.propertyUpload);
       this.btnLoading = true;
-      await this.$listingApi
-        .create(this.propertyUpload)
-        .then((res: any) => {
-          console.log(res, "res");
-          this.btnLoading = false;
-          // this.$message.success("Property Uploaded Successfully!");
-          this.$router.replace("/");
-        })
-        .catch((err: any) => {
-          console.log(err, "error");
+      try {
+        const propertyResponse = await this.$listingApi.create(
+          this.propertyUpload
+        );
+        console.log(propertyResponse);
+        const imageListing = await this.$listingImagesApi.create({
+          listing_id: propertyResponse.data.id,
+          listing_photos: this.listing_photos,
         });
+
+        console.log(imageListing);
+
+        this.btnLoading = false;
+        (this as any as IMixinState).$message({
+          showClose: true,
+          message: propertyResponse.message,
+          type: "success",
+        });
+        this.$router.replace("/");
+      } catch (error) {
+        console.log(error, "error");
+        (this as any as IMixinState).catchError(error);
+      }
     },
   },
 });
@@ -601,6 +578,20 @@ $medium_screen: 769px;
     @media (max-width: $small_screen) {
       width: 100%;
       margin: 0;
+    }
+    .property_image_uploader {
+      border: 1px dotted black;
+      height: 250px;
+      width: 100%;
+      .property_image_main {
+        height: 250px;
+        position: relative;
+        width: 100%;
+        i {
+          font-size: 50px;
+          color: grey;
+        }
+      }
     }
     .property_content {
       height: 400px;

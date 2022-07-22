@@ -104,7 +104,7 @@
               <el-button
                 class="submit_register_button"
                 type="primary"
-                :loading="btnLoading"
+                :loading="loading"
                 @click="userRegister"
                 >Agree and continue</el-button
               >
@@ -159,7 +159,7 @@ export default Vue.extend({
     };
     return {
       phone: "",
-      btnLoading: false,
+      loading: false,
       countries: [],
       registerForm: {
         first_name: "" as string,
@@ -169,9 +169,9 @@ export default Vue.extend({
         password: "" as string,
         confirm_password: "",
         phone_number: "" as string,
-        sign_up_mode: "email",
-        user_type: "visitor",
-        country_id: "",
+        sign_up_mode: "email" as string,
+        user_type: "visitor" as string,
+        country_id: "39a40751-d7d2-4346-99e5-b0235b520ce5" as string,
       },
       validation: {
         email: [
@@ -218,15 +218,14 @@ export default Vue.extend({
       this.registerForm.phone_number = e.formattedNumber;
     },
     userRegister() {
-      this.btnLoading = true;
+      this.loading = true;
       (this as any).$refs.registerForm.validate((valid: boolean) => {
         if (valid) {
           console.log(this.registerForm);
           this.signUp();
-          this.btnLoading = false;
-          // this.$message.success("Registered Successfully!");
+          this.$router.replace("/login");
         } else {
-          this.btnLoading = false;
+          this.loading = false;
           (this as any as IMixinState).getNotification(
             "Make sure all required fields are filled",
             "error"
@@ -238,16 +237,18 @@ export default Vue.extend({
       try {
         // this.$axios
         // .post("http://localhost:8000/api/v3/signup", this.registerForm)
-        await this.$registerApi
-          .create(this.registerForm)
-          .then((res: any) => {
-            console.log(res);
-          })
-          .catch((err: any) => {
-            console.log(err);
-          });
+
+        const register = await this.$registerApi.create(this.registerForm);
+        console.log(register.message);
+        (this as any as IMixinState).$confirm(register.message, {
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+          type: "success",
+        });
+        this.loading = false;
+        // (this as any as IMixinState).$message(() => register.message);
       } catch (error) {
-        this.btnLoading = false;
+        this.loading = false;
         (this as any as IMixinState).catchError(error);
       }
     },

@@ -1,8 +1,11 @@
 <template>
   <el-row :sm="24" :md="12" class="p-20">
     <div class="photo_content">
-      <div class="profile_holder mr-20">
+      <div class="profile_holder mr-20" v-if="!avatar">
         <i class="el-icon-user-solid"></i>
+      </div>
+      <div v-else class="acc_photo">
+        <img :src="imageUrl" />
       </div>
     </div>
     <el-row class="photo_text">
@@ -21,12 +24,14 @@
         action="#"
         :multiple="false"
         :auto-upload="false"
-        :on-change="toggleUpload"
+        :on-change="getAvatar"
         :show-file-list="false"
       >
         <el-button type="info">Select an image of you</el-button>
       </el-upload>
-      <el-button type="primary" class="ml-20">Save</el-button>
+      <el-button type="primary" class="ml-20" @click="save" :disabled="!avatar"
+        >Save</el-button
+      >
     </div>
   </el-row>
 </template>
@@ -34,28 +39,27 @@
 <script lang="ts">
 import Vue from "vue";
 
-interface upload {
-  name: String;
-  percentage: Number;
-  raw: Object;
-  size: Number;
-  status: String;
-  uid: Number;
-}
-
 export default Vue.extend({
   name: "PropertyPhotoUpload",
   data() {
     return {
-      email: "" as String,
-      avatar: {} as object,
+      avatar: "" as any,
+      imageUrl: "",
     };
   },
   methods: {
     login() {},
-    toggleUpload(file: upload) {
+    getAvatar(file: any) {
       console.log(file);
-      this.avatar = file;
+      this.imageUrl = URL.createObjectURL(file.raw);
+
+      let reader = new FileReader();
+      reader.readAsDataURL(file.raw);
+      reader.onloadend = () => {
+        this.avatar = reader.result;
+      };
+    },
+    save() {
       this.$emit("avatar", this.avatar);
     },
   },
@@ -82,6 +86,14 @@ export default Vue.extend({
     i {
       font-size: 140px;
       color: #cbd5e1;
+    }
+  }
+  .acc_photo {
+    height: 200px;
+    img {
+      border-radius: 50%;
+      height: 200px;
+      width: 200px;
     }
   }
 }

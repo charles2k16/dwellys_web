@@ -1,21 +1,21 @@
 <template>
   <div class="header">
     <ApplicationHandler ref="modalHandler" />
-
+    <!-- {{ $auth }} -->
     <div class="header_wrapper section">
       <div style="display: flex; align-items: center">
         <NuxtLink to="/">
           <img src="~/assets/img/logo.png" />
         </NuxtLink>
       </div>
-      <div class="header_content hidden-sm-and-down">
+      <!-- <div class="header_content hidden-sm-and-down">
         <section class="pr-20">
           <NuxtLink to="/">Property valuation</NuxtLink>
         </section>
         <section class="pl-10">
           <NuxtLink to="/property_account">Become an agent</NuxtLink>
         </section>
-      </div>
+      </div> -->
       <div class="drawer hidden-md-and-up">
         <svg
           @click="drawer = true"
@@ -53,6 +53,7 @@
               <section @click="drawer = false" class="pb-20">
                 <NuxtLink to="/messages">Messages</NuxtLink>
               </section>
+
               <section
                 class="login"
                 @click="showLoginModal"
@@ -81,18 +82,44 @@
         <section class="pr-20">
           <NuxtLink to="/messages">Messages</NuxtLink>
         </section>
-        <section class="login" @click="showLoginModal" v-if="!$auth.loggedIn">
-          <div class="login_text">
-            <p>Login</p>
-            <img src="~/assets/img/user_icon.png" alt="icon" />
-          </div>
-        </section>
-        <section class="login" @click="$auth.logout()" v-if="$auth.loggedIn">
-          <div class="login_text">
-            <p>Logout</p>
-            <!-- <img src="~/assets/img/user_icon.png" alt="" /> -->
-          </div>
-        </section>
+
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <img
+              :src="src + userData.avatar"
+              alt="avatar"
+              class="user_avatar"
+              v-if="$auth.user"
+            />
+            <img src="~/assets/img/user_icon.png" alt="icon" v-else />
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item v-if="!$auth.loggedIn">
+              <p class="py-10" @click="showLoginModal">Login</p>
+            </el-dropdown-item>
+
+            <el-dropdown-item>
+              <section class="py-10">
+                <NuxtLink to="/">Property valuation</NuxtLink>
+              </section>
+            </el-dropdown-item>
+            <el-dropdown-item v-if="userData.user_type == 'lister'">
+              <section class="py-10">
+                <NuxtLink to="/property_upload">Property Upload</NuxtLink>
+              </section>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <section class="py-10">
+                <NuxtLink to="/property_account">Become an agent</NuxtLink>
+              </section>
+            </el-dropdown-item>
+            <el-dropdown-item v-if="$auth.loggedIn" style="color: red">
+              <p class="py-10" @click="$auth.logout()">
+                Logout
+              </p></el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </div>
     <hr class="hr_rule register_header_line mt-20" />
@@ -111,10 +138,21 @@ export default Vue.extend({
   },
   data() {
     return {
+      userData: {} as any,
+      src: "http://localhost:8000/",
       user: "login" as string,
       drawer: false as boolean,
       direction: "rtl",
     };
+  },
+  created() {
+    this.userData = this.$auth.$storage.getLocalStorage("user_data");
+    console.log(this.$auth.$storage.getLocalStorage("user_data"));
+    console.log(this.$auth);
+  },
+  updated() {
+    this.userData = this.$auth.$storage.getLocalStorage("user_data");
+    console.log(this.$auth.$storage.getLocalStorage("user_data"));
   },
   methods: {
     showLoginModal(): void {
@@ -162,7 +200,12 @@ a {
   width: 24px;
   height: 24px;
 }
-
+.user_avatar {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  margin-left: 10px;
+}
 /* @media (max-width: 768px) {
   .header_content {
     display: none;

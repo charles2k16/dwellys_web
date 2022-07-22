@@ -111,7 +111,7 @@ export default {
           '1039031868707-iakjs1b8u7i12s3jb5l11on7uc8flkpr.apps.googleusercontent.com',
         scope: ['profile', 'email'],
         codeChallengeMethod: '',
-        responseType: 'code',
+        responseType: 'token id_token',
         endpoints: {
           token: 'http://localhost:8000/api/v3/loginwithsocialmedia', // somm backend url to resolve your auth with google and give you the token back
           userInfo: false, // the endpoint to get the user info after you recived the token
@@ -124,7 +124,6 @@ export default {
           userInfo:
             'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}',
         },
-        // clientId: "2579105180293c669ed5937603135b1a",
         clientId: '3270395229903696',
         scope: ['public_profile', 'email'],
       },

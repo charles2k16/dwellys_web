@@ -31,14 +31,15 @@
           <div class="details_plot">
             <section>
               <p class="d-flex">
-                <span class="material-icons mr-5"> room </span>Plot No, 34, Dade
-                St, Tema
+                <span class="material-icons mr-5"> room </span
+                >{{ propertyDetails.listing_detail.city }}
               </p>
             </section>
             <section>
               <p class="d-flex">
                 <span class="material-icons mr-5"> schedule </span>Last updated
                 2 mins ago
+                <!-- {{ propertyDetails.updated_at }} -->
               </p>
             </section>
           </div>
@@ -51,21 +52,42 @@
             </p>
           </div>
         </div>
-        <el-row class="house_details_images">
-          <div class="house_1"></div>
-          <div class="second_imgs">
-            <div class="house_2"></div>
-            <div class="house_3"></div>
+        <div class="d-flex">
+          <el-row class="house_details_images">
+            <div class="house_1">
+              <img
+                :src="
+                  src +
+                  (image
+                    ? image
+                    : propertyDetails.listing_detail.listing_images[0].photo)
+                "
+                class="previewImg"
+              />
+            </div>
+          </el-row>
+          <div class="d-flex_column">
+            <img
+              v-for="image in propertyDetails.listing_detail.listing_images"
+              :key="image.id"
+              :src="src + image.photo"
+              @click="prevImage(image.photo)"
+              class="prop_imgs mb-10"
+            />
           </div>
-        </el-row>
+        </div>
       </div>
       <div class="justify_between property_info">
         <div class="pt-20 basic_info">
           <h3 style="line-height: 24px; color: #1e293b" class="pb-10">
             Basic information
           </h3>
-          <div class="pb-20 info_cards">
-            <el-card shadow="never" class="info_card">
+          <div
+            class="pb-20 info_cards"
+            v-for="specification in propertyDetails.property_specifications"
+            :key="specification.id"
+          >
+            <!-- <el-card shadow="never" class="info_card">
               <p class="d-flex">
                 <span class="material-icons mr-5"> king_bed </span>2 Bedrooms
               </p>
@@ -74,15 +96,31 @@
               <p class="d-flex">
                 <span class="material-icons mr-5"> bathtub </span>2 bathrooms
               </p>
-            </el-card>
+            </el-card> -->
             <el-card shadow="never" class="info_card">
               <p class="d-flex">
-                <span class="material-icons mr-5"> weekend </span>1 living area
+                <span class="material-icons mr-5"> weekend </span>
+                {{ specification.number }}
+                {{ specification.specification.name }}
               </p>
             </el-card>
-            <el-card shadow="never" class="info_card">
+            <!-- <el-card shadow="never" class="info_card">
               <p class="d-flex">
                 <span class="material-icons mr-5"> drive_eta </span>2 car garage
+              </p>
+            </el-card> -->
+          </div>
+          <div class="pb-20 d-flex info_cards">
+            <el-card
+              shadow="never"
+              class="info_card mx-10"
+              v-for="specification in propertyDetails.other_specifications"
+              :key="specification.id"
+            >
+              <p class="d-flex">
+                <!-- <span class="material-icons mr-5"> weekend </span> -->
+                {{ specification.number }}
+                {{ specification.name }}
               </p>
             </el-card>
           </div>
@@ -105,7 +143,10 @@
                     >/ month
                   </p>
                   <div class="d-flex">
-                    <img src="~/assets/img/user_detail_img.png" />
+                    <img
+                      :src="src + propertyDetails.lister.avatar"
+                      class="property_avatar"
+                    />
                     <div class="ml-20">
                       <p>
                         {{ propertyDetails.lister.first_name }}
@@ -176,6 +217,7 @@
 import Vue from "vue";
 // import { products } from '@/assets/data/index.js'
 import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
+// import moment from "moment";
 
 export default Vue.extend({
   name: "PropertyDetails",
@@ -190,7 +232,9 @@ export default Vue.extend({
   // },
   data() {
     return {
+      src: "http://localhost:8000/",
       activeName: "first" as string,
+      image: "" as any,
       propertyDetails: this.$route.params.property,
       home: "" as string,
       sendForm: {
@@ -210,12 +254,15 @@ export default Vue.extend({
     console.log(this.propertyDetails);
   },
   methods: {
-    onCountryUpdate(country: object) {
-      console.log(country, "event");
-    },
     handleClick(tab: string, event: object) {
       console.log(tab, event);
     },
+    prevImage(image: any) {
+      this.image = image;
+    },
+    //  lastUpdate (date:any) {
+    //     return moment(date).format("MMMM Do YYYY");
+    //   },
     showOwner(): void {
       console.log("show");
       (this as any).$refs.propertyAction.showOwnerModal(this.user);
@@ -285,68 +332,26 @@ $small_screen: 426px;
   }
 
   .house_details_images {
-    display: flex;
-    height: 550px;
+    // height: 550px;
+    width: 70%;
     @media (max-width: $medium_screen) {
       flex-direction: column;
       height: 800px;
     }
-    .house_1 {
-      background-image: url("~/assets/img/image1.png");
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
+    .previewImg {
+      // margin: 0 auto;
+      width: 100%;
       height: 550px;
-      flex: 1;
+      border-radius: 10px;
+    }
+
+    .house_1 {
+      display: flex;
       margin-right: 20px;
       border-radius: 10px;
       @media (max-width: $medium_screen) {
         height: 400px;
         margin-right: 0;
-      }
-    }
-    .second_imgs {
-      display: flex;
-      flex-direction: column;
-      @media (max-width: $medium_screen) {
-        padding-top: 20px;
-        flex-direction: row;
-        justify-content: space-between;
-        height: 300px;
-      }
-
-      .house_2 {
-        background-image: url("~/assets/img/image2.png");
-        background-repeat: no-repeat;
-        background-size: 100%;
-        background-position: center;
-        width: 100%;
-        border-radius: 10px;
-        max-width: 280px;
-        height: 50%;
-        @media (max-width: 768px) {
-          width: 100%;
-          max-width: 400px;
-          margin-right: 20px;
-          height: 300px;
-        }
-      }
-      .house_3 {
-        background-image: url("~/assets/img/image3.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        height: 50%;
-        width: 300px;
-        max-width: 280px;
-        border-radius: 10px;
-        margin-top: 20px;
-        @media (max-width: $medium_screen) {
-          margin-top: 0;
-          width: 100%;
-          max-width: 400px;
-          height: 300px;
-        }
       }
     }
   }
@@ -411,6 +416,17 @@ $small_screen: 426px;
   .info_side_card {
     width: 100%;
     max-width: 300px;
+  }
+
+  .property_avatar {
+    width: 60px;
+    // height:
+    border-radius: 50%;
+  }
+  .prop_imgs {
+    width: 100%;
+    height: 270px;
+    border-radius: 10px;
   }
 }
 </style>
