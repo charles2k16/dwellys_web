@@ -1,5 +1,9 @@
 @media only screen and (max-width: 600px) {
-  /* .login_modal {
-    width: 100%;
-  } */
+  .el-carousel__container {
+    position: relative;
+    height: 300px;
+  }
+  .mob-margin {
+    padding: 0px !important;
+  }
 }

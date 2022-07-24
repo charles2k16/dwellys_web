@@ -9,20 +9,14 @@
         :key="index"
         class="pb-20"
       >
-        <el-card shadow="hover" class="house_card">
+        <el-card shadow="hover" class="property_container">
           <div
-            class="card_img"
-            @click.self="toDetails(property)"
+            class="property_image"
+            @click.self="openPropertyDetails(property)"
             :style="background_style(property.photos)"
           >
-            <div class="d-flex justify_between house_text p-10">
-              <p
-                style="
-                  background: white;
-                  padding: 2px 10px;
-                  border-radius: 7.34885px;
-                "
-              >
+            <div class="d-flex justify_between property_labels p-10">
+              <p>
                 {{ property.listing_detail.category.name }}
               </p>
               <span
@@ -31,7 +25,7 @@
                 :style="
                   favProperties.includes(property)
                     ? { color: 'red' }
-                    : { background: '#fff' }
+                    : { color: 'white' }
                 "
               >
                 favorite_border
@@ -81,8 +75,8 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IMixinState } from "@/types/mixinsTypes";
+import Vue from 'vue';
+// import { IMixinState } from "../../types/mixinsTypes";
 
 export default Vue.extend({
   props: {
@@ -91,12 +85,9 @@ export default Vue.extend({
       type: Array,
     },
   },
-  name: "PropertyList",
+  name: 'PropertyList',
   data() {
     return {
-      src: "http://localhost:8000/",
-      email: "" as string,
-      roote: "~/assets/img/",
       favProperties: [] as Array<object>,
     };
   },
@@ -112,12 +103,15 @@ export default Vue.extend({
       console.log(this.favProperties);
     },
     getImage(pic: string): string {
-      return require("../../assets/img/" + pic);
+      return require('../../assets/img/' + pic);
     },
-    toDetails(property: any): void {
+    openPropertyDetails(property: any): void {
       this.$router.push({
-        name: "property_details",
+        name: 'property_details',
         params: { property: property },
+        query: {
+          name: property.listing_detail.name,
+        },
       });
     },
   },
@@ -125,22 +119,26 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-.house_card {
+.property_container {
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   line-height: 16px;
-  .card_img {
+
+  .property_image {
     width: 100%;
     height: 220px;
     background-repeat: no-repeat;
     background-size: 100%;
-    .house_img {
-      width: 100%;
-      height: 220px;
-    }
-    .house_text {
+
+    .property_labels {
       width: 100%;
       z-index: 20;
+
+      p {
+        background: white;
+        padding: 2px 10px;
+        border-radius: 7.34885px;
+      }
     }
   }
   .card_body {

@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <el-container style="height: 100vh">
-      <el-main style="display: flex; flex-direction: column; padding: 0">
-        <NavHeader />
-        <Nuxt />
-        <Footer />
-      </el-main>
-    </el-container>
-  </div>
+  <el-container style="height: 100vh">
+    <el-main style="display: flex; flex-direction: column; padding: 0">
+      <NavHeader />
+      <Nuxt />
+      <Footer />
+    </el-main>
+  </el-container>
 </template>
 
 <script>
