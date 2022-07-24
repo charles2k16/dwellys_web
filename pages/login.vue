@@ -1,11 +1,16 @@
 <template>
   <div class="login_form">
-    <h2 class="center pb-20">Login or sign in</h2>
+    <h2 class="center pb-20">Login</h2>
+
+    <p v-if="showVerifyInfo" style="color: red">
+      Verify your email address to continue
+    </p>
     <el-form
       ref="loginForm"
       :model="loginForm"
       label-position="top"
       :rules="validation"
+      v-loadding="btnLoading"
     >
       <el-form-item label="Email address" prop="email">
         <el-input
@@ -27,7 +32,7 @@
         <el-button
           type="primary"
           class="btn_lg"
-          @click="login"
+          @click="signIn"
           :loading="btnLoading"
           >Continue</el-button
         >
@@ -49,92 +54,88 @@
       </div>
     </el-col>
   </div>
-  <!-- <div class="login_text">
-      <div class="py-20">
-        <img src="~/assets/img/login_logo.png" />
-      </div>
-      <div>
-        <p class="pb-20 discover text-white">
-          Discover the world’s hub for <span>houses</span> and
-          <span class="bold">properties</span> for sale and rent
-        </p>
-        <p class="text-white">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut metus
-          risus aenean mattis. Odio accumsan viverra ipsum tristique lectus
-          pellentesque erat.
-        </p>
-      </div>
-    </div> -->
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IMixinState } from "@/types/mixinsTypes";
+import Vue from 'vue';
+import { IMixinState } from '@/types/mixinsTypes';
 
 export default Vue.extend({
-  name: "LoginPage",
+  name: 'LoginPage',
 
   data() {
     return {
+      showVerifyInfo: false,
       btnLoading: false as boolean,
       loginForm: {
-        email: "" as string,
-        password: "" as string,
+        email: '' as string,
+        password: '' as string,
       },
       validation: {
         email: [
           {
             required: true,
-            type: "email",
-            message: "Please enter valid email",
-            trigger: ["blur", "change"],
+            type: 'email',
+            message: 'Please enter valid email',
+            trigger: ['blur', 'change'],
           },
-          { min: 5, message: "Length should be 5 or more", trigger: "blur" },
+          { min: 5, message: 'Length should be 5 or more', trigger: 'blur' },
         ],
       },
     };
   },
   methods: {
     signIn() {
+      this.btnLoading = true;
       (this as any).$refs.loginForm.validate((valid: boolean) => {
         if (valid) {
-          this.login();
-          this.btnLoading = false;
-          // this.$message.success({
-          //   message: "You have successfully loggedin",
-          //   type: "success",
-          // });
+          this.checkUserVerification();
         } else {
           this.btnLoading = false;
           (this as any as IMixinState).getNotification(
-            "Make sure all required fields are filled",
-            "error"
+            'Make sure all required fields are filled',
+            'error'
           );
         }
       });
     },
-    login() {
-      this.btnLoading = true;
+    login(response: any) {
+      // const { user, token } = response.data;
+      console.log(response);
+
+      // this.$auth.setUserToken(token);
+      // this.$auth.setUser(user);
+      // // this.$auth.$storage.setLocalStorage("user_data", user);
+      // (this as any as IMixinState).$message({
+      //   showClose: true,
+      //   message: response.data.message,
+      //   type: 'success',
+      // });
+      // this.$emit('closeLoginModal');
+    },
+    checkUserVerification() {
       this.$auth
-        .loginWith("local", {
+        .loginWith('local', {
           data: {
             email: this.loginForm.email,
             password: this.loginForm.password,
           },
         })
         .then((response: any) => {
-          const { user, token } = response.data.data;
-          console.log(response);
-
-          this.$auth.setUserToken(token);
-          this.$auth.setUser(user);
-          // this.$auth.$storage.setLocalStorage("user_data", user);
-          (this as any as IMixinState).$message({
-            showClose: true,
-            message: response.data.message,
-            type: "success",
-          });
-          this.$emit("closeLoginModal");
+          this.btnLoading = false;
+          const message = response.data.message;
+          if (
+            message ==
+            'An email has been set to you in order to complete your registration'
+          ) {
+            this.showVerifyInfo = true;
+            (this as any as IMixinState).getNotification(
+              'Verify your email address to continue',
+              'warning'
+            );
+          } else {
+            this.login(response.data);
+          }
         })
         .catch((error: any) => {
           this.btnLoading = false;
@@ -143,7 +144,7 @@ export default Vue.extend({
     },
     facebookSignIn() {
       this.$auth
-        .loginWith("facebook")
+        .loginWith('facebook')
         .then((response: any) => {
           // const { user, token } = response.data.data;
           console.log(response);
@@ -163,7 +164,7 @@ export default Vue.extend({
     },
     googleSignIn() {
       this.$auth
-        .loginWith("google")
+        .loginWith('google')
         .then((response: any) => {
           // const { user, token } = response.data.data;
           console.log(response);

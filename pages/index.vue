@@ -131,7 +131,7 @@ export default Vue.extend({
 .home {
   color: var(--text-white);
   .home_landing_page {
-    background-image: url('~/assets/img/home.png');
+    // background-image: url('~/assets/img/home.png');
     background-repeat: no-repeat;
     background-size: 100% 440px;
     height: 440px;

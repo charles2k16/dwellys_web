@@ -38,6 +38,8 @@ declare module "vue/types/vue" {
     $listingImagesApi: apiService;
     $router: any
     $auth: any
+    $alert: any
+    $confirm: any
     // $refs: { [key: string]: Vue | Element | (Vue | Element)[] | Function | undefined; }
   }
 }

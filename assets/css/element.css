@@ -252,3 +252,7 @@
   position: relative;
   height: 500px;
 }
+
+.el-message-box__title span {
+  font-size: 17px;
+}

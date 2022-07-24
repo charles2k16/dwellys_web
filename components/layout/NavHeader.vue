@@ -68,27 +68,6 @@
               <section @click="drawer = false" class="pb-20">
                 <NuxtLink to="/messages">Messages</NuxtLink>
               </section>
-
-              <!--             
-              <section
-                class="login"
-                @click="showLoginModal"
-                v-if="!$auth.loggedIn"
-              >
-                <div class="login_text">
-                  <p>Login</p>
-                  <img src="~/assets/img/user_icon.png" alt="icon" />
-                </div>
-              </section>
-              <section
-                class="login"
-                @click="$auth.logout()"
-                v-if="$auth.loggedIn"
-              >
-                <div class="login_text">
-                  <p>Logout</p>
-                </div>
-              </section> -->
             </div>
           </div>
         </el-drawer>
