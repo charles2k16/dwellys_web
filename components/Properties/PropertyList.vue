@@ -75,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 // import { IMixinState } from "../../types/mixinsTypes";
 
 export default Vue.extend({
@@ -85,7 +85,7 @@ export default Vue.extend({
       type: Array,
     },
   },
-  name: 'PropertyList',
+  name: "PropertyList",
   data() {
     return {
       favProperties: [] as Array<object>,
@@ -103,12 +103,13 @@ export default Vue.extend({
       console.log(this.favProperties);
     },
     getImage(pic: string): string {
-      return require('../../assets/img/' + pic);
+      return require("../../assets/img/" + pic);
     },
     openPropertyDetails(property: any): void {
+      console.log(property);
       this.$router.push({
-        name: 'property_details',
-        params: { property: property },
+        name: "property_details",
+        params: { property: property.id },
         query: {
           name: property.listing_detail.name,
         },

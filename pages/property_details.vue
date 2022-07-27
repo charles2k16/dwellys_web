@@ -11,9 +11,19 @@
         </div>
         <p>
           <b
-            >{{ propertyDetails.listing_detail.name }} -
-            {{ propertyDetails.listing_detail.location }},
-            {{ propertyDetails.listing_detail.region }}
+            >{{
+              propertyDetails.listing_detail &&
+              propertyDetails.listing_detail.name
+            }}
+            -
+            {{
+              propertyDetails.listing_detail &&
+              propertyDetails.listing_detail.location
+            }},
+            {{
+              propertyDetails.listing_detail &&
+              propertyDetails.listing_detail.region
+            }}
           </b>
         </p>
       </div>
@@ -21,7 +31,10 @@
         <div class="details_plot">
           <p class="align_center mr-20">
             <span class="material-icons mr-5"> room </span
-            >{{ propertyDetails.listing_detail.city }}
+            >{{
+              propertyDetails.listing_detail &&
+              propertyDetails.listing_detail.city
+            }}
           </p>
 
           <p class="align_center">
@@ -41,7 +54,7 @@
       </div>
     </div>
     <div class="mob-margin section">
-      <el-row :gutter="20">
+      <el-row :gutter="20" v-if="propertyDetails.listing_detail">
         <el-col :xs="24" :sm="24" :md="hasMorePhotos ? 20 : 24">
           <el-carousel :interval="5000" arrow="always">
             <el-carousel-item
@@ -98,7 +111,10 @@
             <div class="property_description mt-20">
               <h4>Description</h4>
               <p>
-                {{ propertyDetails.listing_detail.description }}
+                {{
+                  propertyDetails.listing_detail &&
+                  propertyDetails.listing_detail.description
+                }}
               </p>
             </div>
           </div>
@@ -108,12 +124,12 @@
             <el-card shadow="hover" class="p-10">
               <div style="height: 200px">
                 <p>Rent</p>
-                <p class="mt-5 amout">
+                <p class="mt-5 amout" v-if="propertyDetails.listing_detail">
                   <b style="font-size: 24px; line-height: 28px"
                     >${{ propertyDetails.listing_detail.price }}.00</b
                   >/ month
                 </p>
-                <div class="d-flex mt-20">
+                <div class="d-flex mt-20" v-if="propertyDetails.listing_detail">
                   <img
                     :src="src + propertyDetails.lister.avatar"
                     class="agent_avatar"
@@ -121,8 +137,14 @@
                   <div class="ml-20">
                     <p>
                       <b
-                        >{{ propertyDetails.lister.first_name }}
-                        {{ propertyDetails.lister.last_name }}</b
+                        >{{
+                          propertyDetails.listing_detail &&
+                          propertyDetails.lister.first_name
+                        }}
+                        {{
+                          propertyDetails.listing_detail &&
+                          propertyDetails.lister.last_name
+                        }}</b
                       >
                     </p>
                     <p style="font-size: 13px; color: #64748b">
@@ -172,43 +194,42 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import ApplicationHandler from '@/handlers/ApplicationHandler.vue';
+import Vue from "vue";
+import ApplicationHandler from "@/handlers/ApplicationHandler.vue";
 
 export default Vue.extend({
-  name: 'PropertyDetails',
+  name: "PropertyDetails",
   components: {
     ApplicationHandler,
   },
   data() {
     return {
-      src: 'http://localhost:8000/',
-      activeName: 'first' as string,
-      image: '' as any,
+      src: "http://localhost:8000/",
+      activeName: "first" as string,
+      image: "" as any,
       propertyDetails: {} as any,
-      home: '' as string,
+      home: "" as string,
       sendForm: {
         amount: null,
         recipient_amt: null,
-        payment_method: '' as string,
+        payment_method: "" as string,
       },
       payOptions: [
-        { value: ':brijwallet', label: ':brij wallet' },
-        { value: ':brijEx', label: ':brijEx' },
-        { value: 'M-PESA', label: 'M-PESA' },
+        { value: ":brijwallet", label: ":brij wallet" },
+        { value: ":brijEx", label: ":brijEx" },
+        { value: "M-PESA", label: "M-PESA" },
       ],
-      user: '',
+      user: "",
     };
   },
-  created() {
-    this.propertyDetails = this.$route.params.property;
-    console.log(this.propertyDetails);
+  async created() {
+    const listings = await this.$listingApi.show(this.$route.params.property);
+    this.propertyDetails = listings.data;
+    console.log(listings);
   },
   computed: {
     hasMorePhotos() {
-      return (
-        this.$route.params.property.listing_detail.listing_images.length > 1
-      );
+      return this.propertyDetails.listing_detail.listing_images.length > 1;
     },
   },
   methods: {
@@ -222,7 +243,7 @@ export default Vue.extend({
     //     return moment(date).format("MMMM Do YYYY");
     //   },
     showOwner(): void {
-      console.log('show');
+      console.log("show");
       (this as any).$refs.propertyAction.showOwnerModal(this.user);
     },
   },
@@ -305,7 +326,7 @@ $small_screen: 426px;
       margin-left: 15px;
 
       &::before {
-        content: '\2022';
+        content: "\2022";
         color: red;
         font-weight: bold;
         display: inline-block;

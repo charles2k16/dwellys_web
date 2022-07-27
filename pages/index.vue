@@ -71,50 +71,51 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 
 export default Vue.extend({
-  name: 'IndexPage',
+  name: "IndexPage",
   data() {
     return {
-      search_value: '',
+      search_value: "",
       propertySearch: [
         {
-          label: 'Buy',
-          value: 'buy',
+          label: "Buy",
+          value: "buy",
         },
         {
-          label: 'Rent',
-          value: 'rent',
+          label: "Rent",
+          value: "rent",
         },
         {
-          label: 'Lease',
-          value: 'lease',
+          label: "Lease",
+          value: "lease",
         },
       ],
       listings: [] as Array<object>,
       pageLoad: true as boolean,
       tabOptions: [
-        { label: 'All', title: 'Rent a home' },
-        { label: 'House', title: 'Rent a house' },
-        { label: 'Apartment', title: 'Rent an Apartment' },
-        { label: 'Town house', title: 'Rent a Town house' },
-        { label: ' Office', title: ' Rent an office' },
-        { label: 'Land', title: ' Buy a land' },
+        { label: "All", title: "Rent a home" },
+        { label: "House", title: "Rent a house" },
+        { label: "Apartment", title: "Rent an Apartment" },
+        { label: "Town house", title: "Rent a Town house" },
+        { label: " Office", title: " Rent an office" },
+        { label: "Land", title: " Buy a land" },
       ],
     };
   },
   async created() {
     const listings = await this.$listingApi.index();
+    console.log(listings);
     this.loadListing(listings.data);
   },
   methods: {
     loadListing(properties: any) {
       const data = properties.map((property: any) => {
         property.photos =
-          property.listing_detail.listing_images.length > 0
-            ? property.listing_detail.listing_images[0].photo
-            : 'no photo';
+          property.listing_detail.feature_image_url != null
+            ? property.listing_detail.feature_image_url
+            : "no photo";
         return property;
       });
       this.listings = data;
@@ -131,7 +132,7 @@ export default Vue.extend({
 .home {
   color: var(--text-white);
   .home_landing_page {
-    // background-image: url('~/assets/img/home.png');
+    background-image: url("~/assets/img/home.png");
     background-repeat: no-repeat;
     background-size: 100% 440px;
     height: 440px;
