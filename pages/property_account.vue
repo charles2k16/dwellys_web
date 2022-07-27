@@ -410,7 +410,7 @@ export default Vue.extend({
       (this as any).$refs.property_account.validate((valid: boolean) => {
         if (valid) {
           this.signUp();
-          this.$router.replace('/login');
+          this.$router.replace("/login");
         } else {
           this.btnLoading = false;
           (this as any as IMixinState).getNotification(
