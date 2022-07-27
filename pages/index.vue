@@ -7,61 +7,30 @@
           <span>houses</span> and <span>properties</span> for sale and rent
         </h1>
         <div class="discover_line"></div>
-        <el-tabs type="card" @tab-click="handleClick">
-          <el-tab-pane label="Buy">
-            <div class="buy">
-              <el-form
-                ref="home"
-                class="search_home"
-                v-model="home"
-                label-position="top"
+        <el-tabs type="card" @tab-click="handleClick" class="home_search_tabs">
+          <el-tab-pane
+            :label="searchType.label"
+            v-for="(searchType, index) in propertySearch"
+            :key="index"
+          >
+            <div class="search_container">
+              <el-input
+                v-model="search_value"
+                class="search_input"
+                placeholder="Where do you want to live?"
               >
-                <el-input
-                  v-model="home"
-                  class="search_input"
-                  placeholder="Where do you want to live?"
-                >
-                </el-input>
-                <el-button type="primary">Find your home</el-button>
-              </el-form>
+              </el-input>
+              <el-button type="primary" class="hidden-sm-and-down"
+                >Find your home</el-button
+              >
+              <el-button
+                icon="el-icon-search"
+                type="primary"
+                class="hidden-md-and-up"
+                round
+              ></el-button>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="Rent">
-            <div class="buy">
-              <el-form
-                ref="home"
-                class="search_home"
-                v-model="home"
-                label-position="top"
-              >
-                <el-input
-                  v-model="home"
-                  class="search_input"
-                  placeholder="Where do you want to live?"
-                >
-                </el-input>
-                <el-button type="primary">Find your home</el-button>
-              </el-form>
-            </div></el-tab-pane
-          >
-          <el-tab-pane label="Lease">
-            <div class="buy">
-              <el-form
-                ref="home"
-                class="search_home"
-                v-model="home"
-                label-position="top"
-              >
-                <el-input
-                  v-model="home"
-                  class="search_input"
-                  placeholder="Where do you want to live?"
-                >
-                </el-input>
-                <el-button type="primary">Find your home</el-button>
-              </el-form>
-            </div></el-tab-pane
-          >
         </el-tabs>
         <el-row class="d-flex pt-20">
           <div class="pr-20">
@@ -102,54 +71,57 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "IndexPage",
+  name: 'IndexPage',
   data() {
     return {
-      activeName: "first" as string,
-      home: "" as string,
+      search_value: '',
+      propertySearch: [
+        {
+          label: 'Buy',
+          value: 'buy',
+        },
+        {
+          label: 'Rent',
+          value: 'rent',
+        },
+        {
+          label: 'Lease',
+          value: 'lease',
+        },
+      ],
       listings: [] as Array<object>,
-      pageLoad: false as boolean,
-      sendForm: {
-        amount: null,
-        recipient_amt: null,
-        payment_method: "" as string,
-      },
+      pageLoad: true as boolean,
       tabOptions: [
-        { label: "All", title: "Rent a home" },
-        { label: "House", title: "     Rent a house" },
-        { label: "Apartment", title: "Rent an Apartment" },
-        { label: "Town house", title: "Rent a Town house" },
-        { label: " Office", title: " Rent an office" },
-        { label: "Land", title: " Buy a land" },
+        { label: 'All', title: 'Rent a home' },
+        { label: 'House', title: 'Rent a house' },
+        { label: 'Apartment', title: 'Rent an Apartment' },
+        { label: 'Town house', title: 'Rent a Town house' },
+        { label: ' Office', title: ' Rent an office' },
+        { label: 'Land', title: ' Buy a land' },
       ],
     };
   },
   async created() {
-    this.pageLoad = true;
     const listings = await this.$listingApi.index();
     this.loadListing(listings.data);
   },
   methods: {
-    onCountryUpdate(country: object) {
-      console.log(country, "event");
-    },
     loadListing(properties: any) {
       const data = properties.map((property: any) => {
         property.photos =
           property.listing_detail.listing_images.length > 0
             ? property.listing_detail.listing_images[0].photo
-            : "no photo";
+            : 'no photo';
         return property;
       });
       this.listings = data;
       this.pageLoad = false;
-      console.log(data);
     },
-    handleClick(tab: string, event: object) {
-      console.log(tab, event);
+    handleClick(tab: string) {
+      console.log(tab);
     },
   },
 });
@@ -159,14 +131,14 @@ export default Vue.extend({
 .home {
   color: var(--text-white);
   .home_landing_page {
-    background-image: url("~/assets/img/home.png");
+    // background-image: url('~/assets/img/home.png');
     background-repeat: no-repeat;
-    background-size: 100% 400px;
-    height: 400px;
+    background-size: 100% 440px;
+    height: 440px;
     padding: 30px 0;
     .landing_content {
       display: flex;
-      width: 90%;
+      // width: 95%;
       flex-direction: column;
       justify-content: center;
       h1 {
@@ -190,13 +162,11 @@ export default Vue.extend({
         border-radius: 100%;
         box-shadow: 5px -10px #cf0100;
       }
-      .buy {
+      .search_container {
         background: #ffffff;
         border-radius: 0px 10px 10px 10px;
-        .search_home {
-          display: flex;
-          padding: 10px;
-        }
+        display: flex;
+        padding: 10px;
       }
     }
   }

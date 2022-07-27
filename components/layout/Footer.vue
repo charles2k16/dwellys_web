@@ -6,7 +6,7 @@
         <p class="pb-10">&copy; Dwellys 2022, All rights reserved</p>
         <p class="trademark_text text-grey">
           Dwellys is a registered trademark and the trading name of Dwellys
-          Limited.(v-2.0)
+          Limited.(v-2.3)
         </p>
       </el-col>
       <el-col :md="8" :sm="24">
@@ -46,7 +46,7 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .footer {
-  margin-top: auto;
+  margin-top: 50px;
   background: #fff;
   bottom: 0;
   z-index: 50;
@@ -78,7 +78,6 @@ export default Vue.extend({
     padding: 0 20px;
     width: 100%;
     height: auto;
-    padding-bottom: 150px;
   }
 
   .conditions {
@@ -95,5 +94,8 @@ export default Vue.extend({
       width: 35px;
     }
   }
+}
+.trademark_text {
+  font-size: 14px;
 }
 </style>

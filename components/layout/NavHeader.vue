@@ -8,14 +8,14 @@
           <img src="~/assets/img/logo.png" />
         </NuxtLink>
       </div>
-      <!-- <div class="header_content hidden-sm-and-down">
+      <div class="header_content hidden-sm-and-down">
         <section class="pr-20">
           <NuxtLink to="/">Property valuation</NuxtLink>
         </section>
         <section class="pl-10">
           <NuxtLink to="/property_account">Become an agent</NuxtLink>
         </section>
-      </div> -->
+      </div>
       <div class="drawer hidden-md-and-up">
         <svg
           @click="drawer = true"
@@ -44,6 +44,21 @@
         >
           <div class="drawer_content px-20">
             <div class="d-flex_column">
+              <span class="login-avatar">
+                Login
+                <img
+                  v-if="hasUserData"
+                  :src="src + userData.avatar"
+                  alt="avatar"
+                  class="user_avatar"
+                />
+
+                <img src="~/assets/img/user_icon.png" alt="icon" v-else />
+              </span>
+
+              <section @click="drawer = false" class="pb-20 mt-20">
+                <NuxtLink to="/register">Register</NuxtLink>
+              </section>
               <section @click="drawer = false" class="pb-20">
                 <NuxtLink to="/">Property valuation</NuxtLink>
               </section>
@@ -52,27 +67,6 @@
               </section>
               <section @click="drawer = false" class="pb-20">
                 <NuxtLink to="/messages">Messages</NuxtLink>
-              </section>
-
-              <section
-                class="login"
-                @click="showLoginModal"
-                v-if="!$auth.loggedIn"
-              >
-                <div class="login_text">
-                  <p>Login</p>
-                  <img src="~/assets/img/user_icon.png" alt="icon" />
-                </div>
-              </section>
-              <section
-                class="login"
-                @click="$auth.logout()"
-                v-if="$auth.loggedIn"
-              >
-                <div class="login_text">
-                  <p>Logout</p>
-                  <!-- <img src="~/assets/img/user_icon.png" alt="" /> -->
-                </div>
               </section>
             </div>
           </div>
@@ -85,13 +79,17 @@
 
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
-            <img
-              :src="src + userData.avatar"
-              alt="avatar"
-              class="user_avatar"
-              v-if="$auth.user"
-            />
-            <img src="~/assets/img/user_icon.png" alt="icon" v-else />
+            <span class="login-avatar">
+              Login
+              <img
+                v-if="hasUserData"
+                :src="src + userData.avatar"
+                alt="avatar"
+                class="user_avatar"
+              />
+
+              <img src="~/assets/img/user_icon.png" alt="icon" v-else />
+            </span>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item v-if="!$auth.loggedIn">
@@ -99,11 +97,15 @@
             </el-dropdown-item>
 
             <el-dropdown-item>
+              <p class="py-10" @click="$router.push('/register')">Register</p>
+            </el-dropdown-item>
+
+            <el-dropdown-item>
               <section class="py-10">
                 <NuxtLink to="/">Property valuation</NuxtLink>
               </section>
             </el-dropdown-item>
-            <el-dropdown-item v-if="userData == 'lister'">
+            <el-dropdown-item v-if="hasUserData">
               <section class="py-10">
                 <NuxtLink to="/property_upload">Property Upload</NuxtLink>
               </section>
@@ -146,13 +148,15 @@ export default Vue.extend({
     };
   },
   created() {
-    this.userData = this.$auth.$storage.getLocalStorage("user_data");
-    console.log(this.$auth.$storage.getLocalStorage("user_data"));
+    if (this.$auth.user !== null) {
+      this.userData = this.$auth.user;
+    }
     console.log(this.$auth);
   },
-  updated() {
-    this.userData = this.$auth.$storage.getLocalStorage("user_data");
-    console.log(this.$auth.$storage.getLocalStorage("user_data"));
+  computed: {
+    hasUserData() {
+      return this.$auth.user !== null;
+    },
   },
   methods: {
     showLoginModal(): void {
@@ -166,7 +170,7 @@ export default Vue.extend({
   },
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 a {
   color: #334155;
 }
@@ -190,6 +194,25 @@ a {
   padding: 5px 10px;
   background: #f8fafc;
 }
+.login-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 5px 10px;
+  border-radius: 20px;
+
+  .user_avatar {
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+  }
+
+  img {
+    margin-left: 10px;
+  }
+}
 .login_text {
   display: flex;
 }
@@ -200,12 +223,7 @@ a {
   width: 24px;
   height: 24px;
 }
-.user_avatar {
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  margin-left: 10px;
-}
+
 /* @media (max-width: 768px) {
   .header_content {
     display: none;
