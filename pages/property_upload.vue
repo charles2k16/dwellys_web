@@ -362,24 +362,34 @@ export default Vue.extend({
   },
 
   async created() {
-    const propertyTypes = await this.$propertyTypesApi.index();
-    this.propertyTypes = propertyTypes.data;
-    this.propertyTypes ? (this.pageLoad = false) : (this.pageLoad = true);
+    try {
+      const propertyTypes = await this.$propertyTypesApi.index();
+      this.propertyTypes = propertyTypes.data;
+      this.propertyTypes ? (this.pageLoad = false) : (this.pageLoad = true);
 
-    const listingPlans = await this.$listingPlansApi.index();
-    this.pricingPlans = listingPlans.data;
-    console.log(listingPlans);
+      const listingPlans = await this.$listingPlansApi.index();
+      this.pricingPlans = listingPlans.data;
+      console.log(listingPlans);
 
-    const countries = await this.$countriesApi.index();
-    this.countries = countries.data;
-    console.log(this.countries);
+      const countries = await this.$countriesApi.index();
+      this.countries = countries.data;
+      console.log(this.countries);
 
-    const categories = await this.$listingCategoriesApi.index();
-    this.categories = categories.data;
-    console.log(this.categories);
+      const categories = await this.$listingCategoriesApi.index();
+      this.categories = categories.data;
+      console.log(this.categories);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error?.response?.data) {
+        (this as any as IMixinState).getNotification(
+          "You do not have property account!",
+          "warning"
+        );
+      }
     }
   },
   computed: {

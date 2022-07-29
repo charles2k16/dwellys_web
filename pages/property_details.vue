@@ -38,9 +38,8 @@
           </p>
 
           <p class="align_center">
-            <span class="material-icons mr-5"> schedule </span>Last updated 2
-            mins ago
-            <!-- {{ propertyDetails.updated_at }} -->
+            <span class="material-icons mr-5"> schedule </span>Last updated,
+            {{ $moment(propertyDetails.updated_at).format("MMMM Do YYYY") }}
           </p>
         </div>
         <div class="details_plot">
@@ -88,7 +87,6 @@
                 ) in propertyDetails.property_specifications"
                 :key="index"
               >
-                <span class="material-icons mr-5"> weekend </span>
                 <p>
                   {{ specification.number }}
                   {{ specification.specification.name }}
@@ -101,7 +99,6 @@
                 :key="specification.id"
               >
                 <p class="d-flex">
-                  <!-- <span class="material-icons mr-5"> weekend </span> -->
                   {{ specification.number }}
                   {{ specification.name }}
                 </p>

@@ -55,6 +55,7 @@ export default {
     "@nuxtjs/auth-next",
     "nuxt-material-design-icons-iconfont",
     "@nuxtjs/auth-next",
+    "@nuxtjs/moment",
     // "nuxt-material-design-icons",
   ],
 

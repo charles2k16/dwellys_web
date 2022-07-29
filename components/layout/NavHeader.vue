@@ -45,7 +45,7 @@
           <div class="drawer_content px-20">
             <div class="d-flex_column">
               <span class="login-avatar">
-                Login
+                {{ userData.first_name ? userData.first_name : "Login" }}
                 <img
                   v-if="hasUserData"
                   :src="src + userData.avatar"
@@ -80,7 +80,7 @@
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
             <span class="login-avatar">
-              Login
+              {{ userData.first_name ? userData.first_name : "Login" }}
               <img
                 v-if="hasUserData"
                 :src="src + userData.avatar"
@@ -105,7 +105,7 @@
                 <NuxtLink to="/">Property valuation</NuxtLink>
               </section>
             </el-dropdown-item>
-            <el-dropdown-item v-if="hasUserData">
+            <el-dropdown-item v-if="userData.user_type == 'lister'">
               <section class="py-10">
                 <NuxtLink to="/property_upload">Property Upload</NuxtLink>
               </section>
@@ -141,6 +141,7 @@ export default Vue.extend({
   data() {
     return {
       userData: {} as any,
+      user_type: "" as any,
       src: "http://localhost:8000/",
       user: "login" as string,
       drawer: false as boolean,
@@ -148,14 +149,19 @@ export default Vue.extend({
     };
   },
   created() {
+    // console.log(this.$auth);
+    console.log(this.$auth.$storage.getLocalStorage("user_data"));
     if (this.$auth.user !== null) {
-      this.userData = this.$auth.user;
+      this.userData = this.$auth.$storage.getLocalStorage("user_data");
     }
-    console.log(this.$auth);
+  },
+  beforeUpdate() {
+    console.log(this.$auth.$storage.getLocalStorage("user_data"));
+    this.userData = this.$auth.$storage.getLocalStorage("user_data");
   },
   computed: {
     hasUserData() {
-      return this.$auth.user !== null;
+      return this.$auth.user.first_name !== null;
     },
   },
   methods: {
